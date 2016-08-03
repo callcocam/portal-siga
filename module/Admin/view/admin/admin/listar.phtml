@@ -1,11 +1,11 @@
 <?php echo $this->partial('partials/content-top',['title'=>"Panel Inicial",'filtro'=>$this->filtro]);?>
 <?php
-if(!is_dir("./module_rest/Admin/view/admin/admin/tpl/{$this->controller}")):
-    mkdir("./module_rest/Admin/view/admin/admin/tpl/{$this->controller}");
+if(!is_dir("./module/Admin/view/admin/admin/tpl/{$this->controller}")):
+    mkdir("./module/Admin/view/admin/admin/tpl/{$this->controller}");
 endif;
 if (!$this->resolver("/tpl/{$this->controller}/index")) :
       $partial=$this->GerarViewHelper()->BlockList($this->table);
-      file_put_contents("./module_rest/Admin/view/admin/admin/tpl/{$this->controller}/index.phtml",  $partial);
+      file_put_contents("./module/Admin/view/admin/admin/tpl/{$this->controller}/index.phtml",  $partial);
 else:
     $partial=$this->partial("/tpl/{$this->controller}/index");
 endif;
