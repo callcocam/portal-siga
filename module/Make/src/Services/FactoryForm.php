@@ -16,6 +16,7 @@ class FactoryForm extends Options {
     public function __construct($data, ContainerInterface $container) {
 
         $this->container=$container;
+        $this->setConfig();
         extract($data);
         // Poxfix e o que completa o nome do arquivo ArquivoPosfix (ArquivoForm)
         $this->setPosfix("FormFactory");
@@ -26,7 +27,7 @@ class FactoryForm extends Options {
         // Montar o caminho base
         $aFind = array('DS', 'dirBase', 'dirEntity');
         $aSub = array(DIRECTORY_SEPARATOR, $alias, 'Form\\Factory');
-        $dirBase = str_replace($aFind, $aSub, ".DSmodule_restDSdirBaseDSsrc");
+        $dirBase = str_replace($aFind, $aSub, ".DS{$this->config->module}DSdirBaseDSsrc");
         // Base dir geralmente e ./module/src/Modulo
         $this->setBaseDir($dirBase);
         // Name Space ex:Modulo\Form

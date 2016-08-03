@@ -46,7 +46,7 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'list' => [
-                        'type' => Literal::class,
+                        'type' => Segment::class,
                         'options' => [
                             'route'    => '[/:page]',
                             'defaults' => [

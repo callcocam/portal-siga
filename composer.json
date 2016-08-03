@@ -41,12 +41,12 @@
             "Auth\\": "module/Auth/src/",
             "Home\\": "module/Home/src/",
             "Mail\\": "module/Mail/src/",
-            "Make\\": "module/Make/src/"
+            "Portal\\": "module/Portal/src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-
+        "Make\\": "module/Make/src/"
         }
     },
     "extra": [],

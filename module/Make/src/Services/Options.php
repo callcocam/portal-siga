@@ -21,6 +21,7 @@ use Zend\Code\Generator\DocBlock\Tag;
 class Options {
 
 
+
     public static $ignore = [
         1 => 'id',
         2 => 'codigo',
@@ -53,7 +54,12 @@ class Options {
     protected $container;
     protected $resutl;
     protected $servileLocator;
+    protected $config;
 
+    public function setConfig()
+    {
+        $this->config=$this->container->get('ZfConfig');
+    }
     /**
      * @return mixed
      */

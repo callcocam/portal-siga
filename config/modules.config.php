@@ -30,6 +30,5 @@ return [
     'Admin',
     'Mail',
     'Auth',
-    'Home',
-    'Make'
+    'Home'
 ];

@@ -37,22 +37,23 @@ class MakeController extends AbstractController{
     }
     public function gerarAction()
     {
+      
         $module=$this->params()->fromRoute('module');
         $table=$this->params()->fromRoute('table');
         if(!empty($module) && !empty($table)){
             $data['alias']=$module;
             $data['arquivo']=$table;
             $data['tabela']=$table;
-            if(!is_dir(sprintf("./module_rest/{$module}/src/Model/{$table}"))){
-                mkdir(sprintf("./module_rest/{$module}/src/Model/{$table}"));
+            if(!is_dir(sprintf("./{$this->config->module}/{$module}/src/Model/{$table}"))){
+                mkdir(sprintf("./{$this->config->module}/{$module}/src/Model/{$table}"));
             }
             $model=new Model($data,$this->container);
             $model->generateClass();
             $msg[]="Model {$table} Foi Criado Com Sucesso!";
 
             /*Model Factory*/
-            if(!is_dir(sprintf("./module_rest/{$module}/src/Model/{$table}/Factory"))){
-                mkdir(sprintf("./module_rest/{$module}/src/Model/{$table}/Factory"));
+            if(!is_dir(sprintf("./{$this->config->module}/{$module}/src/Model/{$table}/Factory"))){
+                mkdir(sprintf("./{$this->config->module}/{$module}/src/Model/{$table}/Factory"));
             }
             $modelFactory=new FactoryModel($data,$this->container);
             $modelFactory->generateClass();
@@ -67,29 +68,29 @@ class MakeController extends AbstractController{
             $repositoryFactory->generateClass();
             $msg[]="Repository Factory {$table} Foi Criado Com Sucesso!";
 
-            if(!is_dir(sprintf("./module_rest/{$module}/src/Controller"))){
-                mkdir(sprintf("./module_rest/{$module}/src/Controller"));
+            if(!is_dir(sprintf("./{$this->config->module}/{$module}/src/Controller"))){
+                mkdir(sprintf("./{$this->config->module}/{$module}/src/Controller"));
             }
             $controller=new Controller($data,$this->container);
             $controller->generateClass();
             $msg[]="Controller {$table} Foi Criado Com Sucesso!";
 
-            if(!is_dir(sprintf("./module_rest/{$module}/src/Controller/Factory"))){
-                mkdir(sprintf("./module_rest/{$module}/src/Controller/Factory"));
+            if(!is_dir(sprintf("./{$this->config->module}/{$module}/src/Controller/Factory"))){
+                mkdir(sprintf("./{$this->config->module}/{$module}/src/Controller/Factory"));
             }
             $controllerFactory=new ControllerFactory($data,$this->container);
             $controllerFactory->generateClass();
             $msg[]="Controller Factory {$table} Foi Criado Com Sucesso!";
 
-            if(!is_dir(sprintf("./module_rest/{$module}/src/Form"))){
-                mkdir(sprintf("./module_rest/{$module}/src/Form"));
+            if(!is_dir(sprintf("./{$this->config->module}/{$module}/src/Form"))){
+                mkdir(sprintf("./{$this->config->module}/{$module}/src/Form"));
             }
             $form=new Form($data,$this->container);
             $form->generateClass();
             $msg[]="Form {$table} Foi Criado Com Sucesso!";
 
-            if(!is_dir(sprintf("./module_rest/{$module}/src/Form/Factory"))){
-                mkdir(sprintf("./module_rest/{$module}/src/Form/Factory"));
+            if(!is_dir(sprintf("./{$this->config->module}/{$module}/src/Form/Factory"))){
+                mkdir(sprintf("./{$this->config->module}/{$module}/src/Form/Factory"));
             }
             $formFactory=new FactoryForm($data,$this->container);
             $formFactory->generateClass();
