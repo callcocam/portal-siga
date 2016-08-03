@@ -1,0 +1,65 @@
+<fildset>
+    <legend>FORMULARIO DE MANUTENÇÃO</legend>
+    <div class="col-xs-12">
+        <div class="x_panel">
+            <div class="x_content">
+                <!-- Smart Wizard -->
+                <div class="row">
+                    <div class="col-md-10 col-xs-12 col-md-offset-1 col-xs-offset-0">
+                        <div id="wizard" class="form_wizard wizard_horizontal">
+                            <?php echo $this->partial('/admin/admin/tpl/vendas/step');?>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1 col-xs-offset-0">
+                        <fieldset>
+                            <legend>SUB TOTAIS DO PEDIDO</legend>
+                            <div class="row">
+                                <div class="col-md-3 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label" for="pago"> <?php echo $this->translate('{{pago}}');?>  </label>
+                                        #pago#
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label" for="descontos"> <?php echo $this->translate('{{descontos}}');?>  </label>
+                                        #descontos#
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label" for="juros"> <?php echo $this->translate('{{juros}}');?>  </label>
+                                        #juros#
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label" for="valor"> <?php echo $this->translate('{{valor}}');?>  </label>
+                                        #valor#
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="box-footer">
+                    <div class="pull-right">
+                        #btn-voltar#
+                    </div>
+                </div>
+                <!-- End SmartWizard Content -->
+            </div>
+        </div>
+</fildset>
+
+<?php echo $this->GerarViewHelper()->modal('MEU MODAL','boleto',"teste");?>
+<?php echo $this->GerarViewHelper()->modal('MEU MODAL 2','paypal',"paypal");?>
+
+<script type="text/javascript" src="/js/funcoes/vendas/vendas.js"></script>
+<script type="text/javascript" src="/js/funcoes/vendas/itens.js"></script>
+<script type="text/javascript" src="/js/funcoes/vendas/bancos.js"></script>
+<script type="text/javascript" src="/js/funcoes/vendas/crediario.js"></script>

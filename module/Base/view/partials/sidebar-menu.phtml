@@ -1,0 +1,17 @@
+<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+    <div class="menu_section">
+        <h3>General</h3>
+        <ul class="nav side-menu">
+            <?= $this->navigation('navigation')
+                ->menu()
+                ->setMinDepth(0)
+                ->setMaxDepth(4)
+                ->setUlClass('nav side-menu')->setPartial('partials/navigation.phtml');
+                //->setAcl($this->UserIdentity()->getAuthAcl())
+                //->setRole((string)$this->UserIdentity()->getAuthAcl()->getRoleDefaul())
+                ?>
+        </ul>
+
+    </div>
+</div>
+

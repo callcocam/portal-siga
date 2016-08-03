@@ -1,0 +1,17 @@
+<?php if($data):?>
+    <?php foreach($data as $ar):?>
+        <tr>
+            <th><?=$ar['produto_id']?></th>
+            <th style="text-align: left;"><?=$ar['description']?></th>
+            <th><input type="text" value="<?=$ar['qtd']?>" id="<?=$ar['produto_id']?>" class="form-control qtd"></th>
+            <th><?=$ar['unitario'];?></th>
+            <th><?=$ar['valor'];?></th>
+             <th><a class="btn btn-dark btn-xs btn-block remove" data-placement="top" data-toggle="tooltip" title="Remover Item" data-original-title="Remover Item" href="<?php echo $this->url('itensvendidos',['action'=>'remove','id'=>$ar['produto_id']])?>"><span class="fa fa-trash-o"></span> </a> </th>
+
+        </tr>
+    <?php endforeach;?>
+<?php else:?>
+    <tr>
+        <td colspan="6">Não Produtos Na Lista</td>
+    </tr>
+<?php endif;?>

@@ -1,0 +1,25 @@
+<?php
+if($avista->getResult()){
+    $tabla=$this->Html('table')->setClass('table table-condased')->setText(PHP_EOL);
+    $receberAvista=$avista->getData();
+    $td[]=$this->Html('td')->setText('Parcela');
+    $td[]=$this->Html('td')->setText('Pago');
+    $td[]=$this->Html('td')->setText('Descontos %');
+    $td[]=$this->Html('td')->setText('Juros %');
+    $td[]=$this->Html('td')->setText('Valor');
+    $tr[]=$this->Html('tr')->setText(implode("",$td));
+    if(isset($receberAvista['avista'])):
+        foreach ($receberAvista as $key => $r):
+            $td=[];
+         if($key=="avista"):
+            $td[]=$this->Html('td')->setText($r['parcela']);
+            $td[]=$this->Html('td')->setText($r['pago']);
+            $td[]=$this->Html('td')->setText($r['descontos']);
+            $td[]=$this->Html('td')->setText($r['juros']);
+            $td[]=$this->Html('td')->setText($r['valor']);
+            $tr[]=$this->Html('tr')->setText(implode("",$td));
+         endif;
+        endforeach;
+    echo  $tabla->setText(implode(PHP_EOL,$tr));
+    endif;
+}

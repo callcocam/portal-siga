@@ -1,0 +1,112 @@
+<?= $this->doctype() ?>
+<html lang="pb-br">
+    <head>
+        <meta charset="utf-8">
+        <?= $this->headTitle('ZF BASE')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?= $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+        <!-- Le styles -->
+        <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
+        ->prependStylesheet($this->basePath('css/floatexamples.css'))
+                        ->prependStylesheet($this->basePath('css/icheck/flat/green.css'))
+                        ->prependStylesheet($this->basePath('css/custom.css'))
+                        ->prependStylesheet($this->basePath('css/jquery.datetimepicker.css'))
+                        ->prependStylesheet($this->basePath('css/bootstrap-chosen/bootstrap-chosen.css'))
+                        ->prependStylesheet($this->basePath('css/animate.min.css'))
+                        ->prependStylesheet($this->basePath('css/pnotify.custom.min.css'))
+                        ->prependStylesheet($this->basePath('fonts/css/font-awesome.min.css'))
+                        ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+        ?>
+        <!-- Scripts -->
+        <?= $this->headScript()
+            ->prependFile($this->basePath('js/Manager.js'))
+            ->prependFile($this->basePath('js/notify.init.js'))
+            ->prependFile($this->basePath('js/custom.js'))
+            ->prependFile($this->basePath('/js/jquery.datetimepicker.full.min.js'))
+            ->prependFile($this->basePath('js/validator/jquery.validate.min.js'))
+            ->prependFile($this->basePath('js/formatCurrency.js'))
+            ->prependFile($this->basePath('js/chosen/chosen.jquery.min.js'))
+            ->prependFile($this->basePath('js/wizard/jquery.smartWizard.js'))
+            ->prependFile($this->basePath('js/pnotify.custom.min.js'))
+            ->prependFile($this->basePath('js/jquery.form.min.js'))
+            ->prependFile($this->basePath('js/nprogress.js'))
+            ->prependFile($this->basePath('js/icheck/icheck.min.js'))
+            ->prependFile($this->basePath('js/bootstrap.min.js'))
+            ->prependFile($this->basePath('js/jquery.min.js'))
+        ?>
+        
+    </head>
+<body class="nav-md">
+  <div class="container body">
+     <div class="main_container">
+
+      <div class="col-md-3 left_col">
+        <div class="left_col scroll-view">
+
+          <div class="navbar nav_title" style="border: 0;">
+            <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentellela Alela!</span></a>
+          </div>
+          <div class="clearfix"></div>
+
+          <!-- menu prile quick info -->
+          <div class="profile">
+            <div class="profile_pic">
+
+              <img src="/dist/tim.php?src=/dist/<?php echo $this->UserIdentity()->getHasIdentity()->images?>" alt="<?php echo $this->UserIdentity()->getHasIdentity()->title?>" class="img-circle profile_img">
+            </div>
+            <div class="profile_info">
+              <span>Welcome,</span>
+              <h2><?php echo $this->UserIdentity()->getHasIdentity()->title?></h2>
+            </div>
+          </div>
+          <!-- /menu prile quick info -->
+          <br />
+         <!-- sidebar menu -->
+          <?php echo $this->partial('/partials/sidebar-menu') ?>
+          <!-- /sidebar menu -->
+          <!-- /menu footer buttons -->
+         <?php echo $this->partial('/partials/menu-footer-buttons') ?>
+          <!-- /menu footer buttons -->
+        </div>
+      </div>
+      <!-- top navigation -->
+        <?php echo $this->partial('/partials/top-navigation') ?>
+      <!-- /top navigation -->
+         <!-- page content -->
+      <div class="right_col" role="main">
+          <div class="" style="min-height: 800px;">
+
+                <?= $this->content; ?>
+              <div class="clearfix"></div>
+          </div>
+     <!-- footer content -->
+
+        <footer>
+          <div class="copyright-info">
+            <p class="pull-right">Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>  
+            </p>
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+      </div>
+      <!-- /page content -->
+
+    </div>
+
+  </div>
+
+  <div id="custom_notifications" class="custom-notifications dsp_none">
+    <ul class="list-unstyled notifications clearfix" data-tabbed_notifications="notif-group">
+    </ul>
+    <div class="clearfix"></div>
+    <div id="notif-group" class="tabbed_notifications"></div>
+  </div>
+          
+
+        <?= $this->inlineScript() ?>
+    </body>
+</html>

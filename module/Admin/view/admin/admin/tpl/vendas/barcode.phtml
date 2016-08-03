@@ -1,0 +1,45 @@
+<style>
+    .bancos{ padding: 45px 45px;background-size: 90% 90%; float: left;}
+    .bb{background: url(/dist/bancos/bancos.jpg) -358px -11px no-repeat;}
+    .santander{background: url(/dist/bancos/bancos.jpg) -478px -11px no-repeat;}
+    .caixa{background: url(/dist/bancos/bancos.jpg) -137px -11px no-repeat;}
+    .bradesco{background: url(/dist/bancos/bancos.jpg) -246px -11px no-repeat;}
+    .itau{background: url(/dist/bancos/bancos.jpg) -259px -108px no-repeat;}
+    .unicred{background: url(/dist/bancos/bancos.jpg)  -139px -203px no-repeat;}
+</style>
+
+<div class="row">
+   <div class="col-md-2">
+        <a  title="Banco Do Brasil" href="/boletos/gerar-boleto/bb" class="bancos-action bancos bb"></a>
+    </div>
+    <div class="col-md-2">
+        <a  disabled="disabled" title="Santander" href="/boletos/gerar-boleto/santander" class="bancos-action-disable bancos santander"></a>
+    </div>
+    <div class="col-md-2">
+        <a  disabled="disabled" title="Caixa Economica Federal" href="/boletos/gerar-boleto/caixa" class="bancos-action-disable bancos caixa disabled"></a>
+    </div>
+    <div class="col-md-2">
+        <a  title="Bradesco" href="/boletos/gerar-boleto/bradesco" class="bancos-action bancos bradesco"></a>
+    </div>
+    <div class="col-md-2">
+        <a  disabled="disabled" title="Itau" href="/boletos/gerar-boleto/itau" class="bancos-action-disable bancos itau"></a>
+    </div>
+    <div class="col-md-2">
+        <a  title="Unicréd" href="/boletos/gerar-boleto/unicred" class="bancos-action bancos unicred"></a>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-xs-12  col-md-2 col-sm-3 col-xs-offset-0 col-sm-offset-1 col-md-offset-2">
+        <span id="bandeira"></span>
+    </div>
+    <div class="col-xs-12  col-md-4">
+        <a style="margin-top: 27px;" class="btn btn-warning btn-block" href="#" id="imprimer-boleto">IMPRIMIR O BOLETO</a>
+    </div>
+    <div class="col-xs-12  col-md-4">
+        <a style="margin-top: 27px;" class="btn btn-primary btn-block" href="<?=$this->url('boletos',['action'=>'enviaremailboleto'])?>" id="enviaremailboleto">ENVIAR UM LINK PARA PAGAMENTO</a>
+    </div>
+</div>
+
+

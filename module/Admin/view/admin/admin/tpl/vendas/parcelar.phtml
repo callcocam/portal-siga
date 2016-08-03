@@ -1,0 +1,28 @@
+<?php
+if($calendar->getResult()){
+    $tr=[];
+    $table=$this->Html('table')->setClass('table table-condased')->setText(PHP_EOL);
+    $receberAvista=$calendar->getData();
+   // $td[]=$this->Html('td')->setText('Parcela');
+   // $td[]=$this->Html('td')->setText('Pago');
+    //$td[]=$this->Html('td')->setText('Descontos %');
+    //$td[]=$this->Html('td')->setText('Juros %');
+   // $td[]=$this->Html('td')->setText('Valor');
+   // $tr[]=$this->Html('tr')->setText(implode("",$td));
+    if(isset($receberAvista)):
+        foreach ($receberAvista as $key => $r):
+            $td=[];
+         if((int)$key):
+            $td[]=$this->Html('td')->setText($r['publish_down']);
+             $td[]=$this->Html('td')->setText($r['parcela']);
+            $td[]=$this->Html('td')->setText($r['pago']);
+            $td[]=$this->Html('td')->setText($r['descontos']);
+            $td[]=$this->Html('td')->setText($r['juros']);
+            $td[]=$this->Html('td')->setText($r['valor']);
+            $tr[]=$this->Html('tr')->setText(implode("",$td));
+         endif;
+        endforeach;
+        //echo  $table->setText(implode(PHP_EOL,$tr));
+        echo  implode(PHP_EOL,$tr);
+    endif;
+}

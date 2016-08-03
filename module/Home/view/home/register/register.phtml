@@ -1,0 +1,91 @@
+<div id="" class="animate form">
+    <section class="login_content">
+        <?php
+        echo $this->messages();
+        $form = $this->form;
+        $form->setAttribute('action', $this->url('authenticate-register'));
+        echo $this->form()->openTag($form);?>
+        <h1>CRIAR UMA CONTA</h1>
+        <div class="">
+            <?=$this->formElement($form->get('title'))?>
+            <?=$this->formElementErrors()->render($form->get('title'), ['class' => 'alert alet-danger'])?>
+        </div>
+
+
+        <div>
+            <?=$this->formElement($form->get('email'))?>
+            <?=$this->formElementErrors()->render($form->get('email'), ['class' => 'alert alet-danger'])?>
+
+        </div>
+
+
+        <div>
+            <?=$this->formElement($form->get('phone'))?>
+            <?=$this->formElementErrors()->render($form->get('phone'), ['class' => 'alert alet-danger'])?>
+        </div>
+
+
+        <div>
+            <?=$this->formElement($form->get('password'))?>
+            <?=$this->formElementErrors()->render($form->get('password'), ['class' => 'alert alet-danger'])?>
+
+        </div>
+
+
+        <div>
+            <?=$this->formElement($form->get('usr_password_confirm'))?>
+            <?=$this->formElementErrors()->render($form->get('usr_password_confirm'), ['class' => 'alert alet-danger'])?>
+        </div>
+
+
+        <div>
+            <?=$this->formElement($form->get('description'))?>
+            <?=$this->formElementErrors()->render($form->get('description'), ['class' => 'alert alet-danger'])?>
+        </div>
+
+        <div>
+            <?=$this->formElement($form->get('captcha'))?>
+            <?=$this->formElementErrors()->render($form->get('captcha'), ['class' => 'alert alet-danger'])?>
+
+        </div>
+        <?php echo $this->formHidden($form->get('id'));?>
+        <?php echo $this->formHidden($form->get('codigo'));?>
+        <?php echo $this->formHidden($form->get('asset_id'));?>
+        <?php echo $this->formHidden($form->get('empresa'));?>
+        <?php echo $this->formHidden($form->get('cidade'));?>
+        <?php echo $this->formHidden($form->get('cep'));?>
+        <?php echo $this->formHidden($form->get('endereco'));?>
+        <?php echo $this->formHidden($form->get('bairro'));?>
+        <?php echo $this->formHidden($form->get('access'));?>
+        <?php echo $this->formHidden($form->get('state'));?>
+        <?php echo $this->formHidden($form->get('created'));?>
+        <?php echo $this->formHidden($form->get('modified'));?>
+        <?php echo $this->formHidden($form->get('role_id'));?>
+        <?php echo $this->formHidden($form->get('images'));?>
+        <?php echo $this->formHidden($form->get('security'));?>
+        <?php echo $this->formHidden($form->get('usr_registration_token')->setValue('AUTOMATICO'));?>
+        <?php
+        $submit = $form->get('save');
+        $submit->setValue($this->translate($submit->getValue()));
+        $submit->setAttribute('class', 'btn btn-success btn-block')->setAttribute('style',"margin-left: 0px;");
+        ?>
+        <div>
+            <?=$this->formSubmit($submit) ?>
+        </div>
+        <div class="clearfix"></div>
+        <div class="separator">
+
+            <p class="change_link">JÁ SOU CADASTRADO!
+                <a href="<?php echo $this->url('authenticate')?>" class="to_register"> VOLTAR AO LOGIN </a>
+            </p>
+            <div class="clearfix"></div>
+            <br />
+            <div>
+                <h1><i class="fa fa-paw" style="font-size: 26px;"></i> SIGA-SAMRT!</h1>
+
+                <p>©2015 All Rights Reserved. SIGA-SAMRT! Privacy and Terms</p>
+            </div>
+        </div>
+        <?php echo $this->form()->closeTag();?>
+    </section>
+</div>

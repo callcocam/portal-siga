@@ -1,0 +1,45 @@
+<div id="login" class="animate form">
+    <section class="login_content">
+        <?php
+        $form = $this->form;
+        echo $this->messages();
+        $form = $this->form;
+        $submit = $form->get('save');
+        $submit->setValue("Login");
+        $submit->setAttribute('class', 'btn btn-default submit');
+        $form->prepare();
+        echo $this->form()->openTag($form);?>
+        <h1>SIGA-SMART NFe</h1>
+        <div>
+            <?=$this->formElement($form->get('email'))?>
+            <?=$this->formElementErrors()->render($form->get('email'), ['class' => 'alert alet-danger'])?>
+        </div>
+        <div>
+            <?=$this->formElement($form->get('password'))?>
+            <?=$this->formElementErrors()->render($form->get('password'), ['class' => 'alert alet-danger'])?>
+        </div>
+
+        <div>
+            <?php echo $this->formHidden($form->get('rememberme'));?>
+            <?php echo $this->formHidden($form->get('security'));?>
+            <?=$this->formSubmit($submit->setAttribute('style',"margin-left: 0px;")) ?>
+            <a class="reset_pass" href="<?php echo $this->url('authenticate-forgotten-password')?>" class="to_register">RECUPERAR SENHA?</a>
+        </div>
+        <div class="clearfix"></div>
+        <div class="separator">
+
+            <p class="change_link">New to site?
+                <a href="<?php echo $this->url('authenticate-register')?>" class="to_register"> CRIAR CONTA </a>
+            </p>
+            <div class="clearfix"></div>
+            <br />
+            <div>
+                <h1><i class="fa fa-paw" style="font-size: 26px;"></i> SIGA SMART!</h1>
+                <p>©2015 All Rights Reserved. Siga Smart</p>
+            </div>
+        </div>
+        <?php echo $this->form()->closeTag();?>
+        <!-- form -->
+    </section>
+    <!-- content -->
+</div>

@@ -1,0 +1,47 @@
+<ul class="wizard_steps">
+    <li>
+        <a href="#step-1">
+            <span class="step_no"><i class="fa fa-credit-card"></i></span>
+            <span class="step_descr">NOTA<br />
+                <small>DADOS DA NOTA</small>
+            </span>
+        </a>
+    </li>
+    <li>
+        <a href="#step-2">
+            <span class="step_no"><i class="fa fa-qrcode"></i></span>
+                <span class="step_descr">PRODUTOS<br />
+                <small>ITENS DA NOTA</small>
+            </span>
+        </a>
+    </li>
+    <li>
+        <a href="#step-3">
+            <span class="step_no"><i class="fa fa-money"></i></span>
+                <span class="step_descr">FPGTO<br />
+                <small>FORMA DE PAGAMENTO</small>
+            </span>
+        </a>
+    </li>
+    <li>
+        <a href="#step-4">
+            <span class="step_no"><i class="fa fa-barcode"></i></span>
+                <span class="step_descr">FISCAL<br />
+                <small>NOTA FISCAL</small>
+            </span>
+        </a>
+    </li>
+    <li>
+        <a href="#step-5">
+            <span class="step_no"><i class="fa fa-print"></i> </span>
+                <span class="step_descr">FINALIZAR<br />
+                <small>FINALIZAR NOTA</small>
+            </span>
+        </a>
+    </li>
+</ul>
+<?php echo $this->partial('/admin/admin/tpl/vendas/step1');?>
+<?php echo $this->partial('/admin/admin/tpl/vendas/step2');?>
+<?php echo $this->partial('/admin/admin/tpl/vendas/step3');?>
+<?php echo $this->partial('/admin/admin/tpl/vendas/step4');?>
+<?php echo $this->partial('/admin/admin/tpl/vendas/step5');?>

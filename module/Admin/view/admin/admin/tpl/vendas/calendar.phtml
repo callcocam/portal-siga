@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <?php echo $this->ParcelasHelper()->getForm($cpgto,$publish_up);?>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <table class="table table-condensed table-hover">
+            <thead>
+            <tr>
+                <th>Vencimento</th>
+                <th>N° Parcela</th>
+                <th>Pago</th>
+                <th>Descontos</th>
+                <th>Juros</th>
+                <th>Valor</th>
+            </tr>
+            </thead>
+            <tbody id="parcelamentos">
+                <?php echo $this->partial('/admin/admin/tpl/vendas/parcelar',['calendar'=>$calendar]);?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    $.datetimepicker.setLocale('pt-BR');
+    $('#publish_up').datetimepicker({
+        timepicker:false,
+        format: 'd-m-Y',
+        onChangeDateTime: function (dp, $input) {
+            parcelar($("#cpgto").val(),$input.val());
+        }
+    });
+</script>

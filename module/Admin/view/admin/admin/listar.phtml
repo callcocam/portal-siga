@@ -1,0 +1,61 @@
+<?php echo $this->partial('partials/content-top',['title'=>"Panel Inicial",'filtro'=>$this->filtro]);?>
+<?php
+if(!is_dir("./module_rest/Admin/view/admin/admin/tpl/{$this->controller}")):
+    mkdir("./module_rest/Admin/view/admin/admin/tpl/{$this->controller}");
+endif;
+if (!$this->resolver("/tpl/{$this->controller}/index")) :
+      $partial=$this->GerarViewHelper()->BlockList($this->table);
+      file_put_contents("./module_rest/Admin/view/admin/admin/tpl/{$this->controller}/index.phtml",  $partial);
+else:
+    $partial=$this->partial("/tpl/{$this->controller}/index");
+endif;
+if($this->data->count()){
+    $c=0;
+    $html=[];
+    $button = array(
+        'EDITAR' => array('type' => 'a', 'label' => 'EDITAR', 'icone' => 'fa fa-pencil', 'action' => 'editar', 'class' => 'success', 'page' => $this->page, 'id' => 'editar'),
+        'EXCLUIR' => array('type' => 'a', 'label' => 'EXCLUIR', 'icone' => 'fa fa-trash', 'action' => 'delete', 'class' => 'primary', 'page' => $this->page, 'id' => 'delete'),
+    );
+ foreach($this->data as $o):
+     $o['description'] = \Base\Model\Check::Words($o['description'], 10);
+     $o['buttons'] = $this->GerarViewHelper()->createBtn($o['id'], $button);
+     if (array_key_exists("images", $o)) {
+         $images = $o['images'];
+         $o['images'] = $this->Html("img")->setAttributes(array(
+             'alt' => $o['title'],
+             'title' => $o['title'],
+             'style' => 'width: 100%; display: block;',
+             'src' => "/dist/{$images}"
+             //'src' => "/dist/tim.php?src=/dist/{$images}&w=250&h=100"
+         ));
+     }
+     $o['title'] = \Base\Model\Check::Words($o['title'], 3);
+     $implode = "{{" . implode("}}&{{", array_keys($o)) . "}}";
+     $o['state']=(int)$o['state']?"ARQUIVADO/DESPUBLICADO":"ATIVO/PUBLICADO";
+     $keys = explode("&", $implode);
+
+
+ $c++;
+ if($c>4){
+     $c=1;
+     $row[] =$this->Html('div')->setClass('row')->setText(implode("", $html));
+     $html=[];
+ }
+  $html[] = str_replace(array_values($keys), array_values($o), $partial);
+
+ endforeach;
+    if ($html) {
+        $row[] =$this->Html('div')->setClass('row')->setText(implode("", $html));
+    }
+    if ($row) {
+        echo implode("", $row);
+    }
+}
+
+echo $this->paginationControl(
+    $this->data,
+    'Sliding',
+    '/partials/paginator',
+    ['route' => "{$this->route}/list"]
+);
+echo $this->partial('partials/content-botton',['footer'=>""]);

@@ -1,0 +1,36 @@
+<div id="step-2">
+    <fieldset>
+        <legend>ADICIONAR ITENS AO PEDIDO</legend>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->ItenVendidosHelper()->getForm();
+                 $cart=$this->ItenVendidosHelper()->getCart();
+                ?>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>LISTA DE ITENS DO PEDIDO</legend>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-condensed table-hover">
+                    <thead>
+                    <tr style="text-align: left">
+                        <th style="width: 8%;text-align: left;">CODIGO</th>
+                        <th style="text-align: left;">NOME/DESCRIÇÃO</th>
+                        <th style="width: 8%;text-align: left;">QTDADE</th>
+                        <th style="width: 10%;text-align: left;">V. UNITARIO</th>
+                        <th style="width: 12%;text-align: left;">VALOR</th>
+                        <th style="width: 5%">#</th>
+                    </tr>
+                    </thead>
+                    <tbody id="itens">
+                        <?php echo $this->partial('/admin/admin/tpl/vendas/itens',['data'=>$cart->read()]);?>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </fieldset>
+</div>

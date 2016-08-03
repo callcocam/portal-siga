@@ -1,0 +1,9 @@
+<?php
+return [
+    'db'=>[
+        'username' => 'root',
+        'password' => '',
+        // 'username' => 'rest_client',
+        // 'password' => 'vmiq2552'
+    ]
+];

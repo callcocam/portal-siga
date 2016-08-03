@@ -1,0 +1,110 @@
+<fildset>
+    <legend>FORMULARIO DE MANUTENÇÃO</legend>
+    <div class="col-md-8&#x20;col-xs-12">
+        <div class="x_panel">
+            <div class="x_title&#x20;box-default">
+                <h2 class="x_title"><small>GERAL</small></h2>
+                <div class="clearfix"></div></div>
+            <div class="x_content">
+                <div class="form-group">
+                    <div class="control-label&#x20;col-md-3&#x20;col-sm-3&#x20;col-xs-12" for="&#x7B;&#x7B;&#x24;key&#x7D;&#x7D;">
+                        <?php echo $this->translate('{{title}}');?></div><div class="col-md-9&#x20;col-sm-9&#x20;col-xs-12">
+                        #title#</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label&#x20;col-md-3&#x20;col-sm-3&#x20;col-xs-12" for="&#x7B;&#x7B;&#x24;key&#x7D;&#x7D;">
+                        <?php echo $this->translate('{{agencia}}');?></div><div class="col-md-3&#x20;col-sm-4&#x20;col-xs-12">
+                        #agencia#</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label&#x20;col-md-3&#x20;col-sm-3&#x20;col-xs-12" for="&#x7B;&#x7B;&#x24;key&#x7D;&#x7D;">
+                        <?php echo $this->translate('{{carteira}}');?></div><div class="col-md-3&#x20;col-sm-4&#x20;col-xs-12">
+                        #carteira#</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label&#x20;col-md-3&#x20;col-sm-3&#x20;col-xs-12" for="&#x7B;&#x7B;&#x24;key&#x7D;&#x7D;">
+                        <?php echo $this->translate('{{conta}}');?></div><div class="col-md-3&#x20;col-sm-4&#x20;col-xs-12">
+                        #conta#</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label&#x20;col-md-3&#x20;col-sm-3&#x20;col-xs-12" for="&#x7B;&#x7B;&#x24;key&#x7D;&#x7D;">
+                        <?php echo $this->translate('{{convenio}}');?></div><div class="col-md-3&#x20;col-sm-4&#x20;col-xs-12">
+                        #convenio#</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label&#x20;col-md-3&#x20;col-sm-3&#x20;col-xs-12" for="&#x7B;&#x7B;&#x24;key&#x7D;&#x7D;">
+                        <?php echo $this->translate('{{sequencial}}');?></div><div class="col-md-4&#x20;col-sm-5&#x20;col-xs-12">
+                        #sequencial#</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label&#x20;col-md-3&#x20;col-sm-3&#x20;col-xs-12" for="&#x7B;&#x7B;&#x24;key&#x7D;&#x7D;">
+                        <?php echo $this->translate('{{conta_dv}}');?></div><div class="col-md-2&#x20;col-sm-3&#x20;col-xs-12">
+                        #conta_dv#</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label&#x20;col-md-3&#x20;col-sm-3&#x20;col-xs-12" for="&#x7B;&#x7B;&#x24;key&#x7D;&#x7D;">
+                        <?php echo $this->translate('{{agencia_dv}}');?></div><div class="col-md-2&#x20;col-sm-3&#x20;col-xs-12">
+                        #agencia_dv#</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label&#x20;col-md-3&#x20;col-sm-3&#x20;col-xs-12" for="&#x7B;&#x7B;&#x24;key&#x7D;&#x7D;">
+                        <?php echo $this->translate('{{descricao_demonstrativo}}');?></div><div class="col-md-9&#x20;col-sm-9&#x20;col-xs-12">
+                        #descricao_demonstrativo#</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label&#x20;col-md-3&#x20;col-sm-3&#x20;col-xs-12" for="&#x7B;&#x7B;&#x24;key&#x7D;&#x7D;">
+                        <?php echo $this->translate('{{instrucoes}}');?></div><div class="col-md-9&#x20;col-sm-9&#x20;col-xs-12">
+                        #instrucoes#</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label&#x20;col-md-3&#x20;col-sm-3&#x20;col-xs-12" for="&#x7B;&#x7B;&#x24;key&#x7D;&#x7D;">
+                        <?php echo $this->translate('{{description}}');?></div><div class="col-md-9&#x20;col-sm-9&#x20;col-xs-12">
+                        #description#</div>
+                </div>
+                #id##empresa##asset_id##state##modified##security#</div>
+            <div class="box-footer">
+                <div class="pull-right">
+                    #save##btn-voltar#
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4&#x20;col-xs-12">
+        <div class="x_panel">
+            <div class="x_title&#x20;box-default">
+                <h2 class="x_title"><small>IMAGENS</small></h2>
+                <div class="clearfix"></div></div>
+            <div class="x_content">
+                <div class="img-add&#x20;"><?php echo $this->translate('{{images}}');?>#imagePreview#</div>
+                <div class="row">
+                    <div class="input-group&#x20;class-file"><div class="btn&#x20;btn-blue&#x20;btn-file"><i class="ion&#x20;ion-android-upload"></i><span class="file-text">Selecione uma imagem</span><input name="attachment" type="file" id="attachment" />#images#</div><p class="help-block">Max. 32MB</p></div>
+                    <div class="clear"></div>
+                </div></div>
+
+        </div>
+    </div>
+    <div class="col-md-4&#x20;col-xs-12">
+        <div class="x_panel">
+            <div class="x_title&#x20;box-default">
+                <h2 class="x_title"><small>DATAS</small></h2>
+                <div class="clearfix"></div></div>
+            <div class="x_content">
+                <div class="form-group">
+                    <div class="control-label&#x20;col-md-3&#x20;col-sm-3&#x20;col-xs-12" for="&#x7B;&#x7B;&#x24;key&#x7D;&#x7D;">
+                        <?php echo $this->translate('{{codigo}}');?></div><div class="col-md-9&#x20;col-sm-9&#x20;col-xs-12">
+                        #codigo#</div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label&#x20;col-md-4&#x20;col-sm-4&#x20;col-xs-12" for="&#x7B;&#x7B;&#x24;key&#x7D;&#x7D;">
+                        <?php echo $this->translate('{{access}}');?></div><div class="col-md-8&#x20;xdisplay_inputx&#x20;form-group&#x20;has-feedback">
+                        #access#<span class="fa&#x20;fa-calendar-o&#x20;form-control-feedback&#x20;right"></span></div>
+                </div>
+                <div class="form-group">
+                    <div class="control-label&#x20;col-md-4&#x20;col-sm-4&#x20;col-xs-12" for="&#x7B;&#x7B;&#x24;key&#x7D;&#x7D;">
+                        <?php echo $this->translate('{{created}}');?></div><div class="col-md-8&#x20;xdisplay_inputx&#x20;form-group&#x20;has-feedback">
+                        #created#<span class="fa&#x20;fa-calendar-o&#x20;form-control-feedback&#x20;right"></span></div>
+                </div></div>
+
+        </div>
+    </div>
+</fildset>
