@@ -9,6 +9,14 @@
 namespace Portal;
 
 
+use Portal\Form\CategoriasFilter;
+use Portal\Form\CategoriasForm;
+use Portal\Form\Factory\CategoriasFilterFactory;
+use Portal\Form\Factory\CategoriasFormFactory;
+use Portal\Model\Categorias\Categorias;
+use Portal\Model\Categorias\CategoriasRepository;
+use Portal\Model\Categorias\Factory\CategoriasFactory;
+use Portal\Model\Categorias\Factory\CategoriasRepositoryFactory;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 
@@ -32,6 +40,16 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface{
      */
     public function getServiceConfig()
     {
-        // TODO: Implement getServiceConfig() method.
+        return [
+          'factories'=>[
+              Categorias::class=>CategoriasFactory::class,
+
+              CategoriasRepository::class=>CategoriasRepositoryFactory::class,
+
+              CategoriasForm::class=>CategoriasFormFactory::class,
+
+              CategoriasFilter::class=>CategoriasFilterFactory::class,
+          ]
+        ];
     }
 }

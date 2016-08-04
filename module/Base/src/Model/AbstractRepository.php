@@ -123,7 +123,7 @@ abstract class AbstractRepository{
         endif;
         $this->data->setResult(false);
         $this->data->setClass(self::INFO);
-        $this->data->setError("NEMHUM RESULTADO FOI ENCOTADO PARA A SU PESQUISA");
+        $this->data->setError("NEMHUM RESULTADO FOI ENCOTADO PARA A SUA PESQUISA");
         return $this->data;
     }
 
@@ -134,9 +134,14 @@ abstract class AbstractRepository{
      */
     public function findBy(array $param) {
         $this->setData();
-        $this->data->setData($this->tableGateway->select($param));
-        $this->data->setClass(self::SUCCESS);
-        $this->data->setResult(TRUE);
+        $data=$this->tableGateway->select($param);
+        if($data->count()):
+            $this->data->setResult(true);
+            $this->data->setData($data);
+            return $this->data;
+        endif;
+        $this->data->setClass(self::INFO);
+        $this->data->setError("NEMHUM RESULTADO FOI ENCOTADO PARA A SUA PESQUISA");
         return $this->data;
     }
 
@@ -159,7 +164,7 @@ abstract class AbstractRepository{
         return $this->data;
         endif;
         $this->data->setClass(self::INFO);
-        $this->data->setError("NEMHUM RESULTADO FOI ENCOTADO PARA A SU PESQUISA");
+        $this->data->setError("NEMHUM RESULTADO FOI ENCOTADO PARA A SUA PESQUISA");
         return $this->data;
     }
 

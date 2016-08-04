@@ -24,7 +24,8 @@ class CategoriasFilter extends AbstractInputFilter
     /**
      * construct do Table
      *
-     * @return Base\Form\AbstractInputFilter
+     * @param ContainerInterface $container
+     * @return \Portal\Form\CategoriasFilter
      */
     public function __construct(ContainerInterface $container)
     {
@@ -52,19 +53,12 @@ class CategoriasFilter extends AbstractInputFilter
                     //############################################ informações da coluna parent_id ##############################################:
                      $inputFilter->add([
                     'name' => 'parent_id',
-                    'required' => true,
+                    'required' => false,
                     'filters' => [
                         ['name' => StripTags::class],
                         ['name' => StringTrim::class],
                     ],
-                    'validators' => [
-                        [
-                            'name' => NotEmpty::class,
-                            'options' => [
-                                'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
-                            ],
-                        ],
-                    ],
+
                 ]);
         
         
@@ -90,38 +84,24 @@ class CategoriasFilter extends AbstractInputFilter
                     //############################################ informações da coluna url ##############################################:
                      $inputFilter->add([
                     'name' => 'url',
-                    'required' => true,
+                    'required' => false,
                     'filters' => [
                         ['name' => StripTags::class],
                         ['name' => StringTrim::class],
                     ],
-                    'validators' => [
-                        [
-                            'name' => NotEmpty::class,
-                            'options' => [
-                                'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
-                            ],
-                        ],
-                    ],
+
                 ]);
         
         
                     //############################################ informações da coluna images ##############################################:
                      $inputFilter->add([
                     'name' => 'images',
-                    'required' => true,
+                    'required' => false,
                     'filters' => [
                         ['name' => StripTags::class],
                         ['name' => StringTrim::class],
                     ],
-                    'validators' => [
-                        [
-                            'name' => NotEmpty::class,
-                            'options' => [
-                                'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
-                            ],
-                        ],
-                    ],
+
                 ]);
         
         

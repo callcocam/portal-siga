@@ -24,7 +24,8 @@ class CategoriasController extends AbstractController
     /**
      * __construct Factory Model
      *
-     * @return __construct
+     * @param ContainerInterface $container
+     * @return \Portal\Controller\CategoriasController
      */
     public function __construct(ContainerInterface $container)
     {

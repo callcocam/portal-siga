@@ -30,5 +30,6 @@ return [
     'Admin',
     'Mail',
     'Auth',
-    'Home'
+    'Home',
+    'Portal'
 ];
