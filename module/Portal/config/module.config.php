@@ -8,7 +8,11 @@ namespace Portal;
  */
 
 use Portal\Controller\CategoriasController;
+use Portal\Controller\EmpresasController;
 use Portal\Controller\Factory\CategoriasControllerFactory;
+use Portal\Controller\Factory\EmpresasControllerFactory;
+use Portal\Controller\Factory\PostsControllerFactory;
+use Portal\Controller\PostsController;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 return [
@@ -50,12 +54,86 @@ return [
                     ],
                 ]
             ],
+            'empresas' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route'    => '/empresas[/:action][/:id][/:page]',
+                    'defaults' => [
+                        'controller' => Controller\EmpresasController::class,
+                        'action'     => 'index',
+                        'id'=>'0',
+                        'page'=>'1'
+                    ],
+
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'list' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route'    => '[/:page]',
+                            'defaults' => [
+                                'controller' => Controller\EmpresasController::class,
+                                'page'     => '1',
+                            ],
+                        ],
+                    ],
+                    'empresas-create' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route'    => '/empresas',
+                            'defaults' => [
+                                'controller' => Controller\EmpresasController::class,
+                                'action'     => 'create',
+                            ],
+                        ],
+                    ],
+                ]
+            ],
+            'posts' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route'    => '/posts[/:action][/:id][/:page]',
+                    'defaults' => [
+                        'controller' => Controller\PostsController::class,
+                        'action'     => 'index',
+                        'id'=>'0',
+                        'page'=>'1'
+                    ],
+
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'list' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route'    => '[/:page]',
+                            'defaults' => [
+                                'controller' => Controller\PostsController::class,
+                                'page'     => '1',
+                            ],
+                        ],
+                    ],
+                    'posts-create' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route'    => '/posts',
+                            'defaults' => [
+                                'controller' => Controller\PostsController::class,
+                                'action'     => 'create',
+                            ],
+                        ],
+                    ],
+                ]
+            ],
             ],
 
     ],
     'controllers' => [
         'factories' => [
             CategoriasController::class=>CategoriasControllerFactory::class,
+            EmpresasController::class=>EmpresasControllerFactory::class,
+            PostsController::class=>PostsControllerFactory::class,
         ],
     ],
     'view_manager' => [

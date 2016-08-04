@@ -4,33 +4,33 @@
  */
 
 
-namespace Portal\Model\Categorias;
+namespace Portal\Model\Empresas;
 
 use Base\Model\AbstractModel;
 use Base\Model\Check;
 use Zend\Db\TableGateway\TableGateway;
 use Base\Model\AbstractRepository;
-use Zend\Debug\Debug;
 
 /**
  * SIGA-Smart
  *
  * Esta class foi gerada via Zend\Code\Generator.
  */
-class CategoriasRepository extends AbstractRepository
+class EmpresasRepository extends AbstractRepository
 {
 
     /**
      * __construct Factory Model
      *
      * @param TableGateway $tableGateway
-     * @return \Portal\Model\Categorias\CategoriasRepository
+     * @return \Portal\Model\Empresas\EmpresasRepository
      */
     public function __construct(TableGateway $tableGateway)
     {
         // Configurações iniciais do Factory Repository
         $this->tableGateway=$tableGateway;
     }
+
     public function insert(AbstractModel $model){
         $model->setUrl(Check::Name($model->getTitle()));
         $exist=$this->findBy(['url'=>$model->getUrl()]);
@@ -42,21 +42,6 @@ class CategoriasRepository extends AbstractRepository
 
         return parent::insert($model);
     }
-
-    public function parentCat($param)
-    {
-        $cats=$this->findBy($param);
-        $valueOptions=[''=>'--CATEGORIA PAI--'];
-        if($cats->getResult())
-        {
-            foreach($cats->getData() as $cat){
-                $valueOptions[$cat->getId()]=$cat->getTitle();
-            }
-
-        }
-        return $valueOptions;
-    }
-
 
 }
 

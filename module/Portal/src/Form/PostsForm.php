@@ -15,7 +15,7 @@ use Portal\Model\Categorias\CategoriasRepository;
  *
  * Esta class foi gerada via Zend\Code\Generator.
  */
-class CategoriasForm extends AbstractForm
+class PostsForm extends AbstractForm
 {
 
     /**
@@ -24,9 +24,9 @@ class CategoriasForm extends AbstractForm
      * @param ContainerInterface $container
      * @param string $name
      * @param array $options
-     * @return \Portal\Form\CategoriasForm
+     * @return \Portal\Form\PostsForm
      */
-    public function __construct(ContainerInterface $container, $name = 'Categorias', array $options = array())
+    public function __construct(ContainerInterface $container, $name = 'Posts', array $options = array())
     {
         // Configurações iniciais do Form
         $this->container = $container;
@@ -43,21 +43,21 @@ class CategoriasForm extends AbstractForm
         $this->setDescription([]);
         $this->getAuthservice();
         parent::__construct($container, $name, $options);
-        $this->setAttributes(["action" => "categorias", "class" => "form-geral Manager form-horizontal"]);
-        //############################################ informações da coluna parent_id ##############################################:
+        $this->setAttributes(["action" => "posts", "class" => "form-geral Manager form-horizontal"]);
+        //############################################ informações da coluna catid ##############################################:
         $this->add([
                 'type' => 'select',//hidden, select, radio, checkbox, textarea
-                'name' => 'parent_id',
+                'name' => 'catid',
                 'options' => [
-                    'label' => 'FILD_PARENT_ID_LABEL',
+                    'label' => 'FILD_CATID_LABEL',
                     //'value_options'      =>[],
                     //"disable_inarray_validator" => true,
                 ],
                 'attributes' => [
-                    'id'=>'parent_id',
+                    'id'=>'catid',
                     'class' =>'form-control',
-                    'title' => 'FILD_PARENT_ID_DESC',
-                    'placeholder' => 'FILD_PARENT_ID_PLACEHOLDER',
+                    'title' => 'FILD_CATID_DESC',
+                    'placeholder' => 'FILD_CATID_PLACEHOLDER',
                     'data-access' => '3',
                     'data-position' => 'geral',
                     //'readonly' => true/false,
@@ -106,7 +106,53 @@ class CategoriasForm extends AbstractForm
                     'placeholder' => 'FILD_URL_PLACEHOLDER',
                     'data-access' => '3',
                     'data-position' => 'geral',
-                    'readonly' => true,
+                    //'readonly' => true/false,
+                    //'requerid' => true/false,
+                ],
+            ]
+        );
+
+
+        //############################################ informações da coluna post_type ##############################################:
+        $this->add([
+                'type' => 'text',//hidden, select, radio, checkbox, textarea
+                'name' => 'post_type',
+                'options' => [
+                    'label' => 'FILD_POST_TYPE_LABEL',
+                    //'value_options'      =>[],
+                    //"disable_inarray_validator" => true,
+                ],
+                'attributes' => [
+                    'id'=>'post_type',
+                    'class' =>'form-control',
+                    'title' => 'FILD_POST_TYPE_DESC',
+                    'placeholder' => 'FILD_POST_TYPE_PLACEHOLDER',
+                    'data-access' => '3',
+                    'data-position' => 'geral',
+                    //'readonly' => true/false,
+                    //'requerid' => true/false,
+                ],
+            ]
+        );
+
+
+        //############################################ informações da coluna post_views ##############################################:
+        $this->add([
+                'type' => 'text',//hidden, select, radio, checkbox, textarea
+                'name' => 'post_views',
+                'options' => [
+                    'label' => 'FILD_POST_VIEWS_LABEL',
+                    //'value_options'      =>[],
+                    //"disable_inarray_validator" => true,
+                ],
+                'attributes' => [
+                    'id'=>'post_views',
+                    'class' =>'form-control',
+                    'title' => 'FILD_POST_VIEWS_DESC',
+                    'placeholder' => 'FILD_POST_VIEWS_PLACEHOLDER',
+                    'data-access' => '3',
+                    'data-position' => 'geral',
+                    //'readonly' => true/false,
                     //'requerid' => true/false,
                 ],
             ]
@@ -132,13 +178,37 @@ class CategoriasForm extends AbstractForm
                     //'readonly' => true/false,
                     //'requerid' => true/false,
                 ],
+            ]
+        );
+
+
+        //############################################ informações da coluna created_by ##############################################:
+        $this->add([
+                'type' => 'text',//hidden, select, radio, checkbox, textarea
+                'name' => 'created_by',
+                'options' => [
+                    'label' => 'FILD_CREATED_BY_LABEL',
+                    //'value_options'      =>[],
+                    //"disable_inarray_validator" => true,
+                ],
+                'attributes' => [
+                    'id'=>'created_by',
+                    'class' =>'form-control',
+                    'title' => 'FILD_CREATED_BY_DESC',
+                    'placeholder' => 'FILD_CREATED_BY_PLACEHOLDER',
+                    'data-access' => '3',
+                    'data-position' => 'geral',
+                    //'readonly' => true/false,
+                    //'requerid' => true/false,
+                ],
             ]);
-        if ($this->has('parent_id')):
-            if($this->get('parent_id')->getAttribute('type')=="select"):
+
+        if ($this->has('catid')):
+            if($this->get('catid')->getAttribute('type')=="select"):
                 $cat=$this->container->get(CategoriasRepository::class);
-                $this->get('parent_id')->setOptions(['value_options' => $cat->parentCat(['state'=>'0','parent_id'=>''])]);
+                $this->get('catid')->setOptions(['value_options' => $cat->parentCat(['state'=>'0'])]);
             else:
-                $this->get('parent_id')->setValue('null');
+                $this->get('catid')->setValue('null');
             endif;
         endif;
     }

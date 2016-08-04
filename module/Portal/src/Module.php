@@ -11,12 +11,28 @@ namespace Portal;
 
 use Portal\Form\CategoriasFilter;
 use Portal\Form\CategoriasForm;
+use Portal\Form\EmpresasFilter;
+use Portal\Form\EmpresasForm;
 use Portal\Form\Factory\CategoriasFilterFactory;
 use Portal\Form\Factory\CategoriasFormFactory;
+use Portal\Form\Factory\EmpresasFilterFactory;
+use Portal\Form\Factory\EmpresasFormFactory;
+use Portal\Form\Factory\PostsFilterFactory;
+use Portal\Form\Factory\PostsFormFactory;
+use Portal\Form\PostsFilter;
+use Portal\Form\PostsForm;
 use Portal\Model\Categorias\Categorias;
 use Portal\Model\Categorias\CategoriasRepository;
 use Portal\Model\Categorias\Factory\CategoriasFactory;
 use Portal\Model\Categorias\Factory\CategoriasRepositoryFactory;
+use Portal\Model\Empresas\Empresas;
+use Portal\Model\Empresas\EmpresasRepository;
+use Portal\Model\Empresas\Factory\EmpresasFactory;
+use Portal\Model\Empresas\Factory\EmpresasRepositoryFactory;
+use Portal\Model\Posts\Factory\PostsFactory;
+use Portal\Model\Posts\Factory\PostsRepositoryFactory;
+use Portal\Model\Posts\Posts;
+use Portal\Model\Posts\PostsRepository;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 
@@ -49,6 +65,22 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface{
               CategoriasForm::class=>CategoriasFormFactory::class,
 
               CategoriasFilter::class=>CategoriasFilterFactory::class,
+
+              Empresas::class=>EmpresasFactory::class,
+
+              EmpresasRepository::class=>EmpresasRepositoryFactory::class,
+
+              EmpresasForm::class=>EmpresasFormFactory::class,
+
+              EmpresasFilter::class=>EmpresasFilterFactory::class,
+
+              Posts::class=>PostsFactory::class,
+
+              PostsRepository::class=>PostsRepositoryFactory::class,
+
+              PostsForm::class=>PostsFormFactory::class,
+
+              PostsFilter::class=>PostsFilterFactory::class,
           ]
         ];
     }

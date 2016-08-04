@@ -131,6 +131,97 @@ return [
                 ]
             ],
             [
+                'label' => 'Portal',
+                'route' => 'categorias',
+                'controller' => 'categorias',
+                'resource' => 'portal',
+                'action' => 'index',
+                'privilege' => 'index',
+                'icone'=>'fa fa-gear',
+                'class'=>'nav child_menu',
+                'pages'=>[
+                    [
+                        'label' => 'Categorias',
+                        'route' => 'categorias',
+                        'controller' => 'categorias',
+                        'resource' => 'portal',
+                        'action' => 'index',
+                        'privilege' => 'index',
+                        'pages'=>[
+                            [
+                                'label' => 'Listar Categorias',
+                                'route' => 'categorias',
+                                'controller' => 'categorias',
+                                'resource' => 'portal',
+                                'action' => 'index',
+                                'privilege' => 'index',
+                            ],
+                            [
+                                'label' => 'Nova Categorias',
+                                'route' => 'categorias',
+                                'controller' => 'categorias',
+                                'resource' => 'portal',
+                                'action' => 'create',
+                                'privilege' => 'create',
+                            ]
+                        ]
+                    ],
+                    [
+                        'label' => 'Empresas',
+                        'route' => 'empresas',
+                        'controller' => 'empresas',
+                        'resource' => 'portal',
+                        'action' => 'index',
+                        'privilege' => 'index',
+                        'pages'=>[
+                            [
+                                'label' => 'Listar Empresas',
+                                'route' => 'empresas',
+                                'controller' => 'empresas',
+                                'resource' => 'portal',
+                                'action' => 'index',
+                                'privilege' => 'index',
+                            ],
+                            [
+                                'label' => 'Nova Empresas',
+                                'route' => 'empresas',
+                                'controller' => 'empresas',
+                                'resource' => 'portal',
+                                'action' => 'create',
+                                'privilege' => 'create',
+                            ]
+                        ]
+                    ],
+                    [
+                        'label' => 'Posts',
+                        'route' => 'posts',
+                        'controller' => 'posts',
+                        'resource' => 'portal',
+                        'action' => 'index',
+                        'privilege' => 'index',
+                        'pages'=>[
+                            [
+                                'label' => 'Listar Posts',
+                                'route' => 'posts',
+                                'controller' => 'v',
+                                'resource' => 'portal',
+                                'action' => 'index',
+                                'privilege' => 'index',
+                            ],
+                            [
+                                'label' => 'Nova Posts',
+                                'route' => 'posts',
+                                'controller' => 'posts',
+                                'resource' => 'portal',
+                                'action' => 'create',
+                                'privilege' => 'create',
+                            ]
+                        ]
+                    ],
+
+                ]
+            ],
+            [
                 'label' => 'Configurações',
                 'route' => 'issusers',
                 'controller' => 'users',
