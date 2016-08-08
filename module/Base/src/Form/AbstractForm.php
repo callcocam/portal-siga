@@ -411,8 +411,9 @@ class AbstractForm extends Form{
                 'type' => 'submit',
                 'value' => 'BTN_SAVE_COPY_LABEL',
                 'title' => 'BTN_SAVE_COPY_DESC',
-                'class' => 'btn btn-blue submitbutton',
+                'class' => 'btn btn-primary submitbutton',
                 'id' => 'save_copy',
+                'disabled'=>true
             ],
         ],$savecopy);
     }
@@ -441,7 +442,7 @@ class AbstractForm extends Form{
     public function setValueOption($table, $condicao = array('state' => '0')) {
         $dados = $this->container->get($table)->findBy($condicao);
         $valueOptions = array('--SELECIONE--');
-        if ($dados->getData()->count()):
+        if ($dados->getData()->getResult()):
             foreach ($dados->getData() as $value):
                 $valueOptions[$value->getId()] =sprintf("%s - %s",$value->getId(),$value->getTitle());
             endforeach;

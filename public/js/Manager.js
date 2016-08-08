@@ -1,13 +1,13 @@
-$(function(){
+$(function() {
 
     var options = {
-        target:        '#output',   // target element(s) to be updated with server response
-        beforeSubmit:  showRequest,  // pre-submit callback
-        success:       showResponse,  // post-submit callback
+        target: '#output',   // target element(s) to be updated with server response
+        beforeSubmit: showRequest,  // pre-submit callback
+        success: showResponse,  // post-submit callback
         // other available options:
         //url:       url         // override for form's 'action' attribute
-         type:      'post',        // 'get' or 'post', override for form's 'method' attribute
-         dataType:  'json'
+        type: 'post',        // 'get' or 'post', override for form's 'method' attribute
+        dataType: 'json'
         //clearForm: true        // clear all form fields after successful submit
         //resetForm: true        // reset the form after successful submit
         // $.ajax options can be used here too, for example:
@@ -15,18 +15,11 @@ $(function(){
     };
 
 // bind to the form's submit event
-    $('.Manager').submit(function() {
-        $(this).ajaxSubmit(options);
-        // !!! Important !!!
-        // always return false to prevent standard browser submit and page navigation
-        return false;
-    });
+    $('.Manager').ajaxForm(options);
 
-
-
-    $(".delete").click(function(){
-        var url= $(this).attr('href');
-        var _this=$(this);
+    $(".delete").click(function () {
+        var url = $(this).attr('href');
+        var _this = $(this);
         new PNotify({
             title: 'Confirmation Needed',
             text: 'Are you sure?',
@@ -41,7 +34,7 @@ $(function(){
             history: {
                 history: false
             }
-        }).get().on('pnotify.confirm', function() {
+        }).get().on('pnotify.confirm', function () {
                 $.ajax({
                     url: url,
                     type: 'GET',
@@ -49,19 +42,18 @@ $(function(){
                     beforeSend: function (xhr) {
                         dyn_notice();
                     },
-                    success: function (data)
-                    {
+                    success: function (data) {
                         options.title = "Done!";
                         options.type = data.class;
                         options.hide = true;
                         options.text = data.error;
-                        options.buttons = {closer: true,sticker: true};
+                        options.buttons = {closer: true, sticker: true};
                         options.icon = 'fa fa-check';
                         options.opacity = 1;
                         options.shadow = true;
                         options.width = PNotify.prototype.options.width;
                         notice.update(options);
-                        if(data.result==true){
+                        if (data.result == true) {
                             _this.parent().parent().parent().parent('.col-box-list').remove();
                         }
 
@@ -71,37 +63,46 @@ $(function(){
         return false;
     });
 
-    $('.treeview').click(function(){
+    $('.treeview').click(function () {
         return false;
     });
 
-    $('#wizard').smartWizard({
-        // Properties
-       // selected: 0,  // Selected Step, 0 = first step
-       // keyNavigation: true, // Enable/Disable key navigation(left and right keys are used if enabled)
-       // enableAllSteps: false,  // Enable/Disable all steps on first load
-       // transitionEffect: 'fade', // Effect on navigation, none/fade/slide/slideleft
-       // contentURL:null, // specifying content url enables ajax content loading
-       // contentURLData:null, // override ajax query parameters
-       // contentCache:true, // cache step contents, if false content is fetched always from ajax url
-       // cycleSteps: false, // cycle step navigation
-       // enableFinishButton: false, // makes finish button enabled always
-       // hideButtonsOnDisabled: false, // when the previous/next/finish buttons are disabled, hide them instead
-       // errorSteps:[],    // array of step numbers to highlighting as error steps
-        labelNext:"<i class='fa fa-share'></i> PROXIMO", // label for Next button
-        labelPrevious:"<i class='fa fa-reply'></i> VOLTAR", // label for Previous button
-        labelFinish:"<i class='fa fa-save'></i> FINALIZAR",  // label for Finish button
-        //noForwardJumping:false,
-        //ajaxType: 'POST',
-        // Events
-        //onLeaveStep: null, // triggers when leaving a step
-       // onShowStep: null,  // triggers when showing a step
-       // onFinish: null,  // triggers when Finish button is clicked
-       // includeFinishButton : true,   // Add the finish button
-       // reverseButtonsOrder: false //shows buttons ordered as: prev, next and finish
+     //CAPA VIEW
+    $('#attachment').change(function () {
+       var input = $(this);
+        var target = $('#images');
+        var fileDefault = target.attr('default');
+       if (!input.val()) {
+            target.fadeOut('fast', function () {
+                $('#image-preview').attr('src', fileDefault).fadeIn('slow');
+            });
+            return false;
+        }
+        if (this.files && this.files[0].type.match('image.*')) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                target.fadeOut('fast', function () {
+                    $('#image-preview').attr('src', e.target.result).fadeIn('fast');
+                });
+            };
+            reader.readAsDataURL(this.files[0]);
+        } else {
+                    PNotify.removeAll();
+                    new PNotify({
+                        title: 'Oh No!',
+                            text: 'O arquivo selecionado não é válido! Selecione uma <b>imagem JPG ou PNG</b> para enviar!',
+                        type: 'error'
+                    });
+                
+            target.fadeOut('fast', function () {
+                $('#image-preview').attr('src', fileDefault).fadeIn('slow');
+            });
+            input.val('');
+            return false;
+        }
     });
-});
 
+});
 
 // pre-submit callback
 function showRequest(formData, jqForm, options) {
@@ -112,6 +113,12 @@ function showRequest(formData, jqForm, options) {
 
 // post-submit callback
 function showResponse(responseText, statusText, xhr, $form)  {
+    if(responseText.result==true){
+        $('#id').val(responseText.data.id);
+        $('#save_copy').attr('disabled',false);
+     }
+   
+    
     options.title = "Done!";
     options.type = responseText.class;
     options.hide = true;
@@ -122,7 +129,7 @@ function showResponse(responseText, statusText, xhr, $form)  {
     options.shadow = true;
     options.width = PNotify.prototype.options.width;
     notice.update(options);
-    $('.btn').attr('disabled',false);
+   
 }
 
 function print(URL) {

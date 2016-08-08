@@ -17,7 +17,7 @@ class ProfileForm extends AbstractForm {
     public function __construct(ContainerInterface $container, $name, $options = [])
     {
         $this->container=$container;
-          $this->setId([]);
+        $this->setId([]);
         $this->setAssetid([]);
         $this->setCodigo([]);
         $this->setAccess([]);
@@ -43,6 +43,16 @@ class ProfileForm extends AbstractForm {
                 'id'=>'title',
                 'class'=>'form-control',
                 'placeholder'=>'Nome Completo',
+                'data-access' => '3',
+                'data-position' => 'geral',
+            ]
+        ]);
+
+        $this->add([
+            'type'=>'hidden',
+            'name'=>'url',
+            'attributes'=>[
+                'id'=>'title',
                 'data-access' => '3',
                 'data-position' => 'geral',
             ]

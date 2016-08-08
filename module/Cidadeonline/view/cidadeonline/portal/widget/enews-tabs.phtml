@@ -1,0 +1,49 @@
+    <div class="enews-tab">
+
+        <!-- Tab Menu -->
+        <ul class="nav nav-tabs" id="enewsTabs">
+            <li class="active"><a href="#tab-populars" data-toggle="tab">Mais Vistos</a></li>
+            <li><a href="#tab-recents" data-toggle="tab">Recents</a></li>
+           </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab-populars">
+
+                <!-- One -->
+                <?php $ultimo_post = $this->partial('/tpl/mais-vistos');?>
+                <?php
+                 $html=[];
+                $post=$this->HomeHelper()->ExeRead("bs_posts", "WHERE state =?  ORDER BY post_views DESC LIMIT 5 OFFSET 0", ['0']);
+                if (!$post->getResult()):
+                    $this->HomeHelper()->alert($post->getError());
+                else:
+                    $nomargin=" no-margin-left";
+                    foreach ($post->getData() as $slide):
+                        $slide['title-desc']=\Base\Model\Check::Words($slide['description'], 20);
+                        $html[]=$this->HomeHelper()->Show($slide, $ultimo_post,'posts');
+                        endforeach;
+                    echo implode("",  $html);
+                endif;
+                ?>                
+            </div> <!-- End Populars -->
+
+            <div class="tab-pane" id="tab-recents">
+               <?php
+                 $html=[];
+                $post=$this->HomeHelper()->ExeRead("bs_posts", "WHERE state =?  ORDER BY created DESC LIMIT 5 OFFSET 0", ['0']);
+                if (!$post->getResult()):
+                    $this->HomeHelper()->alert($post->getError());
+                else:
+                    $nomargin=" no-margin-left";
+                    foreach ($post->getData() as $slide):
+                        $slide['title-desc']=\Base\Model\Check::Words($slide['description'], 20);
+                        $html[]=$this->HomeHelper()->Show($slide, $ultimo_post,'posts');
+                        endforeach;
+                    echo implode("",  $html);
+                endif;
+                ?>
+            </div> <!-- End Recents -->
+           
+        </div> <!-- End Tab-Content -->
+
+    </div> <!-- End Enews-Tab -->

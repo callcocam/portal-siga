@@ -18,6 +18,8 @@ class Empresas extends AbstractModel
 
     protected $title = null;
 
+    protected $phone = null;
+
     protected $email = null;
 
     protected $url = null;
@@ -38,8 +40,6 @@ class Empresas extends AbstractModel
 
     protected $catid = null;
 
-    protected $password = null;
-
     protected $empresa_views = null;
 
     /**
@@ -51,6 +51,15 @@ class Empresas extends AbstractModel
     {
         return $this->title;
     }
+
+    /**
+     * @return null
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
 
     /**
      * get email
@@ -152,15 +161,6 @@ class Empresas extends AbstractModel
         return $this->catid;
     }
 
-    /**
-     * get password
-     *
-     * @return varchar
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
 
     /**
      * get empresa_views
@@ -182,6 +182,15 @@ class Empresas extends AbstractModel
         $this->title=$title;
         return $this;
     }
+
+    /**
+     * @param null $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+
 
     /**
      * set email
@@ -290,17 +299,6 @@ class Empresas extends AbstractModel
     public function setCatid($catid = null)
     {
         $this->catid=$catid;
-        return $this;
-    }
-
-    /**
-     * set password
-     *
-     * @return varchar
-     */
-    public function setPassword($password = null)
-    {
-        $this->password=$password;
         return $this;
     }
 

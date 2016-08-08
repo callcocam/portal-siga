@@ -43,17 +43,39 @@ class CategoriasRepository extends AbstractRepository
         return parent::insert($model);
     }
 
-    public function parentCat($param)
+    public function parentCat($param,$parent_id=false)
     {
         $cats=$this->findBy($param);
         $valueOptions=[''=>'--CATEGORIA PAI--'];
         if($cats->getResult())
         {
             foreach($cats->getData() as $cat){
-                $valueOptions[$cat->getId()]=$cat->getTitle();
+                if($parent_id==$cat->getParentId()){
+                    $valueOptions[$cat->getId()]=$cat->getTitle();
+                }
+
             }
 
         }
+        return $valueOptions;
+    }
+
+    public function getGategorias($param=['state' => '0'])
+    {
+        $dados=$this->findBy($param);
+        $valueOptions = ['' => '--CATEGORIA PAI--'];
+        if ($dados->getResult()):
+            foreach ($dados->getData() as $value):
+                $subCategoria = $this->findBy(['state' => '0', 'parent_id' => $value->getId()]);
+                $valueOptionsSubCat = [];
+                if ($subCategoria->getResult()):
+                    foreach ($subCategoria->getData() as $subCat) {
+                        $valueOptionsSubCat[$subCat->getId()] ="--{$subCat->getTitle()}";
+                    }
+                endif;
+                $valueOptions[$value->getId()] = ["label" => $value->getTitle(), "options" => $valueOptionsSubCat];
+            endforeach;
+        endif;
         return $valueOptions;
     }
 

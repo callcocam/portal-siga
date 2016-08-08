@@ -7,8 +7,11 @@ namespace Home;
  * Time: 19:21
  */
 
+use Cidadeonline\Controller\CidadeonlineController;
+use Cidadeonline\Controller\Factory\CidadeonlineControllerFactory;
 use Home\Controller\Factory\BoletosControllerFactory;
 use Home\Controller\Factory\ForgottenPasswordControllerFactory;
+use Home\Controller\Factory\HomeControllerFactory;
 use Home\Controller\Factory\LoginControllerFactory;
 use Home\Controller\Factory\RegisterControllerFactory;
 use Zend\Router\Http\Literal;
@@ -17,7 +20,19 @@ use Zend\Router\Http\Segment;
 return [
     'router' => [
         'routes' => [
-              'authenticate' => [
+            'home' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route'    => '/',
+                    'defaults' => [
+                        'controller' => CidadeonlineController::class,
+                        'action'     => 'index',
+                    ],
+
+                ],
+
+            ],
+            'authenticate' => [
                 'type' => Literal::class,
                 'options' => [
                     'route'    => '/login',
@@ -90,6 +105,8 @@ return [
             Controller\ForgottenPasswordController::class => ForgottenPasswordControllerFactory::class,
             Controller\RegisterController::class => RegisterControllerFactory::class,
             Controller\BoletosController::class => BoletosControllerFactory::class,
+            Controller\HomeController::class => HomeControllerFactory::class,
+            CidadeonlineController::class=>CidadeonlineControllerFactory::class
         ],
     ],
     'view_manager' => [

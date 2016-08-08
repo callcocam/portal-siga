@@ -5393,3 +5393,18 @@ ul.notifications {
 .chosen-container{z-index: 1000;}
 .chosen-results{z-index: 9999  !important;}
 .wizard_content{min-height: 400px;}
+
+
+
+/*IMAGES*/
+.btn-file{position: relative;width: 100%;}
+#attachment, #attachmentSql{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom:0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;}

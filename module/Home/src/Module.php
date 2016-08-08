@@ -18,6 +18,8 @@ use Home\Form\ForgottenPasswordFilter;
 use Home\Form\ForgottenPasswordForm;
 use Home\Form\RegisterFilter;
 use Home\Form\RegisterForm;
+use Home\View\Helper\HomeHelper;
+use Interop\Container\ContainerInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
@@ -65,6 +67,16 @@ class Module implements ConfigProviderInterface,ServiceProviderInterface,ViewHel
      */
     public function getViewHelperConfig()
     {
-        // TODO: Implement getViewHelperConfig() method.
+        return [
+            'factories'=>[
+                'HomeHelper'=>function(ContainerInterface $container){
+                    return new HomeHelper($container);
+                }
+            ],
+            'invokables'=>[
+
+            ]
+
+        ];
     }
 }

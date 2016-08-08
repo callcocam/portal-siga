@@ -8,8 +8,10 @@ namespace Portal;
  */
 
 use Portal\Controller\CategoriasController;
+use Portal\Controller\ClassificadosController;
 use Portal\Controller\EmpresasController;
 use Portal\Controller\Factory\CategoriasControllerFactory;
+use Portal\Controller\Factory\ClassificadosControllerFactory;
 use Portal\Controller\Factory\EmpresasControllerFactory;
 use Portal\Controller\Factory\PostsControllerFactory;
 use Portal\Controller\PostsController;
@@ -126,6 +128,42 @@ return [
                     ],
                 ]
             ],
+            'classificados' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route'    => '/classificados[/:action][/:id][/:page]',
+                    'defaults' => [
+                        'controller' => Controller\ClassificadosController::class,
+                        'action'     => 'index',
+                        'id'=>'0',
+                        'page'=>'1'
+                    ],
+
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'list' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route'    => '[/:page]',
+                            'defaults' => [
+                                'controller' => Controller\ClassificadosController::class,
+                                'page'     => '1',
+                            ],
+                        ],
+                    ],
+                    'posts-create' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route'    => '/classificados',
+                            'defaults' => [
+                                'controller' => Controller\ClassificadosController::class,
+                                'action'     => 'create',
+                            ],
+                        ],
+                    ],
+                ]
+            ],
             ],
 
     ],
@@ -134,6 +172,7 @@ return [
             CategoriasController::class=>CategoriasControllerFactory::class,
             EmpresasController::class=>EmpresasControllerFactory::class,
             PostsController::class=>PostsControllerFactory::class,
+            ClassificadosController::class=>ClassificadosControllerFactory::class,
         ],
     ],
     'view_manager' => [

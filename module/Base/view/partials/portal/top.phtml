@@ -1,0 +1,158 @@
+<div id="top-navigation">
+    <div class="container">
+        <!-- Navigation -->
+        <ul class="nav-menu pull-left">
+            <li class=""><a href="/">Home</a></li>
+            <li><a href="#">CIDADE ONLINE</a>
+                <div class="nav-sub-menu">
+                    <ul class="container">
+
+                        <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'blog-posts','id'=>'aconteceu'])?>">ACONTECEU</a></li>
+                        <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'blog-posts','id'=>'eventos'])?>">EVENTOS</a></li>
+                        <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'blog-posts','id'=>'esportes'])?>">ESPORTES</a></li>
+
+                    </ul>
+                </div>
+            </li>
+            <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'onde-comprar'])?>">ONDE COMPRAR</a>
+                <div class="nav-sub-menu">
+                    <ul class="container">
+                      <?=$this->HomeHelper()->getCidades('onde-comprar');?>
+                    </ul>
+                </div>
+            </li>
+            <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'onde-ficar'])?>">ONDE FICAR</a>
+                <div class="nav-sub-menu">
+                    <ul class="container">
+                        <?=$this->HomeHelper()->getCidades('onde-ficar');?>
+                    </ul>
+                </div></li>
+            <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'onde-comer'])?>">ONDE COMER</a>
+                <div class="nav-sub-menu">
+                    <ul class="container">
+                        <?=$this->HomeHelper()->getCidades('onde-comer');?>
+                    </ul>
+                </div>
+            </li>
+            <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'onde-se-divertir'])?>">ONDE SE DIVERTIR</a>
+                <div class="nav-sub-menu">
+                    <ul class="container">
+                        <?=$this->HomeHelper()->getCidades('onde-se-divertir');?>
+                    </ul>
+                </div>
+            </li>
+            <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'contato'])?>">CONTATO</a></li>
+        </ul>
+        <ul class="nav-menu pull-right">
+            <?php if(!$this->UserIdentity()->getHasIdentity()):?>
+            <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'login'])?>">LOGIN</a></li>
+            <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'cadastro'])?>">CADASTRAR-SE</a></li>
+            <?php else:?>
+                <li><a href="#"><?=$this->UserIdentity()->getHasIdentity()->title?></a>
+                    <div class="nav-sub-menu">
+                        <ul class="container pull-right">
+                            <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'minha-conta'])?>">MINHA CONTA</a></li>
+                            <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'minha-empresa'])?>">MINHA EMPRESA</a></li>
+                            <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'novo-anuncio'])?>">NOVO ANUNCIO</a></li>
+                            <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'logout'])?>">LOGOUT</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+            <?php endif;?>
+        </ul>
+
+    </div> <!-- End Container -->
+</div> <!-- End Top-Navigation -->
+
+<div class="container">
+    <header id="header" class="clearfix">
+        <!-- Logo -->
+        <div class="logo pull-left">
+            <a href="/"><img src="/Portal_city556622/stretched/images/logo.png" alt="Enews" /></a>
+        </div>
+
+        <!-- Ads -->
+        <div class="ads pull-right">
+            <img src="/Portal_city556622/stretched/images/ads/480x80.png" alt="Ads" />
+        </div>
+
+    </header> <!-- End Header -->
+
+    <nav id="main-navigation" class="clearfix margin-bottom40">
+        <ul>
+            <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'classificadolista'])?>">CLASSIFICADOS</a></li>
+            <li><a href="#">TÉCNOLOGIA <i class="arrow-main-nav"></i></a>
+                <ul>
+                  <?php
+                    $html=[];
+                     $cat = $this->HomeHelper()->CatByName('tecnologia');
+                    if (!$cat->getResult()):
+                        $this->HomeHelper()->alert($cat->getError());
+                    else:
+                        $post=$this->HomeHelper()->ExeRead("bs_categorias", "WHERE state =? AND parent_id=? ORDER BY id DESC LIMIT 3 OFFSET 0", ['0',$cat->getData()->id]);
+                        foreach ($post->getData() as $slide):
+                           $html[]=$this->HomeHelper()->Show($slide, '<li><a href="#url#">#title#</a></li>','blog-posts');
+                        endforeach;
+                    endif;
+                    echo implode("", $html);
+                    ?>
+                                       
+                </ul>
+            </li>
+              <li><a href="#">Entretenimento <i class="arrow-main-nav"></i></a>
+                <ul>
+                  <?php
+                    $html=[];
+                     $cat = $this->HomeHelper()->CatByName('entretenimento');
+                    if (!$cat->getResult()):
+                        $this->HomeHelper()->alert($cat->getError());
+                    else:
+                        $post=$this->HomeHelper()->ExeRead("bs_categorias", "WHERE state =? AND parent_id=? ORDER BY id DESC LIMIT 3 OFFSET 0", ['0',$cat->getData()->id]);
+                        foreach ($post->getData() as $slide):
+                           $html[]=$this->HomeHelper()->Show($slide, '<li><a href="#url#">#title#</a></li>','blog-posts');
+                        endforeach;
+                    endif;
+                    echo implode("", $html);
+                    ?>
+                                       
+                </ul>
+            </li>
+            <li><a href="#">Educação</a>
+                <ul>
+                    <?php
+                    $html=[];
+                    $cat = $this->HomeHelper()->CatByName('educacao');
+                    if (!$cat->getResult()):
+                        $this->HomeHelper()->alert($cat->getError());
+                    else:
+                        $post=$this->HomeHelper()->ExeRead("bs_categorias", "WHERE state =? AND parent_id=? ORDER BY id DESC LIMIT 3 OFFSET 0", ['0',$cat->getData()->id]);
+                        foreach ($post->getData() as $slide):
+                            $html[]=$this->HomeHelper()->Show($slide, '<li><a href="#url#">#title#</a></li>','blog-posts');
+                        endforeach;
+                    endif;
+                    echo implode("", $html);
+                    ?>
+                </ul>
+            </li>
+            <li><a href="#">Photo <i class="arrow-main-nav"></i></a>
+                <ul>
+                    <?php
+                    $html=[];
+                    $cat = $this->HomeHelper()->CatByName('fotos');
+                   if (!$cat->getResult()):
+                        $this->HomeHelper()->alert($cat->getError());
+                    else:
+                        $post=$this->HomeHelper()->ExeRead("bs_categorias", "WHERE state =? AND parent_id=? ORDER BY id DESC LIMIT 3 OFFSET 0", ['0',$cat->getData()->id]);
+                        foreach ($post->getData() as $slide):
+                            $html[]=$this->HomeHelper()->Show($slide, '<li><a href="#url#">#title#</a></li>','blog-posts');
+                        endforeach;
+                    endif;
+                    echo implode("", $html);
+                    ?>
+                </ul>
+            </li>
+
+        </ul>
+
+    </nav> <!-- End Main-Navigation -->

@@ -11,10 +11,14 @@ namespace Portal;
 
 use Portal\Form\CategoriasFilter;
 use Portal\Form\CategoriasForm;
+use Portal\Form\ClassificadosFilter;
+use Portal\Form\ClassificadosForm;
 use Portal\Form\EmpresasFilter;
 use Portal\Form\EmpresasForm;
 use Portal\Form\Factory\CategoriasFilterFactory;
 use Portal\Form\Factory\CategoriasFormFactory;
+use Portal\Form\Factory\ClassificadosFilterFactory;
+use Portal\Form\Factory\ClassificadosFormFactory;
 use Portal\Form\Factory\EmpresasFilterFactory;
 use Portal\Form\Factory\EmpresasFormFactory;
 use Portal\Form\Factory\PostsFilterFactory;
@@ -25,6 +29,10 @@ use Portal\Model\Categorias\Categorias;
 use Portal\Model\Categorias\CategoriasRepository;
 use Portal\Model\Categorias\Factory\CategoriasFactory;
 use Portal\Model\Categorias\Factory\CategoriasRepositoryFactory;
+use Portal\Model\Classificados\Classificados;
+use Portal\Model\Classificados\ClassificadosRepository;
+use Portal\Model\Classificados\Factory\ClassificadosFactory;
+use Portal\Model\Classificados\Factory\ClassificadosRepositoryFactory;
 use Portal\Model\Empresas\Empresas;
 use Portal\Model\Empresas\EmpresasRepository;
 use Portal\Model\Empresas\Factory\EmpresasFactory;
@@ -81,6 +89,14 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface{
               PostsForm::class=>PostsFormFactory::class,
 
               PostsFilter::class=>PostsFilterFactory::class,
+
+              Classificados::class=>ClassificadosFactory::class,
+
+              ClassificadosRepository::class=>ClassificadosRepositoryFactory::class,
+
+              ClassificadosForm::class=>ClassificadosFormFactory::class,
+
+              ClassificadosFilter::class=>ClassificadosFilterFactory::class,
           ]
         ];
     }

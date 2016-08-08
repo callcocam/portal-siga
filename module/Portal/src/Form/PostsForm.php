@@ -6,6 +6,7 @@
 
 namespace Portal\Form;
 
+use Auth\Model\Users\UsersRepository;
 use Base\Form\AbstractForm;
 use Interop\Container\ContainerInterface;
 use Portal\Model\Categorias\CategoriasRepository;
@@ -40,6 +41,7 @@ class PostsForm extends AbstractForm
         $this->setSave([]);
         $this->setCsrf([]);
         $this->setState([]);
+        $this->setSavecopy([]);
         $this->setDescription([]);
         $this->getAuthservice();
         parent::__construct($container, $name, $options);
@@ -106,7 +108,7 @@ class PostsForm extends AbstractForm
                     'placeholder' => 'FILD_URL_PLACEHOLDER',
                     'data-access' => '3',
                     'data-position' => 'geral',
-                    //'readonly' => true/false,
+                    'readonly' => true,
                     //'requerid' => true/false,
                 ],
             ]
@@ -115,7 +117,7 @@ class PostsForm extends AbstractForm
 
         //############################################ informações da coluna post_type ##############################################:
         $this->add([
-                'type' => 'text',//hidden, select, radio, checkbox, textarea
+                'type' => 'hidden',//hidden, select, radio, checkbox, textarea
                 'name' => 'post_type',
                 'options' => [
                     'label' => 'FILD_POST_TYPE_LABEL',
@@ -124,11 +126,12 @@ class PostsForm extends AbstractForm
                 ],
                 'attributes' => [
                     'id'=>'post_type',
-                    'class' =>'form-control',
-                    'title' => 'FILD_POST_TYPE_DESC',
-                    'placeholder' => 'FILD_POST_TYPE_PLACEHOLDER',
+                    //'class' =>'form-control',
+                   // 'title' => 'FILD_POST_TYPE_DESC',
+                   // 'placeholder' => 'FILD_POST_TYPE_PLACEHOLDER',
                     'data-access' => '3',
                     'data-position' => 'geral',
+                    'value'=>'post'
                     //'readonly' => true/false,
                     //'requerid' => true/false,
                 ],
@@ -152,7 +155,7 @@ class PostsForm extends AbstractForm
                     'placeholder' => 'FILD_POST_VIEWS_PLACEHOLDER',
                     'data-access' => '3',
                     'data-position' => 'geral',
-                    //'readonly' => true/false,
+                    'readonly' => true,
                     //'requerid' => true/false,
                 ],
             ]
@@ -184,29 +187,35 @@ class PostsForm extends AbstractForm
 
         //############################################ informações da coluna created_by ##############################################:
         $this->add([
-                'type' => 'text',//hidden, select, radio, checkbox, textarea
+                'type' => 'hidden',//text, select, radio, checkbox, textarea
                 'name' => 'created_by',
                 'options' => [
-                    'label' => 'FILD_CREATED_BY_LABEL',
+                    //'label' => 'FILD_CREATED_BY_LABEL',
                     //'value_options'      =>[],
                     //"disable_inarray_validator" => true,
                 ],
                 'attributes' => [
                     'id'=>'created_by',
-                    'class' =>'form-control',
-                    'title' => 'FILD_CREATED_BY_DESC',
-                    'placeholder' => 'FILD_CREATED_BY_PLACEHOLDER',
+                    //'class' =>'form-control',
+                    //'title' => 'FILD_CREATED_BY_DESC',
+                    //'placeholder' => 'FILD_CREATED_BY_PLACEHOLDER',
                     'data-access' => '3',
                     'data-position' => 'geral',
                     //'readonly' => true/false,
                     //'requerid' => true/false,
                 ],
             ]);
-
+        if ($this->has('created_by')):
+            if($this->get('created_by')->getAttribute('type')=="select"):
+                $this->get('created_by')->setOptions(['value_options' =>$this->setValueOption(UsersRepository::class)]);
+            else:
+                $this->get('created_by')->setValue(isset($this->authservice->id)?$this->authservice->id:'1');
+            endif;
+        endif;
         if ($this->has('catid')):
             if($this->get('catid')->getAttribute('type')=="select"):
                 $cat=$this->container->get(CategoriasRepository::class);
-                $this->get('catid')->setOptions(['value_options' => $cat->parentCat(['state'=>'0'])]);
+                $this->get('catid')->setOptions(['value_options' => $cat->getGategorias(['state'=>'0','parent_id' => ''])]);
             else:
                 $this->get('catid')->setValue('null');
             endif;

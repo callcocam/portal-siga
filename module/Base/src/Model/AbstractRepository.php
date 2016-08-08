@@ -11,6 +11,7 @@ namespace Base\Model;
 
 use Zend\Db\Adapter\Exception\InvalidQueryException;
 use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\Expression;
 use Zend\Db\Sql\Predicate\Operator;
 use Zend\Db\Sql\Where;
 use Zend\Db\TableGateway\TableGateway;
@@ -67,6 +68,7 @@ abstract class AbstractRepository{
 
         $this->filtro($where);
         $select->where($this->where);
+        $select->order(['created'=>"DESC"]);
         $statement = $this->tableGateway->getSql()->prepareStatementForSqlObject($select);
         $results = $statement->execute();
         $resultSet = new ResultSet(); //$this->tableGateway->getResultSetPrototype();
@@ -182,8 +184,8 @@ abstract class AbstractRepository{
             }
 
             if ($this->tableGateway->insert($set->toArray())):
-                $this->find($this->tableGateway->getLastInsertValue());
-                $this->data->setLastInsert( $this->data->getData());
+                $this->find($this->tableGateway->getLastInsertValue(),false);
+                $this->data->setLastInsert($this->data->getData());
                 $this->data->setError("O REGISTRO [ <b>{$set->getTitle()}</b> ] FOI SALVO COM SUCESSO!");
                 $this->data->setResult(TRUE);
                 $this->data->setClass(self::SUCCESS);
@@ -283,7 +285,19 @@ abstract class AbstractRepository{
     //    FUNÇÕES EXTRAS
     public function getMax($id) {
         $select = $this->tableGateway->getSql()->select();
-        $select->columns(array('maxId' => new \Zend\Db\Sql\Expression("MAX({$id})")));
+        $select->columns(array('maxId' => new Expression("MAX({$id})")));
+        $query = $this->tableGateway->getSql()->prepareStatementForSqlObject($select);
+        $rowset = $query->execute();
+        $row = $rowset->current();
+        if (!$row) {
+            $row['maxId'] = 0;
+        }
+        return $row['maxId'] + 1;
+    }
+
+    public function getCount($id="id",$where=[]) {
+        $select = $this->tableGateway->getSql()->select($where);
+        $select->columns(array('qtd' => new Expression("COUNT({$id})")));
         $query = $this->tableGateway->getSql()->prepareStatementForSqlObject($select);
         $rowset = $query->execute();
         $row = $rowset->current();
@@ -303,7 +317,8 @@ abstract class AbstractRepository{
     }
 
     /**
-     * @param Result $data
+     * @return $this
+     * @internal param Result $data
      */
     public function setData()
     {

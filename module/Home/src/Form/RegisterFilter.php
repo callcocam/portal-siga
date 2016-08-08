@@ -130,6 +130,16 @@ class RegisterFilter extends AbstractInputFilter {
                ['name' => StringTrim::class],
            ]
        ]);
+
+       $inputFilter->add([
+           'name' => 'url',
+           'required' => false,
+           'filters' => [
+               ['name' => StripTags::class],
+               ['name' => StringTrim::class],
+           ]
+       ]);
+
      $inputFilter->add([
                'name' => 'cnpj',
                'required' => false,

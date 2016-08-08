@@ -36,8 +36,8 @@ class Check {
      */
     public static function Name($Name) {
         self::$Format = array();
-        self::$Format['a'] = 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜüÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûýýþÿRr"!@#$%&*()_-+={[}]/?;:.,\\\'<>°ºª';
-        self::$Format['b'] = 'aaaaaaaceeeeiiiidnoooooouuuuuybsaaaaaaaceeeeiiiidnoooooouuuyybyRr                                 ';
+        self::$Format['a'] = 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜüÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûýýþÿRr"!@#$%&*()_-+={[}]/?;:.,\\\'<>°ºª|';
+        self::$Format['b'] = 'aaaaaaaceeeeiiiidnoooooouuuuuybsaaaaaaaceeeeiiiidnoooooouuuyybyRr                                 -';
 
         self::$Data = strtr(utf8_decode($Name), utf8_decode(self::$Format['a']), self::$Format['b']);
         self::$Data = strip_tags(trim(self::$Data));
@@ -46,6 +46,23 @@ class Check {
 
         return strtolower(utf8_encode(self::$Data));
     }
+
+    /**
+     * <b>Obter categoria:</b> Informe o name (url) de uma categoria para obter o ID da mesma.
+     * @param STRING $category_name = URL da categoria
+     * @return INT $category_id = id da categoria informada
+     */
+    public static function CatByName($CategoryName) {
+        $read = new Read;
+        $read->ExeRead('ws_categories', "WHERE category_name = :name", "name={$CategoryName}");
+        if ($read->getRowCount()):
+            return $read->getResult()[0]['category_id'];
+        else:
+            echo "A categoria {$CategoryName} não foi encontrada!";
+            die;
+        endif;
+    }
+
 
     /**
      * <b>Tranforma URL:</b> Tranforma uma string no formato de Action e retorna o a string convertida!

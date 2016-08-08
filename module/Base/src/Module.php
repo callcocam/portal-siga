@@ -11,6 +11,7 @@ use Base\Form\Factory\BuscaFormFactory;
 use Base\Services\Client;
 use Base\Services\Factory\ClientHttpFactory;
 use Base\Services\Factory\TableFactory;
+use Base\Services\SecondaryNavigationFactory;
 use Base\Services\Table;
 use Base\View\Helper\Factory\GerarViewHelperFactory;
 use Base\View\Helper\Factory\HtmlElementFactory;
@@ -24,6 +25,7 @@ use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Zend\Navigation\Service\DefaultNavigationFactory;
 
 class Module implements BootstrapListenerInterface, ConfigProviderInterface,ServiceProviderInterface,ViewHelperProviderInterface,ControllerPluginProviderInterface
 {
@@ -77,7 +79,7 @@ class Module implements BootstrapListenerInterface, ConfigProviderInterface,Serv
         $action = $e->getRouteMatch()->getParam('action');
 
 
-       // \Base\Model\Check::debug(array($layout_map,$module_namespace,$controller_class,$action),"p");
+      // \Base\Model\Check::debug(array($layout_map,$module_namespace,$controller_class,$action),"p");
 
 
         if (array_key_exists(sprintf("%s/layout", strtolower($module_namespace)), $layout_map)) {
@@ -85,7 +87,7 @@ class Module implements BootstrapListenerInterface, ConfigProviderInterface,Serv
         }
 
         if (array_key_exists(sprintf("%s/layout", strtolower($controller_class)), $layout_map)) {
-            $controller->layout(sprintf("%s/layout", strtolower($controller_class)));
+             $controller->layout(sprintf("%s/layout", strtolower($controller_class)));
         }
 
         if (array_key_exists(sprintf("%s/layout", strtolower($action)), $layout_map)) {
@@ -112,6 +114,8 @@ class Module implements BootstrapListenerInterface, ConfigProviderInterface,Serv
     {
         return [
             'factories'=>[
+                'navigation' => DefaultNavigationFactory::class,
+                'secondary_navigation' => SecondaryNavigationFactory::class,
                 'Messages'=>Messages::class,
                 SigaContas::class=>SigaContas::class,
                 FilesService::class=>FilesServiceFactory::class,

@@ -1,0 +1,46 @@
+<?= $this->doctype() ?>
+<html lang="pb-br">
+<head>
+    <meta charset="utf-8">
+    <?= $this->headTitle('Cidade Online')->setSeparator(' - ')->setAutoEscape(false) ?>
+    <?= $this->headMeta()
+        ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+        ->appendHttpEquiv('X-UA-Compatible', 'IE=edge');?>
+    <!-- Le styles -->
+    <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/Portal_city556622/stretched/images/favicon.ico'])
+        ->prependStylesheet('//fonts.googleapis.com/css?family=Open+Sans')
+        ->prependStylesheet('//fonts.googleapis.com/css?family=Bitter')
+        ->prependStylesheet('//fonts.googleapis.com/css?family=Oswald')
+        ->prependStylesheet($this->basePath('/Portal_city556622/stretched/css/style.css'))
+        ->prependStylesheet($this->basePath('/Portal_city556622/stretched/css/prettyPhoto.css'))
+        ->prependStylesheet($this->basePath('/Portal_city556622/stretched/css/flexslider.css'))
+        ->prependStylesheet($this->basePath('/Portal_city556622/stretched/css/bootstrap-responsive.min.css'))
+        ->prependStylesheet($this->basePath('/Portal_city556622/stretched/css/bootstrap.min.css'))
+    ?>
+    <!-- Scripts -->
+    <?= $this->headScript()
+         ->prependFile($this->basePath('/Portal_city556622/stretched/js/main.js'))
+        ->prependFile($this->basePath('js/jquery.form.min.js'))
+        ->prependFile($this->basePath('/Portal_city556622/stretched/js/modernizr.custom.js'))
+        ->prependFile($this->basePath('/Portal_city556622/stretched/js/jquery.hoverdir.js'))
+        ->prependFile($this->basePath('/Portal_city556622/stretched/js/jquery.isotope.min.js'))
+        ->prependFile($this->basePath('/Portal_city556622/stretched/js/jquery.mobilemenu.js'))
+        ->prependFile($this->basePath('/Portal_city556622/stretched/js/jquery.jticker.js'))
+        ->prependFile($this->basePath('/Portal_city556622/stretched/js/jquery.placeholder.min.js'))
+        ->prependFile($this->basePath('/Portal_city556622/stretched/js/jquery.prettyPhoto.js'))
+        ->prependFile($this->basePath('/Portal_city556622/stretched/js/jquery.lazyload.mini.js'))
+        ->prependFile($this->basePath('/Portal_city556622/stretched/js/jquery.fitvids.min.js'))
+        ->prependFile($this->basePath('/Portal_city556622/stretched/js/jflickrfeed.min.js'))
+        ->prependFile($this->basePath('/Portal_city556622/stretched/js/jquery.flexslider-min.js'))
+        ->prependFile($this->basePath('/Portal_city556622/stretched/js/jquery.easing.js'))
+        ->prependFile($this->basePath('/Portal_city556622/stretched/js/bootstrap.min.js'))
+        ->prependFile($this->basePath('/Portal_city556622/stretched/js/jquery-1.8.3.min.js'))
+    ?>
+</head>
+<body>
+<?=$this->partial('/partials/portal/top')?>
+<?=$this->content; ?>
+<?=$this->partial('/partials/portal/botton')?>
+<?= $this->inlineScript() ?>
+</body>
+</html>

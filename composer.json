@@ -41,7 +41,7 @@
             "Auth\\": "module/Auth/src/",
             "Home\\": "module/Home/src/",
             "Mail\\": "module/Mail/src/",
-            "Portal\\": "module/Portal/src/"
+            "Cidadeonline\\": "module/Cidadeonline/src/"
         }
     },
     "autoload-dev": {

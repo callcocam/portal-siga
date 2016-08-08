@@ -29,8 +29,22 @@ return [
                     ],
 
                 ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'list' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route'    => '[/:page]',
+                            'defaults' => [
+                                'controller' => Controller\ProfileController::class,
+                                'page'     => '1',
+                            ],
+                        ],
+                    ],
 
+                ]
             ],
+
             'users' => [
                 'type' => Segment::class,
                 'options' => [

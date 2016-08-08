@@ -1,0 +1,225 @@
+<?php   echo  $this->messages();?>
+<div id="highlight-posts" class="clearfix">
+    <ul>
+        <li class="masked masked-big"> <!-- One -->
+            <div class="flexslider highlight-one loading">
+                <ul class="slides"> <!-- Images -->
+                    <?php $slider = $this->partial('/tpl/slider');?>
+                    <?php
+                    $html=[];
+                    $post=$this->HomeHelper()->ExeRead("bs_posts", "WHERE state =? ORDER BY modified DESC LIMIT 6 OFFSET 0", ['0']);
+                    if (!$post->getResult()):
+                        $this->HomeHelper()->alert($post->getError());
+                    else:
+                       if($post->getResult()){
+                           foreach ($post->getData() as $slide):
+                               $html[]=$this->HomeHelper()->Show($slide, $slider,"posts");
+                           endforeach;
+                       }
+
+                    endif;
+                    echo implode("", $html);
+
+                    ?>
+                </ul>
+            </div>
+            
+        </li>
+        <li class="masked masked-small"> <!-- Two -->
+            <div class="flexslider highlight-two loading">
+                <ul class="slides"> <!-- Images -->
+                    <?php
+                    $html=[];
+                    $slider_left = $this->partial('/tpl/slider-left');
+                    $cat = $this->HomeHelper()->CatByName('esportes');
+                    if (!$cat->getResult()):
+                        $this->HomeHelper()->alert($cat->getError());
+                    else:
+                        $post=$this->HomeHelper()->ExeRead("bs_posts", "WHERE state =? AND catid=? ORDER BY modified DESC LIMIT 3 OFFSET 0", ['0',$cat->getData()->id]);
+                        if($post->getResult()){
+                        foreach ($post->getData() as $slide):
+                           $html[]=$this->HomeHelper()->Show($slide, $slider_left,"posts");
+                        endforeach;
+                        }
+                    endif;
+                    echo implode("", $html);
+                    ?>
+                </ul>
+            </div>
+           
+        </li>
+        <li class="masked masked-small"> <!-- Three -->
+            <div class="flexslider highlight-three loading">
+                <ul class="slides"> <!-- Images -->
+                <?php
+                    $html=[];
+                    $slider_left = $this->partial('/tpl/slider-left');
+                    $cat = $this->HomeHelper()->CatByName('aconteceu');
+                    if (!$cat->getResult()):
+                        $this->HomeHelper()->alert($cat->getError());
+                    else:
+                        $post=$this->HomeHelper()->ExeRead("bs_posts", "WHERE state =? AND catid=? ORDER BY modified DESC LIMIT 3 OFFSET 0", ['0',$cat->getData()->id]);
+                        if($post->getResult()) {
+                            foreach ($post->getData() as $slide):
+                                $html[] = $this->HomeHelper()->Show($slide, $slider_left, "posts");
+                            endforeach;
+                        }
+                    endif;
+                    echo implode("", $html);
+                    ?>
+                </ul>
+            </div>
+           
+        </li>
+        <li class="masked masked-small no-margin-bottom"> <!-- Four -->
+            <div class="flexslider highlight-four loading">
+                <ul class="slides"> <!-- Images -->
+                   <?php
+                    $html=[];
+                    $slider_left = $this->partial('/tpl/slider-left');
+                    $cat = $this->HomeHelper()->CatByName('eventos');
+                    if (!$cat->getResult()):
+                        $this->HomeHelper()->alert($cat->getError());
+                    else:
+                        $post=$this->HomeHelper()->ExeRead("bs_posts", "WHERE state =? AND catid=? ORDER BY id DESC LIMIT 3 OFFSET 0", ['0',$cat->getData()->id]);
+                        if($post->getResult()) {
+                            foreach ($post->getData() as $slide):
+                                $html[] = $this->HomeHelper()->Show($slide, $slider_left, "posts");
+                            endforeach;
+                        }
+                    endif;
+                    echo implode("", $html);
+                    ?>
+                </ul>
+            </div>
+           
+        </li>
+
+    </ul>
+</div> <!-- End Highlight Posts -->
+
+<div class="headlines clearfix">
+    <span class="base"><?php echo date("m") ?><i><?php
+           /* $this->plugin('dateFormat')
+                ->setTimezone('America/Sao_Paulo')
+                ->setLocale('pt_BR');
+
+            echo $this->dateFormat(new DateTime(date('l')), IntlDateFormatter::SHORT);*/  // "Jul 2, 2012"
+            echo $this->HomeHelper()->getDIASEMANA(date("N")) ?></i></span>
+    <div class="text-rotator">
+       <!-- One -->
+                <?php $ultimo_post = $this->partial('/tpl/rotator');?>
+                <?php
+                 $html=[];
+                $post=$this->HomeHelper()->ExeRead("bs_posts", "WHERE state =?  ORDER BY created DESC LIMIT 10 OFFSET 0", ['0']);
+                if (!$cat->getResult()):
+                    $this->HomeHelper()->alert($cat->getError());
+                else:
+                if($post->getResult()) {
+                    foreach ($post->getData() as $slide):
+                        $html[] = $this->HomeHelper()->Show($slide, $ultimo_post, "posts",50);
+                    endforeach;
+                    echo implode("", $html);
+                }
+                endif;
+                ?>                
+    </div>
+</div> <!-- End Headlines -->
+
+<div class="row-fluid">
+<div id="main" class="span8 image-preloader">
+
+<div class="row-fluid">
+
+<!-- One -->
+<?php $ultimo_post = $this->partial('/tpl/ultimo_post');?>
+<?php
+ $html=[];
+$empresas=[];
+$empresas=$this->HomeHelper()->ExeRead("bs_empresas", "WHERE state =?  ORDER BY id DESC LIMIT 10 OFFSET 4", ['0']);
+if (!$empresas->getResult()):
+    $this->HomeHelper()->alert($empresas->getError());
+else:
+    $nomargin=" no-margin-left";
+    foreach ($empresas->getData() as $slide):
+        $slide['categoria'] = $this->HomeHelper()->getCategorias($slide['catid']);
+        $slide['nomargin']=$nomargin;
+        $html[]=$this->HomeHelper()->Show($slide, $ultimo_post,"empresa",100,30);
+        if(empty($nomargin)){
+            $nomargin=" no-margin-left";
+            $html[]=$this->Html('div')->setClass('clearfix ie-sep');
+        }
+        else{
+           $nomargin="";
+        }
+    endforeach;
+    echo implode("",  $html);
+endif;
+?>
+
+<!-- Gallery Posts -->
+<div class="home-galleries no-margin-left">
+    <!-- Header -->
+    <div class="header">
+        <div class="base">
+            <h4>Classificados</h4>
+            <div class="nav-control">
+                <span class="previous"></span><span class="next"></span>
+            </div>
+        </div>
+        <div class="arrow arrow-left"></div>
+        <div class="arrow arrow-right"></div>
+    </div>
+
+<?php $classificado_tpl = $this->partial('/tpl/carrosel-clasificado');?>
+<?php
+ $html=[];
+$classificado=$this->HomeHelper()->ExeRead("bs_classificados", "WHERE state =?  ORDER BY id DESC LIMIT 12 OFFSET 0", ['0']);
+if (!$classificado->getResult()):
+    $this->HomeHelper()->alert($classificado->getError());
+else:
+    foreach ($classificado->getData() as $slide):
+        $slide['categoria'] =$this->HomeHelper()->getCategorias($slide['catid']);
+        $html[]=$this->HomeHelper()->Show($slide, $classificado_tpl,"classificados",5);
+    endforeach;
+    echo implode("",  $html);
+endif;
+?>
+</div> <!-- End Galleries -->
+<div class="clearfix ie-sep"></div> <!-- Clearfix -->
+</div> <!-- End Row-Fluid -->
+</div> <!-- End Main -->
+
+<div id="sidebar" class="span4">
+
+<div class="widget clearfix">
+   <?php echo $this->partial('/tpl/social-indices'); ?>
+</div> <!-- End Widget -->
+<div class="widget clearfix">
+<?php echo $this->partial('/widget/enews-tabs'); ?>
+</div>
+<div class="widget clearfix">
+    <?php echo $this->partial('/widget/sponsors'); ?>
+</div> <!-- End Widget -->
+<!-- End Widget -->
+<div class="widget clearfix">
+    <div class="subscribe-form">
+
+        <div class="header">
+            <h4>Subscribe Us</h4>
+        </div>
+
+        <div class="content">
+            <p>You can stay up-to-date with our latest news with subscribe our newsletter.</p>
+            <form name="subscribe-form" id="enews-subscribe-form" method="post" action="#">
+                <input type="text" name="email_address" placeholder="ex: your_email@domain.com" />
+                <input type="submit" name="submit" value="Send" />
+            </form>
+        </div>
+
+    </div>
+</div> <!-- End Widget -->
+
+</div> <!-- End Sidebar -->
+
+</div> <!-- End Row-Fluid -->

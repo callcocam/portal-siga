@@ -72,6 +72,16 @@ class RegisterForm extends AbstractForm {
             ]
         ]);
 
+        $this->add([
+            'type'=>'hidden',
+            'name'=>'url',
+            'attributes'=>[
+                'id'=>'title',
+                'data-access' => '3',
+                'data-position' => 'geral',
+            ]
+        ]);
+
 
         $this->add([
             'type'=>'email',

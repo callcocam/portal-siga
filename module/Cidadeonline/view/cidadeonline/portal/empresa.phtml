@@ -1,0 +1,182 @@
+
+<div class="row-fluid">
+    <div id="main" class="span8 single single-post image-preloader">
+
+        <div class="row-fluid">
+            <?php
+            //tabela,estraselect,params,bool[true=1 registro ou false uma lista]
+            //tabela,estraselect,params,bool[true=1 registro ou false uma lista]
+            $empresas=$this->HomeHelper()->ExeRead("bs_empresas", " WHERE url=?",[$this->id],true);
+            if (!$empresas->getResult()):
+                $this->HomeHelper()->alert($empresas->getError());
+            endif;
+            ?>
+            <?php
+            if ($empresas->getResult()):
+                $breadcrumb = $this->partial('/tpl/breadcrumb');
+                $emp=$empresas->getData();
+                $emp['categoria']=$this->HomeHelper()->getCategorias($emp['catid']);
+                $emp['url']="";
+                echo $this->HomeHelper()->Show($emp, $breadcrumb,$emp['catid']);
+            endif;
+            ?>
+
+            <?php
+            if ($empresas->getResult()):
+                $emp_figure = $this->partial('/tpl/empresas/empresas-figure');
+                $emp=$empresas->getData();
+                $emp['categoria']=$this->HomeHelper()->getCategorias($emp['catid']);
+                $emp['url_cat']=$emp['catid'];
+                $emp['action']=$emp['catid'];
+                echo $this->HomeHelper()->Show($emp, $emp_figure,"empresa");
+            endif;
+            ?>
+            <div class="content">
+                <?php
+                if ($empresas->getResult()):
+                    echo $this->HomeHelper()->Show($empresas->getData(), "#description#",$emp['catid']);
+                endif;
+                ?>
+
+                </p>
+
+                <div class="rate-details">
+                    <div class="header">
+                        <h4>ENDEREÇO</h4>
+                    </div>
+                    <?php
+                    if ($empresas->getResult()):
+                        $emp_desc = $this->partial('/tpl/empresas/empresas-desc');
+                        $emp=$empresas->getData();
+                        $dadosCidade=$this->HomeHelper()->getDadosCidade($emp['cidade']);
+                        $emp['cep']=$dadosCidade['cep'];
+                        $emp['uf']=$dadosCidade['uf'];
+                        $emp['cidade']=$dadosCidade['title'];
+                        $emp['pais']=$dadosCidade['xpais'];
+                        echo $this->HomeHelper()->Show($emp,$emp_desc,$emp['catid']);
+                    endif;
+                    ?>
+                </div> <!-- End Tags -->
+
+            </div> <!-- End Content -->
+
+            <div class="sep-border no-margin-bottom"></div> <!-- Separator -->
+
+            <div class="prevnext-posts clearfix">
+                <?php
+
+                if ($empresas->getResult()):
+                    $postId=$empresas->getData();
+                    $navigation=$this->HomeHelper()->ExeRead("bs_empresas", " WHERE id<? LIMIT 1", [$postId['id']],true);
+                    if($navigation->getResult()){
+                        $navprev=$navigation->getData();
+                        $navprev['desc']=$navprev['title'];
+                        echo $this->HomeHelper()->Show($navprev, $this->partial('/tpl/prev',['prev'=>"Proximo"]),"empresa",5,38);
+                    }
+                endif;
+                if ($empresas->getResult()):
+                    $postId=$empresas->getData();
+                    $navigation=$this->HomeHelper()->ExeRead("bs_empresas", " WHERE id>? LIMIT 1", [$postId['id']],true);
+                    if($navigation->getResult()){
+                        $navnext=$navigation->getData();
+                        $navnext['desc']=$navnext['title'];
+                        echo $this->HomeHelper()->Show($navnext, $this->partial('/tpl/next',['next'=>"Anterior"]),"empresa",5,38);
+                    }
+                endif;
+                ?>
+            </div> <!-- End PrevNext-Posts -->
+
+            <div class="sep-border no-margin-top"></div> <!-- Separator -->
+
+            <div class="related-posts">
+                <h3>Empresas Relacionadas</h3>
+                <?php
+                if ($empresas->getResult()):
+                    $empresaId=$empresas->getData();
+                    //tabela,estraselect,params,bool[true=1 registro ou false uma lista]
+                    $empresasRelacionadas=$this->HomeHelper()->ExeRead("bs_empresas", " WHERE catid=? AND id<>? ORDER BY created DESC LIMIT 4", [$empresaId['catid'],$empresaId['id']]);
+                     $html=[];
+                    if (!$empresasRelacionadas->getResult()):
+                        $this->HomeHelper()->alert($empresasRelacionadas->getError());
+                    else:
+                        $nomargin=" no-margin-left";
+                        foreach ($empresasRelacionadas->getData() as $empresa):
+                            $post['nomargin']=$nomargin;
+                            $html[]=$this->HomeHelper()->Show($empresa, $this->partial('/widget/related-post'),"empresa",5);
+                            $nomargin="";
+
+                        endforeach;
+
+                        echo implode(PHP_EOL,$html);
+                    endif;
+                endif;
+                ?>
+
+            </div> <!-- End Related-Posts -->
+
+            <div class="sep-border"></div> <!-- Separator -->
+            <div id="comments">
+                <div id="load-comments">
+
+                </div>
+                <?php
+                if($this->user):
+                if ($empresas->getResult()):
+                    $empresaId=$empresas->getData();
+                    $data['title']=$empresaId['title'];
+                    $data['html']=$this->partial('/widget/comments-form');
+                    $data['parent_id']=$empresaId['id'];
+                    $data['parent']='empresa';
+                    $data['tipo']='0';
+                    $data['id_form']="Comentarios";
+                    echo  $this->HomeHelper()->formComentarios($data);
+                endif;
+                else:?>
+                    <div class="alert alert-warning">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <strong>OPPSS!</strong> Somente Usuarios Logados Podem Comentar
+                    </div>
+                <?php endif; ?>
+            </div> <!-- End Comments -->
+
+
+        </div> <!-- End Row-Fluid -->
+    </div> <!-- End Main -->
+
+    <div id="sidebar" class="span4">
+
+        <div class="widget clearfix">
+            <?php echo $this->partial('/tpl/social-indices'); ?>
+        </div>
+        <!-- End Widget -->
+
+        <div class="widget clearfix">
+            <?php echo $this->partial('/widget/enews-tabs'); ?>
+        </div>
+        <!-- End Widget -->
+
+        <div class="widget clearfix">
+            <?php echo $this->partial('/widget/sponsors'); ?>
+        </div> <!-- End Widget -->
+
+        <div class="widget clearfix">
+            <?php echo $this->partial('/widget/subscribe-form'); ?>
+        </div> <!-- End Widget -->
+
+
+
+    </div> <!-- End Sidebar -->
+
+</div> <!-- End Row-Fluid -->
+<?php
+if ($empresas->getResult()):
+    $postId=$empresas->getData();
+    ?>
+    <script type="text/javascript" src="/Portal_city556622/stretched/js/comments.js"></script>
+    <script>
+        $(function(){
+            var conteudo=$('#load-comments');
+            conteudo.load('<?=$this->url('cidadeonline-pages', array('controller' => 'cidadeonline', 'action' => 'loadcommentsempresas','id'=>$postId['id']))?>');
+        })
+    </script>
+<?php endif;?>

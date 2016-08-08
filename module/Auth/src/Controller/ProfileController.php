@@ -32,13 +32,23 @@ class ProfileController extends AbstractController{
         $this->filter=ProfileFilter::class;
         $this->form=ProfileForm::class;
         $this->controller="users";
-        $this->route="users";
+        $this->route="profile";
+    }
+
+    /**
+     * @return JsonModel
+     */
+    public function finalizaAction()
+    {
+        $this->filter=ProfileFilter::class;
+        $this->form=ProfileForm::class;
+        return parent::finalizaAction();
     }
     public function profileAction(){
         $user=$this->IdentityManager->hasIdentity();
         $this->getForm();
         $this->form->setData((array)$user);
-        $view=new ViewModel(['users'=>$user,'form'=>$this->form]);
+        $view=new ViewModel(['user'=>$user,'form'=>$this->form,'route'=>$this->route,'page'=>'1']);
         return $view;
     }
     public function updatepasswordAction(){
@@ -46,7 +56,7 @@ class ProfileController extends AbstractController{
         $this->form=UpdatePasswordForm::class;
         $user=$this->IdentityManager->hasIdentity();
         $this->getForm();
-        $view=new ViewModel(['users'=>$user,'form'=>$this->form]);
+        $view=new ViewModel(['user'=>$user,'form'=>$this->form,'route'=>$this->route,'page'=>'1']);
         return $view;
     }
 

@@ -7,6 +7,7 @@
 namespace Portal\Form;
 
 use Base\Form\AbstractForm;
+use Base\Model\Cache;
 use Base\Services\Client;
 use Interop\Container\ContainerInterface;
 
@@ -39,7 +40,7 @@ class EmpresasForm extends AbstractForm
         $this->setModified(["type" => "hidden"]);
         $this->setSave([]);
         $this->setCsrf([]);
-        $this->setState(["type" => "hidden"]);
+        $this->setState([]);
         $this->setDescription([]);
         $this->getAuthservice();
         parent::__construct($container, $name, $options);
@@ -66,7 +67,27 @@ class EmpresasForm extends AbstractForm
             ]
         );
 
-
+        //############################################ informações da coluna phone ##############################################:
+        $this->add([
+                'type' => 'text',//hidden, select, radio, checkbox, textarea
+                'name' => 'phone',
+                'options' => [
+                    'label' => 'FILD_PHONE_LABEL',
+                    //'value_options'      =>[],
+                    //"disable_inarray_validator" => true,
+                ],
+                'attributes' => [
+                    'id'=>'phone',
+                    'class' =>'form-control',
+                    'title' => 'FILD_PHONE_DESC',
+                    'placeholder' => 'FILD_PHONE_PLACEHOLDER',
+                    'data-access' => '3',
+                    'data-position' => 'geral',
+                    //'readonly' => true/false,
+                    //'requerid' => true/false,
+                ],
+            ]
+        );
         //############################################ informações da coluna email ##############################################:
         $this->add([
                 'type' => 'text',//hidden, select, radio, checkbox, textarea
@@ -297,29 +318,6 @@ class EmpresasForm extends AbstractForm
         );
 
 
-        //############################################ informações da coluna password ##############################################:
-        $this->add([
-                'type' => 'password',//hidden, select, radio, checkbox, textarea
-                'name' => 'password',
-                'options' => [
-                    'label' => 'FILD_PASSWORD_LABEL',
-                    //'value_options'      =>[],
-                    //"disable_inarray_validator" => true,
-                ],
-                'attributes' => [
-                    'id'=>'password',
-                    'class' =>'form-control',
-                    'title' => 'FILD_PASSWORD_DESC',
-                    'placeholder' => 'FILD_PASSWORD_PLACEHOLDER',
-                    'data-access' => '3',
-                    'data-position' => 'geral',
-                    //'readonly' => true/false,
-                    //'requerid' => true/false,
-                ],
-            ]
-        );
-
-
         //############################################ informações da coluna empresa_views ##############################################:
         $this->add([
                 'type' => 'hidden',//hidden, select, radio, checkbox, textarea
@@ -342,20 +340,27 @@ class EmpresasForm extends AbstractForm
                 /**
                  * @var $client ClientHttp
                  */
-                $client = $this->container->get(Client::class);
-
-                $client->setUri(sprintf("%s/%s",$this->config->serverHost,'cidades'));
-                $response = $client->send();
-
-                if ($response->isSuccess()) {
-                    $data=json_decode($response->getBody(),true);
-                    $arraycidades=[];
-                    foreach($data['data'] as $o){
-                        $arraycidades[$o['id']]=$o['title'];
-                    }
-
+                $cache=new Cache();
+                if($cache->hasItem('busca-cidedes')){
+                    $this->get('cidade')->setOptions(['value_options' => $cache->getItem('busca-cidedes')]);
                 }
-                $this->get('cidade')->setOptions(['value_options' => $arraycidades]);
+                else{
+                    $client = $this->container->get(Client::class);
+
+                    $client->setUri(sprintf("%s/%s",$this->config->serverHost,'cidades'));
+                    $response = $client->send();
+
+                    if ($response->isSuccess()) {
+                        $data=json_decode($response->getBody(),true);
+                        $arraycidades=[];
+                        foreach($data['data'] as $o){
+                            $arraycidades[$o['id']]=$o['title'];
+                        }
+                        $cache->addItem('busca-cidedes',$arraycidades);
+                    }
+                    $this->get('cidade')->setOptions(['value_options' => $arraycidades]);
+                }
+
             else:
                 $this->get('cidade')->setValue('1');
             endif;

@@ -1,0 +1,67 @@
+
+<div class="row-fluid">
+    <div id="main" class="span8 single single-post image-preloader">
+        <div class="row-fluid">
+<?php
+$tpl=$this->partial('/widget/login-form');
+echo $this->HomeHelper()->formLogin($tpl);
+?>
+
+       <!-- Gallery Posts -->
+        <div class="home-galleries no-margin-left">
+            <!-- Header -->
+            <div class="header">
+                <div class="base">
+                    <h4>Classificados</h4>
+                    <div class="nav-control">
+                        <span class="previous"></span><span class="next"></span>
+                    </div>
+                </div>
+                <div class="arrow arrow-left"></div>
+                <div class="arrow arrow-right"></div>
+            </div>
+
+            <?php $classificado_tpl = $this->partial('/tpl/carrosel-clasificado');?>
+            <?php
+            $html=[];
+            $classificado=$this->HomeHelper()->ExeRead("bs_classificados", "WHERE state =?  ORDER BY id DESC LIMIT 12 OFFSET 0", ['0']);
+            if (!$classificado->getResult()):
+                $this->HomeHelper()->alert($classificado->getError());
+            else:
+                foreach ($classificado->getData() as $slide):
+                    $slide['categoria'] =$this->HomeHelper()->getCategorias($slide['catid']);
+                    $html[]=$this->HomeHelper()->Show($slide, $classificado_tpl,"classificados",5);
+                endforeach;
+                echo implode("",  $html);
+            endif;
+            ?>
+        </div> <!-- End Galleries -->
+        <div class="clearfix ie-sep"></div> <!-- Clearfix -->
+        </div> <!-- End Row-Fluid -->
+    </div> <!-- End Main -->
+
+    <div id="sidebar" class="span4">
+
+        <div class="widget clearfix">
+            <?php echo $this->partial('/tpl/social-indices'); ?>
+        </div>
+        <!-- End Widget -->
+
+        <div class="widget clearfix">
+            <?php echo $this->partial('/widget/enews-tabs'); ?>
+        </div>
+        <!-- End Widget -->
+
+        <div class="widget clearfix">
+            <?php echo $this->partial('/widget/sponsors'); ?>
+        </div> <!-- End Widget -->
+
+        <div class="widget clearfix">
+            <?php echo $this->partial('/widget/subscribe-form'); ?>
+        </div> <!-- End Widget -->
+
+
+
+    </div> <!-- End Sidebar -->
+
+</div> <!-- End Row-Fluid -->

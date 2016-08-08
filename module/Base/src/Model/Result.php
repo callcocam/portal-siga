@@ -13,7 +13,7 @@ use Zend\Hydrator\ClassMethods;
 
 class Result {
 
-    protected $result=false;
+    protected $result=0;
     protected $error;
     protected $last_insert;
     protected $class;

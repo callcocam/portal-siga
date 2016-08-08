@@ -50,6 +50,17 @@ class UsersForm extends AbstractForm {
             ]
         ]);
 
+
+        $this->add([
+            'type'=>'hidden',
+            'name'=>'url',
+            'attributes'=>[
+                'id'=>'url',
+                'data-access' => '3',
+                'data-position' => 'geral',
+            ]
+        ]);
+
         $this->add([
             'type'=>'text',
             'name'=>'cnpj',

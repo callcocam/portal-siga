@@ -20,7 +20,7 @@ return [
             'admin' => [
                 'type' => Literal::class,
                 'options' => [
-                    'route'    => '/',
+                    'route'    => '/admin',
                     'defaults' => [
                         'controller' => Controller\AdminController::class,
                         'action'     => 'index',

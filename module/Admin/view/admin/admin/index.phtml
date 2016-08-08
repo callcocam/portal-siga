@@ -21,7 +21,21 @@
                 </ul>
                 <div class="clearfix"></div>
             </div>
-            conteudo
+
+            <?php $qtd=$this->AdminHelper()->countRegister('bs_posts');?>
+            <?=$this->AdminHelper()->widgets($qtd,"Posts",$text="Lorem ipsum psdea itgum rixt.");?>
+
+            <?php $qtd=$this->AdminHelper()->countRegister('bs_empresas');?>
+            <?=$this->AdminHelper()->widgets($qtd,"Empresas",$text="Lorem ipsum psdea itgum rixt.");?>
+
+            <?php $qtd=$this->AdminHelper()->countRegister('bs_users');?>
+            <?=$this->AdminHelper()->widgets($qtd,"Usuarios",$text="Lorem ipsum psdea itgum rixt.");?>
+
+            <?php $qtd=$this->AdminHelper()->countRegister('bs_empresas');?>
+            <?=$this->AdminHelper()->widgets($qtd,"Empresas",$text="Lorem ipsum psdea itgum rixt.");?>
+
+          </div>
+
             <div class="clearfix"></div>
         </div>
     </div>

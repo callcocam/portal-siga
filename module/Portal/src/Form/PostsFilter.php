@@ -90,19 +90,12 @@ class PostsFilter extends AbstractInputFilter
                     //############################################ informações da coluna url ##############################################:
                      $inputFilter->add([
                     'name' => 'url',
-                    'required' => true,
+                    'required' => false,
                     'filters' => [
                         ['name' => StripTags::class],
                         ['name' => StringTrim::class],
                     ],
-                    'validators' => [
-                        [
-                            'name' => NotEmpty::class,
-                            'options' => [
-                                'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
-                            ],
-                        ],
-                    ],
+
                 ]);
         
         
@@ -128,19 +121,12 @@ class PostsFilter extends AbstractInputFilter
                     //############################################ informações da coluna post_views ##############################################:
                      $inputFilter->add([
                     'name' => 'post_views',
-                    'required' => true,
+                    'required' => false,
                     'filters' => [
                         ['name' => StripTags::class],
                         ['name' => StringTrim::class],
                     ],
-                    'validators' => [
-                        [
-                            'name' => NotEmpty::class,
-                            'options' => [
-                                'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
-                            ],
-                        ],
-                    ],
+
                 ]);
         
         

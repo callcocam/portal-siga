@@ -14,6 +14,7 @@ use Base\Model\AbstractModel;
 class Users extends AbstractModel {
 
     protected $title;
+    protected $url;
     protected $cnpj;
     protected $email;
     protected $phone;
@@ -200,6 +201,22 @@ class Users extends AbstractModel {
     public function setTitle($title)
     {
         $this->title = $title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param mixed $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
     }
 
     /**

@@ -150,7 +150,7 @@ class GerarViewHelper extends AbstractHelper {
         $box = $this->view->Html("fildset")->setText(PHP_EOL)->appendText($this->view->Html("legend")->setText("FORMULARIO DE MANUTENÇÃO"))->appendText(PHP_EOL);
         if (self::$hidden):
             self::$gegal['hiddeh'] = implode("", self::$hidden);
-            $boxGeral = $this->boxWidgets(array('body' => implode(PHP_EOL, self::$gegal), "title" => "GERAL", "class" => "box-default", 'footer' => implode("", self::$btn), 'icone' => 'clipboard'));
+            $boxGeral = $this->boxWidgets(array('body' => implode(PHP_EOL, self::$gegal), "title" => "CADASTRO GERAL", "class" => "box-default", 'footer' =>sprintf("%s%s",implode("", self::$btn),"#btn-voltar#"), 'icone' => 'clipboard'));
             $box->appendText($this->view->Html("div")->setClass('col-md-8 col-xs-12')->setText(PHP_EOL)->appendText($boxGeral)->appendText(PHP_EOL))->appendText(PHP_EOL);
         else:
             if(self::$gegal):
@@ -160,12 +160,12 @@ class GerarViewHelper extends AbstractHelper {
         endif;
 
         if (self::$images):
-            $boxImages = $this->boxWidgets(array('body' => implode(PHP_EOL, self::$images), "title" => "IMAGENS", "class" => "box-default", 'icone' => 'clipboard'));
+            $boxImages = $this->boxWidgets(array('body' => implode(PHP_EOL, self::$images), "title" => "CADASTRAR IMAGEM", "class" => "box-default", 'icone' => 'clipboard'));
             $box->appendText($this->view->Html("div")->setClass('col-md-4 col-xs-12')->setText(PHP_EOL)->appendText($boxImages)->appendText(PHP_EOL))->appendText(PHP_EOL);
         endif;
 
         if (self::$datas):
-            $boxDatas = $this->boxWidgets(array('body' => implode(PHP_EOL, self::$datas), "title" => "DATAS", "class" => "box-default", 'icone' => 'clipboard'));
+            $boxDatas = $this->boxWidgets(array('body' => implode(PHP_EOL, self::$datas), "title" => "CADASTRAR CONTRLES E DATAS", "class" => "box-default", 'icone' => 'clipboard'));
             $box->appendText($this->view->Html("div")->setClass('col-md-4 col-xs-12')->setText(PHP_EOL)->appendText($boxDatas)->appendText(PHP_EOL))->appendText(PHP_EOL);
         endif;
 
@@ -222,7 +222,7 @@ class GerarViewHelper extends AbstractHelper {
         $iFaparpeClicp = $this->view->Html('i')->setClass('ion ion-android-upload');
         $attachment = $this->view->Html('input')->setAttributes(array('name' => 'attachment', 'type' => 'file', 'id' => 'attachment'));
         // $imagenHidden = $this->view->formRow($element->setLabel('')->setAttributes(array('type' => 'hidden')));
-        $divbtnPrimary = $this->view->Html('div')->setClass('btn btn-blue btn-file');
+        $divbtnPrimary = $this->view->Html('div')->setClass('btn btn-primary btn-file');
         $span = $this->view->Html('span')->setClass('file-text')->appendText("Selecione uma imagem");
         $divbtnPrimary->setText($iFaparpeClicp)->appendText($span);
         $divbtnPrimary->appendText($attachment)->appendText("#{$key}#");
@@ -236,26 +236,27 @@ class GerarViewHelper extends AbstractHelper {
         extract($options);
         $box_footer = "";
         $box = $this->view->Html('div')->setClass("x_panel");
-        $box_header = $this->view->Html('div')->setClass("x_title {$class}")->setText(PHP_EOL);
+        $box_header = $this->view->Html('fieldset')->setText(PHP_EOL);
 
         $ionIonBag = $this->view->Html("small")->setText($title);
         $clear = $this->view->Html("div")->setClass("clearfix");
-        $box_title = $this->view->Html('h2')->setClass("x_title")->setText($ionIonBag);
+        $box_title = $this->view->Html('legend')->setText($ionIonBag);
+        //$box_title = $this->view->Html('legend')->setClass("x_title")->setText($ionIonBag);
         $box_header->appendText($box_title)->appendText(PHP_EOL)->appendText($clear);
 
-        $box_body = $this->view->Html('div')->setClass("x_content")->setText(PHP_EOL)->appendText($body);
+        $box_body = $this->view->Html('div')->setClass("x_content")->setText(PHP_EOL)->appendText($body)->appendText(PHP_EOL);
+        $box_header->appendText(PHP_EOL)->appendText($box_body)->appendText(PHP_EOL);
         if (isset($footer)) {
             $pull_right = $this->view->Html('div')->setClass("pull-right")->setText(PHP_EOL)->appendText($footer)->appendText(PHP_EOL);
             $box_footer = $this->view->Html('div')->setClass("box-footer")->setText(PHP_EOL)->appendText($pull_right)->appendText(PHP_EOL);
         }
-        $box->setText(PHP_EOL)->appendText($box_header)->appendText(PHP_EOL)->appendText($box_body)->appendText(PHP_EOL)->appendText($box_footer)->appendText(PHP_EOL);
+        $box->setText(PHP_EOL)->appendText($box_header)->appendText(PHP_EOL)->appendText($box_footer)->appendText(PHP_EOL);
         return $box;
     }
 
     public function setBtnVoltar() {
         $linha = "<a class=\"btn btn-danger\" href=\"%s\">{$this->view->translate('BTN_VOLTAR_LABEL')}</a><p>";
         $btnVoltar = sprintf($linha, $this->view->url("{$this->view->route}/list", array('controller' => $this->view->controller, 'action' => "index",'id'=>'0','page'=>$this->view->page)));
-        self::$btn[] = $btnVoltar;
         return $btnVoltar;
     }
 

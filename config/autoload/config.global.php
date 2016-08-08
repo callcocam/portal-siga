@@ -12,6 +12,7 @@ return [
                 'sessao'=>'funcionarios',
                 'serverHost'=>'http://rest.callcocam.com.br',
                 //'serverHost'=>'http://localhost.server',
+                'moderarcomments'=>'1'
                   ]
 ];
 

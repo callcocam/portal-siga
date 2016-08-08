@@ -22,7 +22,7 @@ class IssusersRepository extends AbstractRepository{
     public function getEmpresas(){
         $datas=$this->findBy(['state'=>'0']);
         $valueOptions=[];
-        if($datas->getData()->count())
+        if($datas->getResult())
         {
             foreach($datas->getData() as $data){
                 $valueOptions[$data->getId()]=$data->getTitle();

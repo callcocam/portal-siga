@@ -34,10 +34,13 @@ use Admin\Model\Issusers\Issusers;
 use Admin\Model\Issusers\IssusersRepository;
 use Admin\Model\Clientes\ClientesRepository;
 use Admin\Model\Clientes\Factory\ClientesFactory;
+use Admin\View\Helper\AdminHelper;
+use Interop\Container\ContainerInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
+use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 
-class Module implements ConfigProviderInterface, ServiceProviderInterface{
+class Module implements ConfigProviderInterface, ServiceProviderInterface,ViewHelperProviderInterface{
 
     /**
      * Returns configuration to merge with application configuration
@@ -73,6 +76,23 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface{
                 BancosFilter::class=>BancosFilterFactory::class,
             ]
 
+        ];
+    }
+
+    /**
+     * Expected to return \Zend\ServiceManager\Config object or array to
+     * seed such an object.
+     *
+     * @return array|\Zend\ServiceManager\Config
+     */
+    public function getViewHelperConfig()
+    {
+        return [
+            'factories'=>[
+                'AdminHelper'=>function(ContainerInterface $container){
+                    return new AdminHelper($container);
+                }
+            ]
         ];
     }
 }

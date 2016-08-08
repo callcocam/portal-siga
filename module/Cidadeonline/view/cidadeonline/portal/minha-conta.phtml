@@ -1,0 +1,79 @@
+
+<div class="row-fluid">
+    <div id="main" class="span8 page author-page image-preloader">
+        <div class="row-fluid">
+            <div class="author-bio clearfix">
+                <figure><img alt="<?=$this->user->title?>" src="/dist/<?=$this->user->images?>" ></figure>
+                <div class="content">
+                    <h3><?=$this->user->title?></h3>
+                    <p><?=$this->user->description?></p>
+                    <p class="add-info"><i class="icon-share"></i> Email: <a title="Send a private message via email" href="#"><?=$this->user->email?></a></p>
+                </div>
+            </div> <!-- End Author-Bio -->
+            <?php
+
+            $this->HomeHelper()->setSelect(" count(id) as result ");
+            $encontrou=$this->HomeHelper()->ExeRead("bs_classificados",' WHERE  created_by=?',[$this->user->id],true);
+            $this->HomeHelper()->setSelect(" * ");
+            $count="0";
+            if($encontrou->getResult()){
+                $count=$encontrou->getData()['result'];
+            }
+            ?>
+            <div class="header">
+                <h4><?=$this->user->title?> - Fez ( <?=str_pad($count,5,'0',STR_PAD_LEFT);?> ) Anuncio(s)</h4>
+            </div>
+            <?php
+            $classificados=$this->HomeHelper()->ExeRead("bs_classificados", " WHERE created_by=?  ORDER BY id DESC",[$this->user->id]);
+            if (!$classificados->getResult()):
+                $this->HomeHelper()->alert($classificados->getError());
+            else:
+                 ?>
+                <div class="sep-border margin-bottom30"></div> <!-- Sep Border -->
+                <?php
+                    $html=[];
+                    $classificados_list = $this->partial('/tpl/classificados/meus-classificados');
+                    foreach ($classificados->getData() as $classificado):
+                        $classificado['categoria']=$this->HomeHelper()->getCategorias($classificado['catid']);
+                        $html[]=$this->HomeHelper()->Show($classificado, $classificados_list,'classificados');
+                    endforeach;
+                    echo implode(PHP_EOL,$html);
+            endif;
+            ?>
+            <!-- One -->
+
+
+            <!-- CADA DOIS ANUNCIO TEM CLEAR -->
+
+
+            <div class="clearfix ie-sep"></div> <!-- Clearfix -->
+
+
+        </div> <!-- End Row-Fluid -->
+    </div> <!-- End Main -->
+
+    <div id="sidebar" class="span4">
+
+        <div class="widget clearfix">
+            <?php echo $this->partial('/tpl/social-indices'); ?>
+        </div>
+        <!-- End Widget -->
+
+        <div class="widget clearfix">
+            <?php echo $this->partial('/widget/enews-tabs'); ?>
+        </div>
+        <!-- End Widget -->
+
+        <div class="widget clearfix">
+            <?php echo $this->partial('/widget/sponsors'); ?>
+        </div> <!-- End Widget -->
+
+        <div class="widget clearfix">
+            <?php echo $this->partial('/widget/subscribe-form'); ?>
+        </div> <!-- End Widget -->
+
+
+
+    </div> <!-- End Sidebar -->
+
+</div> <!-- End Row-Fluid -->

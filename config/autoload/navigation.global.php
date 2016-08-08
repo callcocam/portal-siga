@@ -15,6 +15,16 @@ return [
                 'privilege' => 'index',
             ],
             [
+                'label' => 'Ir Para O Site',
+                'route' => 'home',
+                'controller' => 'cidadeonline',
+                'resource' => 'cidadeonline',
+                'action' => 'index',
+                'icone'=>'fa fa-globe',
+                'privilege' => 'index',
+                'target'=>'_blank'
+            ],
+            [
                 'label' => 'Controle De Acesso',
                 'route' => 'users',
                 'controller' => 'users',
@@ -131,10 +141,10 @@ return [
                 ]
             ],
             [
-                'label' => 'Portal',
+                'label' => 'Cidade Online',
                 'route' => 'categorias',
                 'controller' => 'categorias',
-                'resource' => 'portal',
+                'resource' => 'cidadeonline',
                 'action' => 'index',
                 'privilege' => 'index',
                 'icone'=>'fa fa-gear',
@@ -144,7 +154,7 @@ return [
                         'label' => 'Categorias',
                         'route' => 'categorias',
                         'controller' => 'categorias',
-                        'resource' => 'portal',
+                        'resource' => 'cidadeonline',
                         'action' => 'index',
                         'privilege' => 'index',
                         'pages'=>[
@@ -152,7 +162,7 @@ return [
                                 'label' => 'Listar Categorias',
                                 'route' => 'categorias',
                                 'controller' => 'categorias',
-                                'resource' => 'portal',
+                                'resource' => 'cidadeonline',
                                 'action' => 'index',
                                 'privilege' => 'index',
                             ],
@@ -160,7 +170,7 @@ return [
                                 'label' => 'Nova Categorias',
                                 'route' => 'categorias',
                                 'controller' => 'categorias',
-                                'resource' => 'portal',
+                                'resource' => 'cidadeonline',
                                 'action' => 'create',
                                 'privilege' => 'create',
                             ]
@@ -170,7 +180,7 @@ return [
                         'label' => 'Empresas',
                         'route' => 'empresas',
                         'controller' => 'empresas',
-                        'resource' => 'portal',
+                        'resource' => 'cidadeonline',
                         'action' => 'index',
                         'privilege' => 'index',
                         'pages'=>[
@@ -178,7 +188,7 @@ return [
                                 'label' => 'Listar Empresas',
                                 'route' => 'empresas',
                                 'controller' => 'empresas',
-                                'resource' => 'portal',
+                                'resource' => 'cidadeonline',
                                 'action' => 'index',
                                 'privilege' => 'index',
                             ],
@@ -186,7 +196,7 @@ return [
                                 'label' => 'Nova Empresas',
                                 'route' => 'empresas',
                                 'controller' => 'empresas',
-                                'resource' => 'portal',
+                                'resource' => 'cidadeonline',
                                 'action' => 'create',
                                 'privilege' => 'create',
                             ]
@@ -196,15 +206,15 @@ return [
                         'label' => 'Posts',
                         'route' => 'posts',
                         'controller' => 'posts',
-                        'resource' => 'portal',
+                        'resource' => 'cidadeonline',
                         'action' => 'index',
                         'privilege' => 'index',
                         'pages'=>[
                             [
                                 'label' => 'Listar Posts',
                                 'route' => 'posts',
-                                'controller' => 'v',
-                                'resource' => 'portal',
+                                'controller' => 'posts',
+                                'resource' => 'cidadeonline',
                                 'action' => 'index',
                                 'privilege' => 'index',
                             ],
@@ -212,7 +222,59 @@ return [
                                 'label' => 'Nova Posts',
                                 'route' => 'posts',
                                 'controller' => 'posts',
-                                'resource' => 'portal',
+                                'resource' => 'cidadeonline',
+                                'action' => 'create',
+                                'privilege' => 'create',
+                            ]
+                        ]
+                    ],
+                      [
+                        'label' => 'Classificados',
+                        'route' => 'classificados',
+                        'controller' => 'classificados',
+                        'resource' => 'cidadeonline',
+                        'action' => 'index',
+                        'privilege' => 'index',
+                        'pages'=>[
+                            [
+                                'label' => 'Listar Classificados',
+                                'route' => 'classificados',
+                                'controller' => 'classificados',
+                                'resource' => 'cidadeonline',
+                                'action' => 'index',
+                                'privilege' => 'index',
+                            ],
+                            [
+                                'label' => 'Novo Classificados',
+                                'route' => 'classificados',
+                                'controller' => 'classificados',
+                                'resource' => 'cidadeonline',
+                                'action' => 'create',
+                                'privilege' => 'create',
+                            ]
+                        ]
+                    ],
+                    [
+                        'label' => 'Comentarios',
+                        'route' => 'comentarios',
+                        'controller' => 'comentarios',
+                        'resource' => 'cidadeonline',
+                        'action' => 'index',
+                        'privilege' => 'index',
+                        'pages'=>[
+                            [
+                                'label' => 'Listar Comentarios',
+                                'route' => 'comentarios',
+                                'controller' => 'comentarios',
+                                'resource' => 'cidadeonline',
+                                'action' => 'index',
+                                'privilege' => 'index',
+                            ],
+                            [
+                                'label' => 'Novo Comentarios',
+                                'route' => 'comentarios',
+                                'controller' => 'comentarios',
+                                'resource' => 'cidadeonline',
                                 'action' => 'create',
                                 'privilege' => 'create',
                             ]
@@ -274,5 +336,95 @@ return [
 
 
         ],
+        'secondary'=>[
+            [
+                'label' => 'Home',
+                'route' => 'home',
+                'controller' => 'cidadeonline',
+                'resource' => 'cidadeonline',
+                'action' => 'index',
+                'icone'=>'fa fa-home',
+                'privilege' => 'index',
+            ],
+            [
+                'label' => 'Cidade Online',
+                'route' => 'home',
+                'controller' => 'cidadeonline',
+                'resource' => 'cidadeonline',
+                'action' => 'index',
+                'icone'=>'fa fa-home',
+                'privilege' => 'index',
+                'pages'=>[
+                    [
+                        'label' => 'ACONTECEU',
+                        'route' => 'cidadeonline-pages',
+                        'controller' => 'cidadeonline',
+                        'resource' => 'cidadeonline',
+                        'action' => 'blog-posts',
+                        'privilege' => 'blog-posts',
+                        'id' => 'aconteceu',
+
+                    ],
+                     [
+                        'label' => 'EVENTOS',
+                        'route' => 'cidadeonline-pages',
+                        'controller' => 'cidadeonline',
+                        'resource' => 'cidadeonline',
+                        'action' => 'blog-posts',
+                         'id' => 'eventos',
+                        'privilege' => 'blog-posts',
+
+
+                    ],
+                     [
+                        'label' => 'ESPORTES',
+                        'route' => 'cidadeonline-pages',
+                        'controller' => 'cidadeonline',
+                        'resource' => 'cidadeonline',
+                        'action' => 'blog-posts',
+                        'privilege' => 'blog-posts',
+                        'id' => 'esportes',
+
+                    ],
+
+                ]
+            ],
+            [
+                'label' => 'ONDE COMPRAR',
+                'route' => 'cidadeonline-pages',
+                'controller' => 'cidadeonline',
+                'resource' => 'cidadeonline',
+                'action' => 'onde-comprar',
+                'icone'=>'fa fa-home',
+                'privilege' => 'onde-comprar',
+            ],
+            [
+                'label' => 'ONDE FICAR',
+                'route' => 'cidadeonline-pages',
+                'controller' => 'cidadeonline',
+                'resource' => 'cidadeonline',
+                'action' => 'onde-ficar',
+                'icone'=>'fa fa-home',
+                'privilege' => 'onde-ficar',
+            ],
+            [
+                'label' => 'ONDE COMER',
+                'route' => 'cidadeonline-pages',
+                'controller' => 'cidadeonline',
+                'resource' => 'cidadeonline',
+                'action' => 'onde-comer',
+                'icone'=>'fa fa-home',
+                'privilege' => 'onde-comer',
+            ],
+            [
+                'label' => 'ONDE  SE DIVERTIR',
+                'route' => 'cidadeonline-pages',
+                'controller' => 'cidadeonline',
+                'resource' => 'cidadeonline',
+                'action' => 'onde-se-divertir',
+                'icone'=>'fa fa-home',
+                'privilege' => 'onde-se-divertir',
+            ],
+        ]
     ],
 ];

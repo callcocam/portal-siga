@@ -38,6 +38,7 @@ class CategoriasForm extends AbstractForm
         $this->setEmpresa([]);
         $this->setModified(["type" => "hidden"]);
         $this->setSave([]);
+        $this->setSavecopy([]);
         $this->setCsrf([]);
         $this->setState([]);
         $this->setDescription([]);

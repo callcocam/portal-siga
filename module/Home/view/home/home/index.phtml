@@ -1,0 +1,329 @@
+<?php
+$tpl_g = $this->partial('/tpl/article_g');
+$tpl_m = $this->partial('/tpl/article_m');
+$tpl_p = $this->partial('/tpl/article_p');
+$tpl_empresa = $this->partial('/tpl/empresa_p');
+
+?>
+<!--HOME SLIDER-->
+<section class="main-slider">
+    <h3>Últimas Atualizações:</h3>
+    <div class="container">
+
+        <div class="slidecount">
+            <?php
+            $cat = $this->HomeHelper()->CatByName('noticias');
+            $post=$this->HomeHelper()->ExeRead("bs_posts", "WHERE state =? AND catid=? ORDER BY created DESC LIMIT 3 OFFSET 0", ['1',$cat->getData()->id]);
+            if (!$cat->getResult()):
+                echo '<div class="alert alert-danger">
+            	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            	<strong>OPSS!</strong>'.$cat->getError().'
+            </div>';
+            else:
+
+                foreach ($post->getData() as $slide):
+                    $slide['title'] = \Base\Model\Check::Words($slide['title'], 12);
+                    $slide['description'] = \Base\Model\Check::Words($slide['description'], 38);
+                    $slide['datetime'] = date('Y-m-d', strtotime($slide['created']));
+                    $slide['pubdate'] = date('d/m/Y H:i', strtotime($slide['modified']));
+                    $this->HomeHelper()->Show($slide, $tpl_g);
+                endforeach;
+            endif;
+            ?>
+        </div>
+
+        <div class="slidenav"></div>
+    </div><!-- Container Slide -->
+
+</section><!-- /slider -->
+
+
+<!--HOME CONTENT-->
+<div class="site-container">
+
+<section class="main-destaques">
+    <h2>Destaques:</h2>
+
+    <section class="main_lastnews">
+        <h1 class="line_title"><span class="oliva">Últimas Notícias:</span></h1>
+
+        <?php
+        $post=$this->HomeHelper()->ExeRead("bs_posts", "WHERE state =? AND catid=? ORDER BY created DESC LIMIT 1 OFFSET 3", ['1',$cat->getData()->id],true);
+        if (!$post->getResult()):
+           echo '<div class="alert alert-danger">
+            	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            	<strong>OPSS!</strong>'.$cat->getError().'
+            </div>';
+        else:
+            $new = $post->getData();
+            $new['title'] = \Base\Model\Check::Words($new['title'], 12);
+            $new['description'] = \Base\Model\Check::Words($new['description'], 38);
+            $new['datetime'] = date('Y-m-d', strtotime($new['created']));
+            $new['pubdate'] = date('d/m/Y H:i', strtotime($new['modified']));
+            $this->HomeHelper()->Show($new, $tpl_m);
+        endif;
+        ?>
+
+        <div class="last_news">
+            <?php
+            $post=$this->HomeHelper()->ExeRead("bs_posts", "WHERE state =? AND catid=? ORDER BY created DESC LIMIT 4 OFFSET 4", ['1',$cat->getData()->id]);
+            if (!$post->getResult()):
+                echo '<div class="alert alert-danger">
+            	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            	<strong>OPSS!</strong>'.$cat->getError().'
+            </div>';
+            else:
+                foreach ($post->getData() as $news):
+                    $news['title'] = \Base\Model\Check::Words($news['title'], 12);
+                    $news['datetime'] = date('Y-m-d', strtotime($news['created']));
+                    $news['pubdate'] = date('d/m/Y H:i', strtotime($news['modified']));
+                    $this->HomeHelper()->Show($news, $tpl_p);
+                endforeach;
+            endif;
+            ?>
+        </div>
+
+
+        <nav class="guia_comercial">
+            <h1>Guia de Empresas:</h1>
+            <ul class="navitem">
+                <li id="comer" class="azul tabactive">Onde Comer</li>
+                <li id="ficar">Onde Ficar</li>
+                <li id="comprar" class="verde">Onde Comprar</li>
+                <li id="divertir" class="roxo">Onde se Divertir</li>
+            </ul>
+
+            <div class="tab comer">
+                <?php
+                $empcat = 'onde-comer';
+                $empresa=$this->HomeHelper()->ExeRead("bs_empresas", "WHERE state = 1 AND  catid = ? ORDER BY rand() LIMIT 4", [$empcat]);
+                if (!$empresa->getResult()):
+                    echo '<div class="alert alert-danger">
+            	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            	<strong>OPSS!</strong>'.$cat->getError().'
+            </div>';
+                else:
+                    foreach ($empresa->getData() as $emp):
+                        $this->HomeHelper()->Show($emp, $tpl_empresa);
+                    endforeach;
+                endif;
+                ?>
+            </div>
+
+            <div class="tab ficar none">
+                <?php
+                $empcat = 'onde-ficar';
+                $empresa= $this->HomeHelper()->ExeRead("bs_empresas","WHERE state =? AND catid=?",['1',$empcat]);
+                if (!$empresa->getResult()):
+                        echo '<div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <strong>OPSS!</strong>'.$cat->getError().'
+                        </div>';
+                else:
+                    foreach ($empresa->getData() as $emp):
+                        $this->HomeHelper()->Show($emp, $tpl_empresa);
+                    endforeach;
+                endif;
+                ?>
+            </div>
+
+            <div class="tab comprar none">
+                <?php
+                $empcat = 'onde-comprar';
+                $empresa= $this->HomeHelper()->ExeRead("bs_empresas","WHERE state =? AND catid=?",['1',$empcat]);
+                if (!$empresa->getResult()):
+                    echo '<div class="alert alert-danger">
+            	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            	<strong>OPSS!</strong>'.$cat->getError().'
+            </div>';
+                else:
+                    foreach ($empresa->getData() as $emp):
+                        $this->HomeHelper()->Show($emp, $tpl_empresa);
+                    endforeach;
+                endif;
+                ?>
+            </div>
+
+            <div class="tab divertir none">
+                <?php
+                $empcat = 'onde-se-divertir';
+                $empresa= $this->HomeHelper()->ExeRead("bs_empresas","WHERE state =? AND catid=?",['1',$empcat]);
+                if (!$empresa->getResult()):
+                    echo '<div class="alert alert-danger">
+            	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            	<strong>OPSS!</strong>'.$cat->getError().'
+            </div>';
+                else:
+                    foreach ($empresa->getData() as $emp):
+                        $this->HomeHelper()->Show($emp, $tpl_empresa);
+                    endforeach;
+                endif;
+                ?>
+            </div>
+        </nav>
+    </section><!--  last news -->
+
+
+    <aside>
+        <div class="aside-banner">
+            <!--300x250-->
+            <a href="http://www.upinside.com.br/campus" title="Campus UpInside - Cursos Profissionais em TI">
+                <img src="/_tmp/banner_large.png" title="Campus UpInside - Cursos Profissionais em TI" alt="Campus UpInside - Cursos Profissionais em TI" />
+            </a>
+        </div>
+
+        <h1 class="line_title"><span class="vermelho">Destaques:</span></h1>
+
+        <?php
+        $asideposts=$this->HomeHelper()->ExeRead("bs_posts", "WHERE state = 1 ORDER BY post_views DESC, created DESC LIMIT 3",[]);
+        if (!$asideposts->getResult()):
+            echo '<div class="alert alert-danger">
+            	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            	<strong>OPSS!</strong>'.$cat->getError().'
+            </div>';
+        else:
+            foreach ($asideposts->getData() as $aposts):
+                $aposts['title'] = \Base\Model\Check::Words($aposts['title'], 12);
+                $aposts['datetime'] = date('Y-m-d', strtotime($aposts['created']));
+                $aposts['pubdate'] = date('d/m/Y H:i', strtotime($aposts['modified']));
+                $this->HomeHelper()->Show($aposts, $tpl_p);
+            endforeach;
+        endif;
+        ?>
+    </aside>
+
+</section><!-- destaques -->
+
+
+<section class="last_forcat">
+
+    <h1>Por categoria!</h1>
+
+    <section class="eventos">
+        <h2 class="line_title"><span class="roxo">Aconteceu:</span></h2>
+
+        <?php
+        $cat = $this->HomeHelper()->CatByName('aconteceu');
+        $post= $this->HomeHelper()->ExeRead("bs_posts","WHERE state =? AND catid=? ORDER BY created DESC LIMIT 1 OFFSET 0",['1',$cat->getData()->id],true);
+        if (!$post->getResult()):
+            echo '<div class="alert alert-danger">
+            	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            	<strong>OPSS!</strong>'.$cat->getError().'
+            </div>';
+        else:
+            $new = $post->getData();
+            $new['title'] = \Base\Model\Check::Words($new['title'], 9);
+            $new['description'] = \Base\Model\Check::Words($new['description'], 20);
+            $new['datetime'] = date('Y-m-d', strtotime($new['created']));
+            $new['pubdate'] = date('d/m/Y H:i', strtotime($new['modified']));
+            $this->HomeHelper()->Show($new, $tpl_m);
+        endif;
+        ?>
+
+        <div class="last_news">
+            <?php
+            $post= $this->HomeHelper()->ExeRead("bs_posts","WHERE state =? AND catid=? ORDER BY created DESC LIMIT 3 OFFSET 1",['1',$cat->getData()->id]);
+            if (!$post->getResult()):
+                echo '<div class="alert alert-danger">
+            	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            	<strong>OPSS!</strong>'.$cat->getError().'
+            </div>';
+            else:
+                foreach ($post->getData() as $news):
+                    $news['title'] = \Base\Model\Check::Words($news['title'], 12);
+                    $news['datetime'] = date('Y-m-d', strtotime($news['created']));
+                    $news['pubdate'] = date('d/m/Y H:i', strtotime($news['modified']));
+                    $this->HomeHelper()->Show($news, $tpl_p);
+                endforeach;
+            endif;
+            ?>
+        </div>
+    </section>
+
+
+    <section class="esportes">
+        <h2 class="line_title"><span class="verde">Eventos:</span></h2>
+
+        <?php
+        $cat = $this->HomeHelper()->CatByName('eventos');
+        $post= $this->HomeHelper()->ExeRead("bs_posts","WHERE state =? AND catid=? ORDER BY created DESC LIMIT 1 OFFSET 0",['1',$cat->getData()->id],true);
+        if (!$post->getResult()):
+            echo '<div class="alert alert-danger">
+            	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            	<strong>OPSS!</strong>'.$cat->getError().'
+            </div>';
+        else:
+            $new = $post->getData();
+            $new['title'] = \Base\Model\Check::Words($new['title'], 9);
+            $new['description'] = \Base\Model\Check::Words($new['description'], 20);
+            $new['datetime'] = date('Y-m-d', strtotime($new['created']));
+            $new['pubdate'] = date('d/m/Y H:i', strtotime($new['modified']));
+            $this->HomeHelper()->Show($new, $tpl_m);
+        endif;
+        ?>
+
+        <div class="last_news">
+            <?php
+           $post= $this->HomeHelper()->ExeRead("bs_posts","WHERE state =? AND catid=? ORDER BY created DESC LIMIT 3 OFFSET 1",['1',$cat->getData()->id]);
+            if (!$post->getResult()):
+                echo '<div class="alert alert-danger">
+            	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            	<strong>OPSS!</strong>'.$cat->getError().'
+            </div>';
+            else:
+                foreach ($post->getData() as $news):
+                    $news['title'] = \Base\Model\Check::Words($news['title'], 12);
+                    $news['datetime'] = date('Y-m-d', strtotime($news['created']));
+                    $news['pubdate'] = date('d/m/Y H:i', strtotime($news['modified']));
+                    $this->HomeHelper()->Show($news, $tpl_p);
+                endforeach;
+            endif;
+            ?>
+        </div>
+    </section>
+
+
+    <section class="baladas">
+        <h2 class="line_title"><span class="azul">Esportes:</span></h2>
+
+        <?php
+        $cat = $this->HomeHelper()->CatByName('esportes');
+        $post= $this->HomeHelper()->ExeRead("bs_posts","WHERE state =? AND catid=? ORDER BY created DESC LIMIT 1 OFFSET 0",['1',$cat->getData()->id],true);
+        if (!$post->getResult()):
+            echo '<div class="alert alert-danger">
+            	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            	<strong>OPSS!</strong>'.$cat->getError().'
+            </div>';
+        else:
+            $new = $post->getData();
+            $new['title'] = \Base\Model\Check::Words($new['title'], 9);
+            $new['description'] = \Base\Model\Check::Words($new['description'], 20);
+            $new['datetime'] = date('Y-m-d', strtotime($new['created']));
+            $new['pubdate'] = date('d/m/Y H:i', strtotime($new['modified']));
+            $this->HomeHelper()->Show($new, $tpl_m);
+        endif;
+        ?>
+
+        <div class="last_news">
+            <?php
+            $post=$this->HomeHelper()->ExeRead('bs_posts',"WHERE state =? AND catid=? ORDER BY created DESC LIMIT 3 OFFSET 1",['1',$cat->getData()->id]);
+            if (!$post->getResult()):
+                echo '<div class="alert alert-danger">
+            	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            	<strong>OPSS!</strong>'.$cat->getError().'
+            </div>';
+            else:
+                foreach ($post->getData() as $news):
+                    $news['title'] = \Base\Model\Check::Words($news['title'], 12);
+                    $news['datetime'] = date('Y-m-d', strtotime($news['created']));
+                    $news['pubdate'] = date('d/m/Y H:i', strtotime($news['modified']));
+                    $this->HomeHelper()->Show($news, $tpl_p);
+                endforeach;
+            endif;
+            ?>
+        </div>
+    </section>
+
+</section><!-- categorias -->
+<div class="clear"></div>
+</div><!--/ site container -->

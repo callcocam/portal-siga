@@ -50,228 +50,227 @@ class EmpresasFilter extends AbstractInputFilter
         $this->setState([]);
         $this->setDescription([]);
         $inputFilter = parent::getInputFilter();
-                    //############################################ informações da coluna title ##############################################:
-                     $inputFilter->add([
-                    'name' => 'title',
-                    'required' => true,
-                    'filters' => [
-                        ['name' => StripTags::class],
-                        ['name' => StringTrim::class],
+        //############################################ informações da coluna title ##############################################:
+        $inputFilter->add([
+            'name' => 'title',
+            'required' => true,
+            'filters' => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+            ],
+            'validators' => [
+                [
+                    'name' => NotEmpty::class,
+                    'options' => [
+                        'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
                     ],
-                    'validators' => [
-                        [
-                            'name' => NotEmpty::class,
-                            'options' => [
-                                'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
-                            ],
-                        ],
-                    ],
-                ]);
-        
-        
-                    //############################################ informações da coluna email ##############################################:
-                     $inputFilter->add([
-                    'name' => 'email',
-                    'required' => true,
-                    'filters' => [
-                        ['name' => StripTags::class],
-                        ['name' => StringTrim::class],
-                    ],
-                    'validators' => [
-                        [
-                            'name' => NotEmpty::class,
-                            'options' => [
-                                'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
-                            ],
-                        ],
-                    ],
-                ]);
-        
-        
-                    //############################################ informações da coluna url ##############################################:
-                     $inputFilter->add([
-                    'name' => 'url',
-                    'required' => false,
-                    'filters' => [
-                        ['name' => StripTags::class],
-                        ['name' => StringTrim::class],
-                    ],
+                ],
+            ],
+        ]);
 
-                ]);
-        
-        
-                    //############################################ informações da coluna images ##############################################:
-                     $inputFilter->add([
-                    'name' => 'images',
-                    'required' => true,
-                    'filters' => [
-                        ['name' => StripTags::class],
-                        ['name' => StringTrim::class],
+        //############################################ informações da coluna phone ##############################################:
+        $inputFilter->add([
+            'name' => 'phone',
+            'required' => true,
+            'filters' => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+            ],
+            'validators' => [
+                [
+                    'name' => NotEmpty::class,
+                    'options' => [
+                        'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
                     ],
-                    'validators' => [
-                        [
-                            'name' => NotEmpty::class,
-                            'options' => [
-                                'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
-                            ],
-                        ],
-                    ],
-                ]);
-        
-        
-                    //############################################ informações da coluna ramo ##############################################:
-                     $inputFilter->add([
-                    'name' => 'ramo',
-                    'required' => true,
-                    'filters' => [
-                        ['name' => StripTags::class],
-                        ['name' => StringTrim::class],
-                    ],
-                    'validators' => [
-                        [
-                            'name' => NotEmpty::class,
-                            'options' => [
-                                'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
-                            ],
-                        ],
-                    ],
-                ]);
-        
-        
-                    //############################################ informações da coluna site ##############################################:
-                     $inputFilter->add([
-                    'name' => 'site',
-                    'required' => false,
-                    'filters' => [
-                        ['name' => StripTags::class],
-                        ['name' => StringTrim::class],
-                    ],
+                ],
+            ],
+        ]);
 
-                ]);
-        
-        
-                    //############################################ informações da coluna facebook ##############################################:
-                     $inputFilter->add([
-                    'name' => 'facebook',
-                    'required' => false,
-                    'filters' => [
-                        ['name' => StripTags::class],
-                        ['name' => StringTrim::class],
-                    ],
 
-                ]);
-        
-        
-                    //############################################ informações da coluna endereco ##############################################:
-                     $inputFilter->add([
-                    'name' => 'endereco',
-                    'required' => true,
-                    'filters' => [
-                        ['name' => StripTags::class],
-                        ['name' => StringTrim::class],
+        //############################################ informações da coluna email ##############################################:
+        $inputFilter->add([
+            'name' => 'email',
+            'required' => true,
+            'filters' => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+            ],
+            'validators' => [
+                [
+                    'name' => NotEmpty::class,
+                    'options' => [
+                        'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
                     ],
-                    'validators' => [
-                        [
-                            'name' => NotEmpty::class,
-                            'options' => [
-                                'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
-                            ],
-                        ],
-                    ],
-                ]);
-        
-        
-                    //############################################ informações da coluna uf ##############################################:
-                     $inputFilter->add([
-                    'name' => 'uf',
-                    'required' => true,
-                    'filters' => [
-                        ['name' => StripTags::class],
-                        ['name' => StringTrim::class],
-                    ],
-                    'validators' => [
-                        [
-                            'name' => NotEmpty::class,
-                            'options' => [
-                                'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
-                            ],
-                        ],
-                    ],
-                ]);
-        
-        
-                    //############################################ informações da coluna cidade ##############################################:
-                     $inputFilter->add([
-                    'name' => 'cidade',
-                    'required' => true,
-                    'filters' => [
-                        ['name' => StripTags::class],
-                        ['name' => StringTrim::class],
-                    ],
-                    'validators' => [
-                        [
-                            'name' => NotEmpty::class,
-                            'options' => [
-                                'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
-                            ],
-                        ],
-                    ],
-                ]);
-        
-        
-                    //############################################ informações da coluna catid ##############################################:
-                     $inputFilter->add([
-                    'name' => 'catid',
-                    'required' => true,
-                    'filters' => [
-                        ['name' => StripTags::class],
-                        ['name' => StringTrim::class],
-                    ],
-                    'validators' => [
-                        [
-                            'name' => NotEmpty::class,
-                            'options' => [
-                                'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
-                            ],
-                        ],
-                    ],
-                ]);
-        
-        
-                    //############################################ informações da coluna password ##############################################:
-                     $inputFilter->add([
-                    'name' => 'password',
-                    'required' => true,
-                    'filters' => [
-                        ['name' => StripTags::class],
-                        ['name' => StringTrim::class],
-                    ],
-                    'validators' => [
-                        [
-                            'name' => NotEmpty::class,
-                            'options' => [
-                                'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
-                            ],
-                        ],
-                    ],
-                ]);
-        
-        
-                    //############################################ informações da coluna empresa_views ##############################################:
-                     $inputFilter->add([
-                    'name' => 'empresa_views',
-                    'required' => false,
-                    'filters' => [
-                        ['name' => StripTags::class],
-                        ['name' => StringTrim::class],
-                    ],
+                ],
+            ],
+        ]);
 
-                ]);
-        
-        
+
+        //############################################ informações da coluna url ##############################################:
+        $inputFilter->add([
+            'name' => 'url',
+            'required' => false,
+            'filters' => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+            ],
+
+        ]);
+
+
+        //############################################ informações da coluna images ##############################################:
+        $inputFilter->add([
+            'name' => 'images',
+            'required' => true,
+            'filters' => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+            ],
+            'validators' => [
+                [
+                    'name' => NotEmpty::class,
+                    'options' => [
+                        'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
+                    ],
+                ],
+            ],
+        ]);
+
+
+        //############################################ informações da coluna ramo ##############################################:
+        $inputFilter->add([
+            'name' => 'ramo',
+            'required' => true,
+            'filters' => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+            ],
+            'validators' => [
+                [
+                    'name' => NotEmpty::class,
+                    'options' => [
+                        'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
+                    ],
+                ],
+            ],
+        ]);
+
+
+        //############################################ informações da coluna site ##############################################:
+        $inputFilter->add([
+            'name' => 'site',
+            'required' => false,
+            'filters' => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+            ],
+
+        ]);
+
+
+        //############################################ informações da coluna facebook ##############################################:
+        $inputFilter->add([
+            'name' => 'facebook',
+            'required' => false,
+            'filters' => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+            ],
+
+        ]);
+
+
+        //############################################ informações da coluna endereco ##############################################:
+        $inputFilter->add([
+            'name' => 'endereco',
+            'required' => true,
+            'filters' => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+            ],
+            'validators' => [
+                [
+                    'name' => NotEmpty::class,
+                    'options' => [
+                        'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
+                    ],
+                ],
+            ],
+        ]);
+
+
+        //############################################ informações da coluna uf ##############################################:
+        $inputFilter->add([
+            'name' => 'uf',
+            'required' => true,
+            'filters' => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+            ],
+            'validators' => [
+                [
+                    'name' => NotEmpty::class,
+                    'options' => [
+                        'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
+                    ],
+                ],
+            ],
+        ]);
+
+
+        //############################################ informações da coluna cidade ##############################################:
+        $inputFilter->add([
+            'name' => 'cidade',
+            'required' => true,
+            'filters' => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+            ],
+            'validators' => [
+                [
+                    'name' => NotEmpty::class,
+                    'options' => [
+                        'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
+                    ],
+                ],
+            ],
+        ]);
+
+
+        //############################################ informações da coluna catid ##############################################:
+        $inputFilter->add([
+            'name' => 'catid',
+            'required' => true,
+            'filters' => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+            ],
+            'validators' => [
+                [
+                    'name' => NotEmpty::class,
+                    'options' => [
+                        'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
+                    ],
+                ],
+            ],
+        ]);
+
+
+
+        //############################################ informações da coluna empresa_views ##############################################:
+        $inputFilter->add([
+            'name' => 'empresa_views',
+            'required' => false,
+            'filters' => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+            ],
+
+        ]);
+
+
         return $inputFilter;
     }
 
 
 }
-

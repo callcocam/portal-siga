@@ -223,6 +223,7 @@ abstract class AbstractController extends AbstractActionController
          $this->form->setInputFilter($inputfilter->getInputFilter());
          $model->exchangeArray($this->data);
          $this->form->setData($this->data);
+
          if ($this->form->isValid()) {
              if (isset($this->data['save_copy'])):
                  $this->data['id'] = 'AUTOMATICO';

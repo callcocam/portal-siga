@@ -7,13 +7,13 @@ return [
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
         ],
     ],
-    /*'db' => [
-        'driver' => 'Pdo',
-        'dsn' => 'mysql:dbname=rest_client;host=rest_client.mysql.dbaas.com.br',
-        'driver_options' => [
-            PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
-        ],
-    ],*/
+    // 'db' => [
+    //     'driver' => 'Pdo',
+    //     'dsn' => 'mysql:dbname=portal_city;host=portal_city.mysql.dbaas.com.br',
+    //     'driver_options' => [
+    //         PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
+    //     ],
+    // ],
     'service_manager' => [
         'factories' => [
             'Zend\Db\Adapter\Adapter'=> 'Zend\Db\Adapter\AdapterServiceFactory',

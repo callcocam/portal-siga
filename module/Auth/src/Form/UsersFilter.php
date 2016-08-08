@@ -220,6 +220,15 @@ class UsersFilter extends AbstractInputFilter{
         ]);
 
         $inputFilter->add([
+            'name' => 'url',
+            'required' => false,
+            'filters' => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+            ]
+        ]);
+
+        $inputFilter->add([
             'name' => 'cidade',
             'required' => false,
             'filters' => [

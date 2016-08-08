@@ -23,6 +23,11 @@ return [
         'exception_template'       => 'error/index',
         'template_map' => [
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
+            'home/layout'           => __DIR__ . '/../view/layout/home.phtml',
+            'cidadeonline_controller_cidadeonlinecontroller/layout'           => __DIR__ . '/../view/layout/portal.phtml',
+            'loadcommentsposts/layout'           => __DIR__ . '/../view/layout/transp.phtml',
+            'loadcommentsempresas/layout'           => __DIR__ . '/../view/layout/transp.phtml',
+            'loadcommentsclassificados/layout'           => __DIR__ . '/../view/layout/transp.phtml',
             'authenticate/layout'           => __DIR__ . '/../view/layout/auth.phtml',
             'register/layout'           => __DIR__ . '/../view/layout/auth.phtml',
             'confirm-email/layout'           => __DIR__ . '/../view/layout/auth.phtml',

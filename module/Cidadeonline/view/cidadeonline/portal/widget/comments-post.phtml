@@ -1,0 +1,28 @@
+<div class="comment-lists">
+<?php
+if (!empty($this->id)):
+ $this->HomeHelper()->setSelect(" a.*, b.title as autor,b.images as images ");
+ //tabela,estraselect,params,bool[true=1 registro ou false uma lista]
+ $comments=$this->HomeHelper()->ExeRead("bs_comentarios a", ", bs_users b WHERE a.created_by=b.id AND  a.parent=? AND a.parent_id=? AND a.tipo='0' ORDER BY a.modified DESC", [$this->parent,$this->id]);
+ $html=[];
+ if (!$comments->getResult()):
+    ?>
+    <h4>Não Á Comentarios Para Este Artigo</h4>
+    <?php
+ else:
+ $nomargin=" no-margin-left";
+     ?>
+     <h4><?=$comments->getResult()?> Comments To This Article</h4>
+    <ul>
+    <?php
+    $tpl_form = $this->partial('/comments-form');
+    $tpl_comments=$this->partial('/tpl/load-comments');
+    echo $this->HomeHelper()->readComments($comments,$tpl_comments,$tpl_form);
+    ?>
+    </ul>
+    <?php
+ endif;
+ endif;
+$this->HomeHelper()->setSelect(" * ");
+ ?>
+ </div> <!-- End Comment-Lists -->
