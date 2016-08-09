@@ -148,6 +148,17 @@ class ClassificadosFilter extends AbstractInputFilter
                     ],
 
                 ]);
+
+                //############################################ informações da coluna site ##############################################:
+                     $inputFilter->add([
+                    'name' => 'created_by',
+                    'required' => false,
+                    'filters' => [
+                        ['name' => StripTags::class],
+                        ['name' => StringTrim::class],
+                    ],
+
+                ]);
         
         
                     //############################################ informações da coluna url ##############################################:

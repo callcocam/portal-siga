@@ -40,6 +40,8 @@ class Empresas extends AbstractModel
 
     protected $catid = null;
 
+    protected $created_by;
+
     protected $empresa_views = null;
 
     /**
@@ -161,6 +163,13 @@ class Empresas extends AbstractModel
         return $this->catid;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCreatedBy()
+    {
+        return $this->created_by;
+    }
 
     /**
      * get empresa_views
@@ -300,6 +309,14 @@ class Empresas extends AbstractModel
     {
         $this->catid=$catid;
         return $this;
+    }
+
+    /**
+     * @param mixed $created_by
+     */
+    public function setCreatedBy($created_by)
+    {
+        $this->created_by = $created_by;
     }
 
     /**

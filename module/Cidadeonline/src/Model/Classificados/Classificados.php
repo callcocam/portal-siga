@@ -32,6 +32,8 @@ class Classificados extends AbstractModel
 
     protected $images = null;
 
+    protected $created_by;
+
     protected $classifcados_views = null;
 
     /**
@@ -113,6 +115,15 @@ class Classificados extends AbstractModel
     {
         return $this->images;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedBy()
+    {
+        return $this->created_by;
+    }
+
 
     /**
      * get classifcados_views
@@ -211,6 +222,15 @@ class Classificados extends AbstractModel
         $this->images=$images;
         return $this;
     }
+
+    /**
+     * @param mixed $created_by
+     */
+    public function setCreatedBy($created_by)
+    {
+        $this->created_by = $created_by;
+    }
+
 
     /**
      * set classifcados_views

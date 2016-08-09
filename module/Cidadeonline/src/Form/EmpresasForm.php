@@ -335,6 +335,27 @@ class EmpresasForm extends AbstractForm
                     //'requerid' => true/false,
                 ],
             ]);
+
+         //############################################ informações da coluna empresa_views ##############################################:
+        $this->add([
+                'type' => 'hidden',//hidden, select, radio, checkbox, textarea
+                'name' => 'created_by',
+                'options' => [
+                    //'label' => 'FILD_EMPRESA_VIEWS_LABEL',
+                    //'value_options'      =>[],
+                    //"disable_inarray_validator" => true,
+                ],
+                'attributes' => [
+                    'id'=>'created_by',
+                    'data-access' => '3',
+                    'data-position' => 'geral',
+                    //'readonly' => true/false,
+                    //'requerid' => true/false,
+                ],
+            ]);
+
+
+
         if ($this->has('cidade')):
             if($this->get('cidade')->getAttribute('type')=="select"):
                 /**

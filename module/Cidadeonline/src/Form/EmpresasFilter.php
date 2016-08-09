@@ -268,6 +268,17 @@ class EmpresasFilter extends AbstractInputFilter
 
         ]);
 
+        //############################################ informações da coluna created_by ##############################################:
+        $inputFilter->add([
+            'name' => 'created_by',
+            'required' => false,
+            'filters' => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+            ],
+
+        ]);
+
 
         return $inputFilter;
     }

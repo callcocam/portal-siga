@@ -14,6 +14,7 @@ use Base\Model\Check;
 use Base\Model\Result;
 use Base\Services\Client;
 use Cidadeonline\Form\ComentariosForm;
+use Cidadeonline\Form\EmpresasForm;
 use Home\Form\AuthForm;
 use Home\Form\RegisterForm;
 use Interop\Container\ContainerInterface;
@@ -407,12 +408,13 @@ class HomeHelper extends AbstractHelper{
     public function formMinhaEmpresa($html){
         echo  $this->view->messages();
         if($this->view->user):
-            $form = $this->container->get(AuthForm::class);
+            $form = $this->container->get(EmpresasForm::class);
             $form->setAttribute('action', $this->view->url('cidadeonline-pages', array('controller' => 'cidadeonline', 'action' => 'minha-empresa')));
             $this->view->formElementErrors()
                 ->setMessageOpenFormat('<ul class="nav"><li class="erro-obrigatorio">')
                 ->setMessageSeparatorString('</li>')->render($form);
             $formRender[]= $this->view->form()->openTag($form);
+            $form->get('url')->setAttribute('type','hidden');
             $this->GerarElement($form);
             $primeiro = str_replace(array_keys(self::$html), array_values(self::$html), $html);
             $formRender[]= str_replace(array_keys(self::$labels), array_values(self::$labels), $primeiro);
@@ -453,6 +455,7 @@ class HomeHelper extends AbstractHelper{
                 endif;
                 self::$html["#imagePreview#"] = \Base\Model\Check::Image($caminho, $element->getValue(), "420", "330", "thumbnail img-responsive preview_IMG");
                 $element->setAttribute('type', 'hidden')->setLabel("");
+                self::$html["#{$key}#"] = $this->view->formHidden($element);
             } else {
                 self::$html["#{$key}#"] = $this->view->formRow($element->setLabel(''));
            }
