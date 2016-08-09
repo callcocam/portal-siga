@@ -141,7 +141,7 @@ class Module implements BootstrapListenerInterface, ConfigProviderInterface,Serv
         return [
             'invokables'=>[
                 'viewhelpercaptcha' => 'Base\View\Helper\Form\Custom\Captcha\ViewHelperCaptcha',
-
+                 'CacheHelper' => 'Base\View\Helper\CacheHelper',
 
             ],
             'factories'=>[
@@ -153,6 +153,7 @@ class Module implements BootstrapListenerInterface, ConfigProviderInterface,Serv
                 },
                 'GerarViewHelper'=>GerarViewHelperFactory::class,
                 'Html'=>HtmlElementFactory::class,
+
 
             ]
         ];

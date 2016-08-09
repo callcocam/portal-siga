@@ -10,6 +10,7 @@ namespace Home\Controller;
 
 
 use Auth\Storage\IdentityManager;
+use Base\Files\FilesService;
 use Interop\Container\ContainerInterface;
 use Mail\Service\Mail;
 use Zend\Crypt\Key\Derivation\Pbkdf2;
@@ -18,6 +19,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Mvc\MvcEvent;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
+use Base\Model\Cache;
 
 abstract class AbstractController extends AbstractActionController{
 
@@ -27,6 +29,7 @@ abstract class AbstractController extends AbstractActionController{
     protected $model;
     protected $form;
     protected $filter;
+    protected $filesservice;
     protected $route;
     protected $controller;
     protected $action;
@@ -130,6 +133,15 @@ abstract class AbstractController extends AbstractActionController{
         endif;
         return $this->data;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFilesservice()
+    {
+        $this->filesservice=$this->container->get(FilesService::class);
+        return $this->filesservice;
+    }
     
 
     public function indexAction()
@@ -185,6 +197,18 @@ abstract class AbstractController extends AbstractActionController{
         }
         return new JsonModel(['result'=>false,'class'=>'danger','error'=>"NENHUM POST FOI PASSADO"]);
 
+    }
+
+    public function upload($file) {
+        if ($file):
+            $this->getFilesservice();
+            $this->filesservice->persistFile($file, $this->data);
+            if ($this->filesservice->getResult()):
+                $this->data['images'] = $this->filesservice->getRealFolder();
+                return TRUE;
+            endif;
+        endif;
+        return false;
     }
 
 
@@ -287,6 +311,34 @@ abstract class AbstractController extends AbstractActionController{
         return $this->redirect()->toRoute('home');
     }
 
+    public function cache_usuarios_online(){
+       $cache=new Cache();
+            $data['title']="ANONIMO";
+            $data['images']="/dist/no_avatar.jpg";
+            $data['email']="admin@hotmail.com";
+            $url = sprintf("%s%s", $this->getRequest()->getServer('HTTP_ORIGIN'),$this->params()->fromRoute('action','index'));
+            $data['url']=$url;
+       if ($this->getIdentityManager()->hasIdentity()) {
+             $data['title']=$this->user->title;
+             $data['images']=$this->user->images;
+             $data['email']=$this->user->email;
+        }
+        $data['ip']=$this->getRequest()->getServer('REMOTE_ADDR');
+        $data['agent']=$this->getRequest()->getServer('HTTP_USER_AGENT');
+        $read=$cache->getItem('useronline');
+        if($read){
+            $read[$url]=$data;
+            $cache->setItem('useronline',$read);
+        }
+        else{
+            $cache->setItem('useronline',[$url=>$data]);
+        }
+        
+        echo "<pre>";
+        var_dump($cache->getItem('useronline'));
+        echo "</pre>";
+     }
 
+//\Base\Model\Check::Name($this->getRequest()->getServer('REMOTE_ADDR'))
 
 }

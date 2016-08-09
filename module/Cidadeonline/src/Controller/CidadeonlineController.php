@@ -11,10 +11,15 @@ namespace Cidadeonline\Controller;
 
 use Auth\Model\Users\Users;
 use Auth\Model\Users\UsersRepository;
+use Base\Model\Cache;
 use Cidadeonline\Form\ComentariosFilter;
 use Cidadeonline\Form\ComentariosForm;
+use Cidadeonline\Form\EmpresasFilter;
+use Cidadeonline\Form\EmpresasForm;
 use Cidadeonline\Model\Classificados\Classificados;
 use Cidadeonline\Model\Classificados\ClassificadosRepository;
+use Cidadeonline\Form\ClassificadosFilter;
+use Cidadeonline\Form\ClassificadosForm;
 use Cidadeonline\Model\Comentarios\Comentarios;
 use Cidadeonline\Model\Comentarios\ComentariosRepository;
 use Cidadeonline\Model\Empresas\Empresas;
@@ -42,6 +47,7 @@ class CidadeonlineController extends AbstractController {
 
     public function indexAction()
     {
+        $this->cache_usuarios_online();
         $ViewModel=new ViewModel(['id'=>$this->id]);
         $ViewModel->setTemplate('/cidadeonline/portal/index');
         return $ViewModel;
@@ -52,6 +58,7 @@ class CidadeonlineController extends AbstractController {
      */
     public function postsAction()
     {
+        $this->cache_usuarios_online();
         $this->table=PostsRepository::class;
         $this->model=Posts::class;
         $this->getTable()->postViews($this->id);
@@ -65,6 +72,7 @@ class CidadeonlineController extends AbstractController {
      */
     public function empresaAction()
     {
+        $this->cache_usuarios_online();
         $this->table=EmpresasRepository::class;
         $this->model=Empresas::class;
         $this->getTable()->empresasViews($this->id);
@@ -79,6 +87,7 @@ class CidadeonlineController extends AbstractController {
      */
     public function classificadosAction()
     {
+        $this->cache_usuarios_online();
         $this->table=ClassificadosRepository::class;
         $this->model=Classificados::class;
         $this->getTable()->classificadosViews($this->id);
@@ -92,6 +101,7 @@ class CidadeonlineController extends AbstractController {
      */
     public function categoriasAction()
     {
+        $this->cache_usuarios_online();
        $ViewModel=new ViewModel(['id'=>$this->id]);
         $ViewModel->setTemplate('/cidadeonline/portal/categorias');
         return $ViewModel;
@@ -102,6 +112,7 @@ class CidadeonlineController extends AbstractController {
      */
     public function ramoAction()
     {
+        $this->cache_usuarios_online();
         $ViewModel=new ViewModel(['id'=>$this->id]);
         $ViewModel->setTemplate('/cidadeonline/portal/ramo');
         return $ViewModel;
@@ -113,6 +124,7 @@ class CidadeonlineController extends AbstractController {
      */
     public function noticiasAction()
     {
+        $this->cache_usuarios_online();
         $ViewModel=new ViewModel(['id'=>$this->id]);
         $ViewModel->setTemplate('/cidadeonline/portal/noticias');
         return $ViewModel;
@@ -123,6 +135,7 @@ class CidadeonlineController extends AbstractController {
      */
     public function blogpostsAction()
     {
+        $this->cache_usuarios_online();
         $ViewModel=new ViewModel(['id'=>$this->id]);
         $ViewModel->setTemplate('/cidadeonline/portal/blog-posts');
         return $ViewModel;
@@ -133,6 +146,7 @@ class CidadeonlineController extends AbstractController {
      */
     public function blogautorAction()
     {
+        $this->cache_usuarios_online();
         $ViewModel=new ViewModel(['id'=>$this->id]);
         $ViewModel->setTemplate('/cidadeonline/portal/blog-autor');
         return $ViewModel;
@@ -143,6 +157,7 @@ class CidadeonlineController extends AbstractController {
      */
     public function ondecomprarAction()
     {
+        $this->cache_usuarios_online();
         $ViewModel=new ViewModel(['id'=>$this->id,'action'=>$this->params()->fromRoute('action')]);
         $ViewModel->setTemplate('/cidadeonline/portal/ramo');
         return $ViewModel;
@@ -154,6 +169,7 @@ class CidadeonlineController extends AbstractController {
      */
     public function ondeficarAction()
     {
+        $this->cache_usuarios_online();
         $ViewModel=new ViewModel(['id'=>$this->id,'action'=>$this->params()->fromRoute('action')]);
         $ViewModel->setTemplate('/cidadeonline/portal/ramo');
         return $ViewModel;
@@ -163,7 +179,8 @@ class CidadeonlineController extends AbstractController {
      * @return ViewModel
      */
     public function ondesedivertirAction()
-    {
+    {       
+        $this->cache_usuarios_online();
         $ViewModel=new ViewModel(['id'=>$this->id,'action'=>$this->params()->fromRoute('action')]);
         $ViewModel->setTemplate('/cidadeonline/portal/ramo');
         return $ViewModel;
@@ -174,6 +191,7 @@ class CidadeonlineController extends AbstractController {
      */
     public function ondecomerAction()
     {
+        $this->cache_usuarios_online();
         $ViewModel=new ViewModel(['id'=>$this->id,'action'=>$this->params()->fromRoute('action')]);
         $ViewModel->setTemplate('/cidadeonline/portal/ramo');
         return $ViewModel;
@@ -181,6 +199,7 @@ class CidadeonlineController extends AbstractController {
 
     public function classificadolistaAction()
     {
+        $this->cache_usuarios_online();
         $ViewModel=new ViewModel(['id'=>$this->id,'action'=>$this->params()->fromRoute('action')]);
         $ViewModel->setTemplate('/cidadeonline/portal/classificados-categoria');
         return $ViewModel;
@@ -192,6 +211,7 @@ class CidadeonlineController extends AbstractController {
      */
     public function contatoAction()
     {
+        $this->cache_usuarios_online();
         $ViewModel=new ViewModel(['id'=>$this->id]);
         $ViewModel->setTemplate('/cidadeonline/portal/contato');
         return $ViewModel;
@@ -199,11 +219,11 @@ class CidadeonlineController extends AbstractController {
 
     public function contactAction()
     {
+        $this->cache_usuarios_online();
         return new JsonModel();
     }
 
     public function commentsAction(){
-
         $this->table=ComentariosRepository::class;
         $this->model=Comentarios::class;
         $this->form=ComentariosForm::class;
@@ -237,6 +257,7 @@ class CidadeonlineController extends AbstractController {
      */
 
     public function cadastroAction(){
+        $this->cache_usuarios_online();
         $ViewModel=new ViewModel(['id'=>$this->id,'route'=>'comentarios','page'=>'1','user'=>$this->user]);
         $ViewModel->setTemplate('/cidadeonline/portal/cadastro');
         if (!$this->getData()) {
@@ -254,7 +275,6 @@ class CidadeonlineController extends AbstractController {
         $this->form->setInputFilter($inputfilter->getInputFilter());
         if (! $this->form->isValid()) {
             $this->Messages()->error("OS DADOS PASSADOS SÃO INVALIDOS");
-            Debug::dump($this->form->getMessages());
             return $ViewModel;
         }
         try {
@@ -278,20 +298,61 @@ class CidadeonlineController extends AbstractController {
 
     public function minhacontaAction()
     {
+        $this->cache_usuarios_online();
         $this->template='/cidadeonline/portal/minha-conta';
         return parent::minhacontaAction();
     }
 
     public function minhaempresaAction()
     {
+        $this->cache_usuarios_online();
         $this->template='/cidadeonline/portal/minha-empresa';
         $ViewModel=new ViewModel(['id'=>$this->id,'route'=>'cidadeonline','page'=>'1','user'=>$this->user]);
         $ViewModel->setTemplate('/cidadeonline/portal/minha-empresa');
         return $ViewModel;
     }
+    public function atualizaempresaAction()
+    {
+        $this->cache_usuarios_online();
+        $this->table=EmpresasRepository::class;
+        $this->model=Empresas::class;
+        $this->filter=EmpresasFilter::class;
+        $this->form=EmpresasForm::class;
+        return parent::finalizaAction();
+    }
+
+    public function novoanuncioAction()
+    {
+        $this->cache_usuarios_online();
+        $ViewModel=new ViewModel(['id'=>$this->id,'route'=>'cidadeonline','page'=>'1','user'=>$this->user]);
+        $ViewModel->setTemplate('/cidadeonline/portal/novo-anuncio');
+        return $ViewModel;
+    }
+
+    public function finalizaanucioAction()
+    {
+        $this->table=ClassificadosRepository::class;
+        $this->model=Classificados::class;
+        $this->filter=ClassificadosFilter::class;
+        $this->form=ClassificadosForm::class;
+        return parent::finalizaAction();
+    }
+
+    public function getufAction()
+    {
+        $id=$this->params()->fromRoute('id');
+        $uf['uf']="SC";
+        $cache=new Cache();
+        if($cache->hasItem('data-cidedes')){
+            $cidade=$cache->getItem('data-cidedes');
+            $uf=$cidade[$id];
+        }
+        return new JsonModel($uf);
+    }
 
     public function loginAction()
     {
+        $this->cache_usuarios_online();
         $this->form=AuthForm::class;
         $this->route='home';
         $this->template='/cidadeonline/portal/login';

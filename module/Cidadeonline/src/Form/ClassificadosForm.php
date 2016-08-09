@@ -227,7 +227,7 @@ class ClassificadosForm extends AbstractForm
 
         //############################################ informações da coluna classifcados_views ##############################################:
         $this->add([
-                'type' => 'hidden',//hidden, select, radio, checkbox, textarea
+                'type' => 'text',//hidden, select, radio, checkbox, textarea
                 'name' => 'classifcados_views',
                 'options' => [
                     'label' => 'FILD_CLASSIFCADOS_VIEWS_LABEL',
@@ -238,7 +238,7 @@ class ClassificadosForm extends AbstractForm
                     'id'=>'classifcados_views',
                     'data-access' => '3',
                     'data-position' => 'images',
-
+                    'readonly' => true,
                 ],
             ]
         );

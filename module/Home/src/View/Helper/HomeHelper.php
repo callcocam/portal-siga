@@ -17,6 +17,7 @@ use Cidadeonline\Form\ComentariosForm;
 use Cidadeonline\Form\EmpresasForm;
 use Home\Form\AuthForm;
 use Home\Form\RegisterForm;
+use Cidadeonline\Form\ClassificadosForm;
 use Interop\Container\ContainerInterface;
 use Zend\Db\Adapter\Driver\ResultInterface;
 use Zend\Db\ResultSet\ResultSet;
@@ -408,13 +409,21 @@ class HomeHelper extends AbstractHelper{
     public function formMinhaEmpresa($html){
         echo  $this->view->messages();
         if($this->view->user):
+
             $form = $this->container->get(EmpresasForm::class);
-            $form->setAttribute('action', $this->view->url('cidadeonline-pages', array('controller' => 'cidadeonline', 'action' => 'minha-empresa')));
+            $empresa=$this->ExeRead('bs_empresas',' WHERE created_by=?',[$this->view->user->id],true);
+            if($empresa->getResult()){
+                $form->setData($empresa->getData());
+            }
+            $form->setAttribute('action', $this->view->url('cidadeonline-pages', array('controller' => 'cidadeonline', 'action' => 'atualizaempresa')));
             $this->view->formElementErrors()
                 ->setMessageOpenFormat('<ul class="nav"><li class="erro-obrigatorio">')
                 ->setMessageSeparatorString('</li>')->render($form);
             $formRender[]= $this->view->form()->openTag($form);
             $form->get('url')->setAttribute('type','hidden');
+            $form->get('access')->setAttribute('type','hidden');
+            $form->get('uf')->setAttribute('type','hidden');
+            $form->get('created_by')->setValue($this->view->user->id);
             $this->GerarElement($form);
             $primeiro = str_replace(array_keys(self::$html), array_values(self::$html), $html);
             $formRender[]= str_replace(array_keys(self::$labels), array_values(self::$labels), $primeiro);
@@ -425,6 +434,27 @@ class HomeHelper extends AbstractHelper{
         endif;
     }
 
+    public function formNovoAnuncio($html){
+            echo  $this->view->messages();
+            if($this->view->user):
+                $form = $this->container->get(ClassificadosForm::class);
+                $form->setAttribute('action', $this->view->url('cidadeonline-pages', array('controller' => 'cidadeonline', 'action' => 'finalizaanucio')));
+                $this->view->formElementErrors()
+                    ->setMessageOpenFormat('<ul class="nav"><li class="erro-obrigatorio">')
+                    ->setMessageSeparatorString('</li>')->render($form);
+                $formRender[]= $this->view->form()->openTag($form);
+                $form->get('url')->setAttribute('type','hidden');
+                $form->get('access')->setAttribute('type','hidden');
+                $form->get('created_by')->setValue($this->view->user->id);
+                $this->GerarElement($form);
+                $primeiro = str_replace(array_keys(self::$html), array_values(self::$html), $html);
+                $formRender[]= str_replace(array_keys(self::$labels), array_values(self::$labels), $primeiro);
+                $formRender[]= $this->view->form()->closeTag();
+                return implode("",$formRender);
+            else:
+                return $this->alert("Por Favor Faça Login");
+            endif;
+        }
 
 
 

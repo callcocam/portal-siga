@@ -320,10 +320,10 @@ class EmpresasForm extends AbstractForm
 
         //############################################ informações da coluna empresa_views ##############################################:
         $this->add([
-                'type' => 'hidden',//hidden, select, radio, checkbox, textarea
+                'type' => 'text',//hidden, select, radio, checkbox, textarea
                 'name' => 'empresa_views',
                 'options' => [
-                    //'label' => 'FILD_EMPRESA_VIEWS_LABEL',
+                    'label' => 'FILD_EMPRESA_VIEWS_LABEL',
                     //'value_options'      =>[],
                     //"disable_inarray_validator" => true,
                 ],
@@ -331,7 +331,7 @@ class EmpresasForm extends AbstractForm
                     'id'=>'empresa_views',
                     'data-access' => '3',
                     'data-position' => 'geral',
-                    //'readonly' => true/false,
+                    'readonly' => true,
                     //'requerid' => true/false,
                 ],
             ]);
@@ -374,10 +374,13 @@ class EmpresasForm extends AbstractForm
                     if ($response->isSuccess()) {
                         $data=json_decode($response->getBody(),true);
                         $arraycidades=[];
+                        $dataCidade=[];
                         foreach($data['data'] as $o){
                             $arraycidades[$o['id']]=$o['title'];
+                            $dataCidade[$o['id']]=$o;
                         }
                         $cache->addItem('busca-cidedes',$arraycidades);
+                        $cache->addItem('data-cidedes',$dataCidade);
                     }
                     $this->get('cidade')->setOptions(['value_options' => $arraycidades]);
                 }
