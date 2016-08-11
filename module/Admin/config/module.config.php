@@ -18,16 +18,30 @@ return [
     'router' => [
         'routes' => [
             'admin' => [
-                'type' => Literal::class,
+                'type' => Segment::class,
                 'options' => [
-                    'route'    => '/admin',
+                    'route'    => '/admin[/:action][/:id][/:page]',
                     'defaults' => [
                         'controller' => Controller\AdminController::class,
                         'action'     => 'index',
+                        'id'=>'0',
+                        'page'=>'1'
                     ],
 
                 ],
-
+                'may_terminate' => true,
+                'child_routes' => [
+                    'list' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route'    => '[/:page]',
+                            'defaults' => [
+                                'controller' => Controller\AdminController::class,
+                                'page'     => '1',
+                            ],
+                        ],
+                    ],
+                ]
             ],
             'issusers' => [
                 'type' => Segment::class,

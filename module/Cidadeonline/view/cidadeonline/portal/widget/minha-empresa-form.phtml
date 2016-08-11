@@ -1,13 +1,12 @@
 <div class="margin-top40"></div>
-<div class="form-comment">
-    <fildset>
-        <legend>FORMULARIO MINHA EMPRESA</legend>
-        <div class="row">
+<div class="row">
+    <div class="span10 offset1">
+       <div class="row">
             <div class="span3">
                 <figure>#imagePreview# </figure>
             </div>
             <div class="span8">
-                <input name="attachment" type="file" id="attachment" style="margin-top: 76px;" />
+                <input name="attachment" type="file" id="attachment-empresa" style="margin-top: 76px;" />
                 <p class="help-block">Max. 32MB</p>
             </div>
         </div>
@@ -25,19 +24,17 @@
             </div>
         </div>
         <div class="row">
-            <div class="span12">
+            <div class="span4">
                 <div class="" for="">
                     <?php echo $this->translate('{{ramo}}');?></div><div class="">
                     #ramo#</div>
             </div>
-        </div>
-        <div class="row">
-            <div class="span4">
+           <div class="span4">
                 <div class="" for="">
                     <?php echo $this->translate('{{phone}}');?></div><div class="">
                     #phone#</div>
             </div>
-             <div class="span8">
+             <div class="span4">
                 <div class="" for="">
                     <?php echo $this->translate('{{email}}');?></div><div class="">
                     #email#</div>
@@ -69,12 +66,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="span3">
-                <div class="" for="">
-                    <?php echo $this->translate('{{empresa_views}}');?></div><div class="">
-                    #empresa_views#</div>
-            </div>
-            <div class="span3">
+             <div class="span3">
                 <div class="" for="">
                     <?php echo $this->translate('{{state}}');?></div><div class="">
                     #state#</div>
@@ -83,6 +75,11 @@
                 <div class="" for="">
                     <?php echo $this->translate('{{created}}');?></div><div class="">
                     #created#<span class=""></span></div>
+            </div>
+            <div class="span3">
+                <div class="" for="">
+                    <?php echo $this->translate('{{empresa_views}}');?></div><div class="">
+                    #empresa_views#</div>
             </div>
         </div>
        <div class="row">
@@ -97,11 +94,11 @@
         </div>
         <div class="margin-bottom20"></div>
         <input type="submit" value="ATUALIZAR DADOS DA EMPRESA" name="save">
-    </fildset>
+    </div>
     <script src="/js/tinymce/tinymce.min.js" type="text/javascript"></script>
     <script src="/js/tinymce.init.js" type="text/javascript"></script>
     <script>
-        intTinymce("#description");
+        intTinymce("textarea");
     </script>
 </div> <!-- End Form-Comment -->
 <div class="margin-bottom30"></div>

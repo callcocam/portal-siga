@@ -56,6 +56,24 @@ class IssusersFilter extends AbstractInputFilter{
                 ],
             ],
         ]);
+         $inputFilter->add([
+            'name' => 'phone',
+            'required' => true,
+            'filters' => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+            ],
+            'validators' => [
+                [
+                    'name' => NotEmpty::class,
+                    'options' => [
+                        'messages' => [NotEmpty::IS_EMPTY => "Campo Obrigatorio"]
+                    ],
+                ],
+            ],
+        ]);
+
+
 
         $inputFilter->add([
             'name' => 'cep',

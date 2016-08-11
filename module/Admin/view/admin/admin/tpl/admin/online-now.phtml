@@ -1,0 +1,25 @@
+<?php if($this->CacheHelper()->getItem('useronline')):
+   $i=1;
+   $row=[];
+   foreach ($this->CacheHelper()->getItem('useronline') as $key => $value) {
+    $qtd=$this->AdminHelper()->countRegister('bs_posts',' WHERE created_by=?',[$value['id']]);
+    $value['posts']=$qtd;
+    $qtd=$this->AdminHelper()->countRegister('bs_classificados',' WHERE created_by=?',[$value['id']]);
+    $value['classificados']=$qtd;
+    $qtd=$this->AdminHelper()->countRegister('bs_empresas',' WHERE created_by=?',[$value['id']]);
+    $value['empresas']=$qtd;
+    $tpl=$this->partial("/user-online");
+     $html[]=$this->Html('div')->setClass('col-md-4 col-xs-12 widget widget_tally_box')->setText(PHP_EOL)->appendText($this->AdminHelper()->Show($value,$tpl));
+    if($i>=3){
+      $row[]=$this->Html('div')->setClass('row')->setText(PHP_EOL)->appendText(implode(PHP_EOL, $html));
+      $html=[];
+      $i=0;
+    }
+    $i++;
+  }
+  if($html){
+    $row[]=$this->Html('div')->setClass('row')->setText(PHP_EOL)->appendText(implode(PHP_EOL, $html));
+  }
+  echo implode(PHP_EOL, $row);
+  endif; 
+             

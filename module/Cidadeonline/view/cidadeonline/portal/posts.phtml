@@ -17,20 +17,20 @@ if ($posts->getResult()):
     $breadcrumb = $this->partial('/tpl/breadcrumb');
     $emp=$posts->getData();
     $emp['url']=$emp["url_cat"];
-    echo $this->HomeHelper()->Show($emp, $breadcrumb,"blog-posts");
+    echo $this->HomeHelper()->Show($emp, $breadcrumb,"posts-list");
  endif;
  ?>
 
 <?php
 if ($posts->getResult()):
     $post_figure = $this->partial('/tpl/posts/posts-figure');
-    echo $this->HomeHelper()->Show($posts->getData(), $post_figure,"blog-posts");
+    echo $this->HomeHelper()->Show($posts->getData(), $post_figure,"posts-list");
  endif;
  ?>
 <div class="content">
 <?php
 if ($posts->getResult()):
-   echo $this->HomeHelper()->Show($posts->getData(), "#description#","blog-posts",500,10000);
+   echo $this->HomeHelper()->Show($posts->getData(), "#description#","posts-list",500,10000);
  endif;
  ?>
 
@@ -42,7 +42,7 @@ if ($posts->getResult()):
        if ($cats->getResult()):
            $tag_categorias = $this->partial('/tpl/tag-categorias');
            foreach ($cats->getData() as $cat) {
-               echo   $this->HomeHelper()->Show($cat, $tag_categorias,"blog-posts");
+               echo   $this->HomeHelper()->Show($cat, $tag_categorias,"posts-list");
            }
        endif;
        ?>
@@ -56,7 +56,7 @@ if ($posts->getResult()):
     <?php
     if ($posts->getResult()):
         $autor=$posts->getData();
-         echo $this->HomeHelper()->Show($autor, $this->partial('/tpl/autor-post'),"blog-autor",12,38,'url_autor');
+         echo $this->HomeHelper()->Show($autor, $this->partial('/tpl/autor-post'),"posts-list",12,38,'url_autor');
     endif;
     ?>
 </div> <!-- End Post Author -->

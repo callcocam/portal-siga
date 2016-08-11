@@ -16,12 +16,13 @@ return [
            'make' => [
                 'type' => Segment::class,
                 'options' => [
-                    'route'    => '/make[/:action][/:module][/:table]',
+                    'route'    => '/make[/:action][/:module][/:classe][/:table]',
                     'defaults' => [
                         'controller' => Controller\MakeController::class,
                         'action'     => 'index',
                         'module'=>'0',
-                        'table'=>'1'
+                        'classe'=>'0',
+                        'table'=>'0'
                     ],
 
                 ],

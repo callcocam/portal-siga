@@ -1,0 +1,6 @@
+<?php
+$filtro=$this->filtro;
+$filtro["count"]=$result->getResult();
+$filtro["first"]=$this->page;
+$filtro["lasted"]=$result->getResult();
+echo $this->HomeHelper()->formSearch($this->partial('/tpl/search-form'),$this->url,$filtro);

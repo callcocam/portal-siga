@@ -47,6 +47,23 @@ class IssusersForm extends AbstractForm {
                 'data-position' => 'geral',
             ]
         ]);
+
+        $this->add([
+            'type' => 'text',
+            'name' => 'phone',
+            'options' => [
+                'label' => 'FILD_PHONE_LABEL'
+            ],
+            'attributes' => [
+                'id' => 'title',
+                'class' => 'form-control',
+                'placeholder' => 'FILD_PHONE_PLACEHOLDER',
+                'title' => 'FILD_PHONE_DESC',
+                'data-access' => '3',
+                'data-position' => 'geral',
+            ]
+        ]);
+
          $this->add([
             'type' => 'text',
             'name' => 'cep',
@@ -228,14 +245,24 @@ class IssusersForm extends AbstractForm {
                 'data-position' => 'geral',
             ]
         ]);
-         $this->add([
-            'type' => 'hidden',
+        $this->add([
+            'type' => 'text',//hidden, select, radio, checkbox, textarea
             'name' => 'images',
+            'options' => [
+                'label' => 'FILD_IMAGES_LABEL',
+                //'value_options'      =>[],
+                //"disable_inarray_validator" => true,
+            ],
             'attributes' => [
-                'id' => 'images',
+                'id'=>'images',
+                'class' =>'form-control',
+                'title' => 'FILD_IMAGES_DESC',
+                'placeholder' => 'FILD_IMAGES_PLACEHOLDER',
                 'data-access' => '3',
-                'data-position' => 'geral',
-            ]
+                'data-position' => 'images',
+                //'readonly' => true/false,
+                //'requerid' => true/false,
+            ],
         ]);
          $this->add([
             'type' => 'text',

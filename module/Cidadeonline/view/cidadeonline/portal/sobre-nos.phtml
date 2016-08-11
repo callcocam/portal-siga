@@ -1,0 +1,123 @@
+<?php
+$cache=$this->CacheHelper();
+$issusers=$cache->getItem('issusers');
+$dadosCidade=$this->HomeHelper()->getDadosCidade($issusers['municipio']);
+?>
+<div class="row-fluid">
+    <div id="main" class="span8 page author-page image-preloader">
+        <div class="row-fluid">
+            <div class="author-bio clearfix">
+                <figure><img alt="<?=$issusers['title']?>" src="/dist/tim.php?src=/dist/<?=$issusers['images']?>&h=220" original="images/content/avatar/1.jpg"></figure>
+                <div class="content ">
+                    <h3><?=$issusers['title']?></h3>
+                    <p>
+                      <?=\Base\Model\Check::Words($issusers['description'],30);?>
+                    </p>
+                    <p class="add-info">
+                        <a title="Send a private message via email" href="#"><img alt="Youtube" src="/Portal_city556622/stretched/images/social/f0101/youtube.png"></a></a> |
+                        <a title="Send a private message via email" href="#"><img alt="LinkedIn" src="/Portal_city556622/stretched/images/social/f0101/linkedin.png"></a></a>|
+                        <a title="Send a private message via email" href="#"><img alt="Facebook" src="/Portal_city556622/stretched/images/social/f0101/facebook.png"></a></a>|
+                        <a title="Send a private message via email" href="#"><img alt="Twitter" src="/Portal_city556622/stretched/images/social/f0101/twitter.png"></a></a>
+                    </p>
+
+                </div>
+            </div>
+            <div class="content">
+
+                <p></p>
+
+                <div class="rate-details">
+                    <div class="base-rate"> <!-- One -->
+                        <div class="rate-text">
+                            <span class="left">E-MAIL</span>
+                            <span class="right"><?=$issusers['email']?></span>
+                        </div>
+
+                    </div>
+                    <div class="base-rate"> <!-- One -->
+                        <div class="rate-text">
+                            <span class="left">TELEFONE</span>
+                            <span class="right"><?=$issusers['phone']?></span>
+                        </div>
+
+                    </div>
+                    <div class="base-rate"> <!-- One -->
+                        <div class="rate-text">
+                            <span class="left">CIDADE</span>
+                            <span class="right"><?=$dadosCidade['title']?></span>
+                        </div>
+
+                    </div>
+                    <div class="base-rate"> <!-- One -->
+                        <div class="rate-text">
+                            <span class="left">CEP</span>
+                            <span class="right"><?=$issusers['cep']?></span>
+                        </div>
+
+                    </div>
+                    <div class="base-rate"> <!-- One -->
+                        <div class="rate-text">
+                            <span class="left">UF</span>
+                            <span class="right"><?=$issusers['uf']?></span>
+                        </div>
+
+                    </div>
+                    <div class="base-rate"> <!-- One -->
+                        <div class="rate-text">
+                            <span class="left">ENDEREÇO</span>
+                            <span class="right"><?=$issusers['logradouro']?></span>
+                        </div>
+
+                    </div>
+                    <div class="base-rate"> <!-- One -->
+                        <div class="rate-text">
+                            <span class="left">COMPLEMENTO</span>
+                            <span class="right"><?=$issusers['complemento']?></span>
+                        </div>
+                    </div>
+                    <div class="base-rate"> <!-- One -->
+                        <div class="rate-text">
+                            <span class="left">COMPLEMENTO</span>
+                            <span class="right"><?=$issusers['numero']?></span>
+                        </div>
+                    </div>
+                    <div class="base-rate"> <!-- One -->
+                        <div class="rate-text">
+                            <span class="left">PAIS</span>
+                            <span class="right"><?=$dadosCidade['xpais']?></span>
+                        </div>
+                    </div>                </div> <!-- End Tags -->
+
+            </div>
+            <div class="clearfix ie-sep"></div> <!-- Clearfix -->
+            <div class="single single-portofolio">
+                <h3>Projeto De Vida</h3>
+                <p><?=$issusers['description']?></p><br>
+                <h3>Características</h3>
+                <ul>
+                    <li><span>Skills Needed:</span><i>Design</i></li>
+                    <li><span>Habilidades:</span><i>Web Design, Wordpress, Programming, Typography, Marketing</i></li>
+                    <li><span>Project URL:</span><i><a href="#">View Project</a></i></li>
+                    <li><span>Copyright:</span><i><?=$issusers['title']?></i></li>
+                </ul>
+            </div>
+
+            <div class="clearfix ie-sep"></div> <!-- Clearfix -->
+        </div> <!-- End Row-Fluid -->
+    </div> <!-- End Main -->
+
+    <div id="sidebar" class="span4">
+
+        <div class="widget clearfix">
+            <?php echo $this->partial('/widget/enews-tabs'); ?>
+        </div>
+        <!-- End Widget -->
+        <div class="widget clearfix">
+            <?php echo $this->partial('/widget/subscribe-form'); ?>
+        </div> <!-- End Widget -->
+
+
+
+    </div> <!-- End Sidebar -->
+
+</div> <!-- End Row-Fluid -->

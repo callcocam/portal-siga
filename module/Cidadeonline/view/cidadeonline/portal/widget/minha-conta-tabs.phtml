@@ -1,0 +1,50 @@
+<div id="output"></div>
+<div class="enews-tab">
+    <!-- Tab Menu -->
+    <ul class="nav nav-tabs" id="enewsTabs">
+        <li class="active"><a href="#tab-meus-dados" data-toggle="tab">Meus Dados</a></li>
+        <li><a href="#tab-anuncios" data-toggle="tab">Anuncios</a></li>
+        <li><a href="#tab-epresas" data-toggle="tab">Empresas</a></li>
+        <li><a href="#tab-relatorios" data-toggle="tab">Relatorios</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab-meus-dados">
+             <?php
+             $tpl=$this->partial('/widget/meus-dados');
+             echo $this->HomeHelper()->formProfile($tpl);?>
+        </div> <!-- End Populars -->
+        <div class="tab-pane" id="tab-anuncios">
+            <?php
+            $classificados=$this->HomeHelper()->ExeRead("bs_classificados", " WHERE created_by=?  ORDER BY id DESC",[$this->user->id]);
+            if (!$classificados->getResult()):
+                $this->HomeHelper()->alert($classificados->getError());
+            else:
+                ?>
+                <div class="sep-border margin-bottom30"></div> <!-- Sep Border -->
+                <?php
+                $html=[];
+                $classificados_list = $this->partial('/tpl/classificados/meus-classificados');
+                foreach ($classificados->getData() as $classificado):
+                    $classificado['categoria']=$this->HomeHelper()->getCategorias($classificado['catid']);
+                    $classificado['url_remove']=$this->url($this->route,['action'=>'remover-classificado','id'=>$classificado['id']]);
+                    $classificado['url_novo']=$this->url($this->route,['action'=>'novo-anuncio']);
+                    $html[]=$this->HomeHelper()->Show($classificado, $classificados_list,'classificados');
+                endforeach;
+                echo implode(PHP_EOL,$html);
+            endif;
+            ?>
+            <div class="clearfix"></div>
+        </div> <!-- End Populars -->
+
+        <div class="tab-pane" id="tab-epresas">
+        <?=$this->partial('/minha-empresa');?>
+         </div> <!-- End Recents -->
+        <div class="tab-pane" id="tab-relatorios">
+            <?=$this->partial('/widget/meus-relatorios');?>
+        </div> <!-- End Recents -->
+
+    </div> <!-- End Tab-Content -->
+
+</div> <!-- End Enews-Tab -->
+<script src="/Portal_city556622/stretched/js/minhaconta.js"></script>

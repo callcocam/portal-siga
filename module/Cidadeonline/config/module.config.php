@@ -10,11 +10,13 @@ namespace Cidadeonline;
 
 use Cidadeonline\Controller\CategoriasController;
 use Cidadeonline\Controller\ClassificadosController;
+use Cidadeonline\Controller\ClientesController;
 use Cidadeonline\Controller\ComentariosController;
 use Cidadeonline\Controller\EmpresasController;
 use Cidadeonline\Controller\Factory\CategoriasControllerFactory;
 use Cidadeonline\Controller\Factory\CidadeonlineControllerFactory;
 use Cidadeonline\Controller\Factory\ClassificadosControllerFactory;
+use Cidadeonline\Controller\Factory\ClientesControllerFactory;
 use Cidadeonline\Controller\Factory\ComentariosControllerFactory;
 use Cidadeonline\Controller\Factory\EmpresasControllerFactory;
 use Cidadeonline\Controller\Factory\PostsControllerFactory;
@@ -231,6 +233,42 @@ return [
                     ],
                 ]
             ],
+            'clientes' => [
+                'type' => Segment::class,
+                'options' => [
+                    'route'    => '/clientes[/:action][/:id][/:page]',
+                    'defaults' => [
+                        'controller' => Controller\ClientesController::class,
+                        'action'     => 'index',
+                        'id'=>'0',
+                        'page'=>'1'
+                    ],
+
+                ],
+                'may_terminate' => true,
+                'child_routes' => [
+                    'list' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route'    => '[/:page]',
+                            'defaults' => [
+                                'controller' => Controller\ClientesController::class,
+                                'page'     => '1',
+                            ],
+                        ],
+                    ],
+                    'clientes-create' => [
+                        'type' => Literal::class,
+                        'options' => [
+                            'route'    => '/clientes',
+                            'defaults' => [
+                                'controller' => Controller\ClientesController::class,
+                                'action'     => 'create',
+                            ],
+                        ],
+                    ],
+                ]
+            ],
 
           ],
     ],
@@ -242,6 +280,7 @@ return [
             PostsController::class=>PostsControllerFactory::class,
             ClassificadosController::class=>ClassificadosControllerFactory::class,
             ComentariosController::class=>ComentariosControllerFactory::class,
+            ClientesController::class=>ClientesControllerFactory::class,
 
         ],
     ],

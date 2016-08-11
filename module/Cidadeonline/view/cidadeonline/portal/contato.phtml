@@ -1,36 +1,25 @@
+<?php
+$cache=$this->CacheHelper();
+$issusers=$cache->getItem('issusers');
+$dadosCidade=$this->HomeHelper()->getDadosCidade($issusers['municipio']);
+$issusers['city']=$dadosCidade['title'];
+?>
 <div class="row-fluid">
    <div id="main" class="span8 page contact-page image-preloader">
   
     <div class="row-fluid">
     
-     <h1>Keep in Touch</h1>
-     <p>Aenean dictum pharetra nibh, sodales luctus felis aliquet at. Nulla vulputate venenatis orci, a laoreet libero vehicula ac. Duis tempor rhoncus quam, at blandit nulla egestas vitae. Required fields are marked *</p>
-     
-     <form id="enews-contact-form" method="post" action="#">
-      
-      <label>Name</label>
-      <input type="text" name="name" maxlength="80" />
-      <label>Email <span class="font-required">*</span></label>
-      <input type="text" name="email" maxlength="225" />
-      <label>Subject</label>
-      <input type="text" name="subject" />
-      <label>Message <span class="font-required">*</span></label>
-      <textarea name="message"></textarea>
-      <input type="submit" name="submit" value="Send Message" />
-      
-      <div class="data-status"></div> <!-- data submit status -->
-     
-     </form>
+     <h1><?=$issusers['title']?></h1>
+     <p> <?=\Base\Model\Check::Words($issusers['description'],30);?></p>
+        <?php
+           echo  $this->HomeHelper()->formContato($this->partial('/widget/contato-form'));
+       ?>
    
     </div> <!-- End Row-Fluid -->
    </div> <!-- End Main -->
   
    <div id="sidebar" class="span4">
-  
-    <div class="widget clearfix">
-    <?php echo $this->partial('/tpl/social-indices'); ?>
-    </div> <!-- End Widget -->
-   
+
     <div class="widget clearfix">
      <div class="contact-details">
      
@@ -39,11 +28,11 @@
       </div>
       
       <div class="content">
-       <p><strong>Mugiwara Kiwolen</strong></p>
-       <p>1234 South Something Street</p>
-       <p>Madison, WI 555555</p>
-       <p>Call: <i>+00-000-0000</i></p>
-       <p>Email: <a href="#">contact@email_domain.com</a></p>
+       <p><strong><?=$issusers['title']?></strong></p>
+       <p><?=$issusers['numero']?> <?=$issusers['logradouro']?> <?=$issusers['city']?></p>
+       <p><?=$dadosCidade['xpais']?>, <?=$issusers['uf']?>, <?=$issusers['cep']?></p>
+       <p>Call: <i>+<?=$issusers['phone']?></i></p>
+       <p>Email: <a href="#"><?=$issusers['email']?></a></p>
       </div>
      
      </div>
@@ -57,8 +46,8 @@
       </div>
       
       <figure>
-       <iframe height="250" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=id&amp;geocode=&amp;q=1234+South+Something+Street&amp;sll=37.0625,-95.677068&amp;sspn=49.223579,93.076172&amp;ie=UTF8&amp;t=m&amp;z=14&amp;ll=37.144972,-91.361692&amp;output=embed"></iframe>
-      </figure>
+          <iframe height="250" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3489.6465289478997!2d-49.7620933851515!3d-28.997843582275124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95221ebe8765c7db%3A0xef9e2ee8f35a8f83!2sJacinto+Machado!5e0!3m2!1spt-BR!2sbr!4v1470938958318" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+       </figure>
      
      </div>
     </div> <!-- End Widget -->
@@ -66,4 +55,4 @@
    </div> <!-- End Sidebar -->
   
   </div> <!-- End Row-Fluid -->
-  
+  <script type="text/javascript" src="/Portal_city556622/stretched/js/contato.js"></script>

@@ -14,6 +14,7 @@ use Base\Model\AbstractModel;
 class Resources extends AbstractModel {
 
     protected $title;
+    protected $alias;
 
     /**
      * @return mixed
@@ -29,6 +30,22 @@ class Resources extends AbstractModel {
     public function setTitle($title)
     {
         $this->title = $title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAlias()
+    {
+        return $this->alias;
+    }
+
+    /**
+     * @param mixed $alias
+     */
+    public function setAlias($alias)
+    {
+        $this->alias = $alias;
     }
 
 

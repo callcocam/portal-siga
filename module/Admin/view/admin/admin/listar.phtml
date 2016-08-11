@@ -1,4 +1,6 @@
-<?php echo $this->partial('partials/content-top',['title'=>"Panel Inicial",'filtro'=>$this->filtro]);?>
+<?php echo $this->partial('partials/content-top',['title'=>"Panel Inicial",'filtro'=>$this->filtro,
+    'btnfiltro'=>$this->btnfiltro,
+    'btnnovo'=>$this->btnnovo]);?>
 <?php
 if(!is_dir("./module/Admin/view/admin/admin/tpl/{$this->controller}")):
     mkdir("./module/Admin/view/admin/admin/tpl/{$this->controller}");
@@ -13,7 +15,7 @@ if($this->data->count()){
     $c=0;
     $html=[];
     $button = array(
-        'EDITAR' => array('type' => 'a', 'label' => 'EDITAR', 'icone' => 'fa fa-pencil', 'action' => 'editar', 'class' => 'success', 'page' => $this->page, 'id' => 'editar'),
+        'EDITAR' => array('type' => 'a', 'label' => 'EDITAR', 'icone' => 'fa fa-pencil', 'action' => 'update', 'class' => 'success', 'page' => $this->page, 'id' => 'editar'),
         'EXCLUIR' => array('type' => 'a', 'label' => 'EXCLUIR', 'icone' => 'fa fa-trash', 'action' => 'delete', 'class' => 'primary', 'page' => $this->page, 'id' => 'delete'),
     );
  foreach($this->data as $o):
@@ -51,11 +53,12 @@ if($this->data->count()){
         echo implode("", $row);
     }
 }
-
-echo $this->paginationControl(
-    $this->data,
-    'Sliding',
-    '/partials/paginator',
-    ['route' => "{$this->route}/list"]
-);
-echo $this->partial('partials/content-botton',['footer'=>""]);
+    if($this->btnnavigation):
+        echo $this->paginationControl(
+            $this->data,
+            'Sliding',
+            '/partials/paginator',
+            ['route' => "{$this->route}/list"]
+        );
+    endif;
+echo $this->partial('partials/content-botton',['footer'=>"", 'btnnavigation'=>$this->btnnavigation]);

@@ -15,13 +15,18 @@ use Base\Model\Result;
 use Base\Services\Client;
 use Cidadeonline\Form\ComentariosForm;
 use Cidadeonline\Form\EmpresasForm;
+use Cidadeonline\Form\SearchForm;
 use Home\Form\AuthForm;
+use Home\Form\ProfileForm;
 use Home\Form\RegisterForm;
 use Cidadeonline\Form\ClassificadosForm;
 use Interop\Container\ContainerInterface;
+use Mail\Form\MailForm;
 use Zend\Db\Adapter\Driver\ResultInterface;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Debug\Debug;
+use Zend\Paginator\Adapter\ArrayAdapter;
+use Zend\Paginator\Paginator;
 use Zend\View\Helper\AbstractHelper;
 use Zend\Db\Adapter\AdapterInterface;
 class HomeHelper extends AbstractHelper{
@@ -85,6 +90,7 @@ class HomeHelper extends AbstractHelper{
     public function ExeRead($tabela,$extraselect="",$params=[],$current=false)
     {
        // echo sprintf('SELECT %s FROM %s %s  ',$this->select,$tabela,$extraselect);die;
+        
         $this->setData(new Result());
         $this->data->setError(self::MSG_ERROR);
         $this->data->setResult(false);
@@ -97,13 +103,23 @@ class HomeHelper extends AbstractHelper{
                 $this->data->setData($results->current());
             }
             else{
-                $this->data->setData($results);
+                $this->data->setData($this->paginator($results));
             }
 
           $this->data->setError(sprintf(self::MSG_SUCCESS,$results->count()));
-
         }
         return $this->getData();
+    }
+
+
+
+    public function paginator($data){
+        $resultSet = new ResultSet(); //$this->tableGateway->getResultSetPrototype();
+        $resultSet->initialize($data);
+        $paginator=new Paginator(new ArrayAdapter($resultSet->toArray()));
+        $paginator->setCurrentPageNumber($this->view->page);
+        $paginator->setItemCountPerPage($this->config->count_per_page);
+        return $paginator;
     }
 
     public function getCidades($action,$tabela="bs_empresas")
@@ -377,6 +393,30 @@ class HomeHelper extends AbstractHelper{
             $formRender[]= $this->view->form()->openTag($form);
             $form->get('created')->setAttribute('type','hidden');
             $form->get('modified')->setAttribute('type','hidden');
+            $form->get('asset_id')->setValue('clientes');
+            $form->get('images')->setValue('no_avatar.jpg');
+            $this->GerarElement($form);
+            $primeiro = str_replace(array_keys(self::$html), array_values(self::$html), $html);
+            $formRender[]= str_replace(array_keys(self::$labels), array_values(self::$labels), $primeiro);
+            $formRender[]= $this->view->form()->closeTag();
+            return implode("",$formRender);
+        else:
+            return $this->alert("Por Favor Faça Login");
+        endif;
+    }
+
+    public function formProfile($html){
+        echo  $this->view->messages();
+        if($this->view->user):
+            $form = $this->container->get(ProfileForm::class);
+            $form->setData((array)$this->view->user);
+            $form->setAttribute('action', $this->view->url('cidadeonline-pages', array('controller' => 'cidadeonline', 'action' => 'profile')));
+            $this->view->formElementErrors()
+                ->setMessageOpenFormat('<ul class="nav"><li class="erro-obrigatorio">')
+                ->setMessageSeparatorString('</li>')->render($form);
+            $formRender[]= $this->view->form()->openTag($form);
+            $form->get('modified')->setAttribute('type','hidden');
+            $form->get('access')->setAttribute('type','hidden');
             $this->GerarElement($form);
             $primeiro = str_replace(array_keys(self::$html), array_values(self::$html), $html);
             $formRender[]= str_replace(array_keys(self::$labels), array_values(self::$labels), $primeiro);
@@ -405,6 +445,23 @@ class HomeHelper extends AbstractHelper{
             return $this->alert("Por Favor Faça Login");
         endif;
     }
+
+    public function formContato($html){
+           echo  $this->view->messages();
+            $form = $this->container->get(MailForm::class);
+            $form->setAttribute('action', $this->view->url('cidadeonline-pages', array('controller' => 'cidadeonline', 'action' => 'contact')));
+            $this->view->formElementErrors()
+                ->setMessageOpenFormat('<ul class="nav"><li class="erro-obrigatorio">')
+                ->setMessageSeparatorString('</li>')->render($form);
+            $formRender[]= $this->view->form()->openTag($form);
+            $this->GerarElement($form,false);
+            $primeiro = str_replace(array_keys(self::$html), array_values(self::$html), $html);
+            $formRender[]= str_replace(array_keys(self::$labels), array_values(self::$labels), $primeiro);
+            $formRender[]= $this->view->form()->closeTag();
+            return implode("",$formRender);
+
+    }
+
 
     public function formMinhaEmpresa($html){
         echo  $this->view->messages();
@@ -456,16 +513,40 @@ class HomeHelper extends AbstractHelper{
             endif;
         }
 
+    public function formSearch($html,$url,$filtro=[]){
+        echo  $this->view->messages();
+            $form = $this->container->get(SearchForm::class);
+            $form->setData($filtro);
+            $form->setAttribute('action', $url);
+            $this->view->formElementErrors()
+                ->setMessageOpenFormat('<ul class="nav"><li class="erro-obrigatorio">')
+                ->setMessageSeparatorString('</li>')->render($form);
+            $formRender[]= $this->view->form()->openTag($form);
+            self::$html['#search-value#']=$form->get('search')->getValue();
+            self::$html['#count-value#']=$form->get('count')->getValue();
+            self::$html['#first-value#']=$form->get('first')->getValue();
+            self::$html['#lasted-value#']=$form->get('lasted')->getValue();
+            $this->GerarElement($form);
+            $primeiro = str_replace(array_keys(self::$html), array_values(self::$html), $html);
+            $formRender[]= str_replace(array_keys(self::$labels), array_values(self::$labels), $primeiro);
+            $formRender[]= $this->view->form()->closeTag();
+            return implode("",$formRender);
+
+    }
 
 
-    public function GerarElement($form) {
+
+    public function GerarElement($form,$removeClass=true) {
         foreach ($form->getElements() as $key => $element) {
             $visible = "";
             //verifica se o usuario pode ter acesso ao campo
             if ($element->hasAttribute('placeholder')) {
                 $element->setAttribute('placeholder', $this->view->translate($element->getAttribute('placeholder')));
             }
-            $element->setAttribute('class','');
+            if($removeClass){
+                $element->setAttribute('class','');
+            }
+
             if (!empty($element->getLabel())) {
                 self::$labels["{{{$key}}}"] = $this->view->Html("label")->setAttributes(array("class" => "field-label", "for" => $element->getName()))->setText($this->view->translate($element->getLabel()));
             }
@@ -518,6 +599,8 @@ class HomeHelper extends AbstractHelper{
         $this->setSelect(" * ");
         return implode(PHP_EOL,$html);
     }
+
+
 
 
     /*

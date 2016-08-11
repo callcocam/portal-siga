@@ -1,7 +1,4 @@
-<?php $title="Pagina Inicial";
-
-var_dump($this->CacheHelper()->getItem('useronline'));
-?>
+<?php $title="Pagina Inicial";?>
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
@@ -34,8 +31,8 @@ var_dump($this->CacheHelper()->getItem('useronline'));
             <?php $qtd=$this->AdminHelper()->countRegister('bs_users');?>
             <?=$this->AdminHelper()->widgets($qtd,"Usuarios",$text="Lorem ipsum psdea itgum rixt.");?>
 
-            <?php $qtd=$this->AdminHelper()->countRegister('bs_empresas');?>
-            <?=$this->AdminHelper()->widgets($qtd,"Empresas",$text="Lorem ipsum psdea itgum rixt.");?>
+            <?php $qtd=$this->AdminHelper()->countRegister('bs_classificados');?>
+            <?=$this->AdminHelper()->widgets($qtd,"Classificados",$text="Lorem ipsum psdea itgum rixt.");?>
 
           </div>
 
@@ -43,51 +40,29 @@ var_dump($this->CacheHelper()->getItem('useronline'));
         </div>
     </div>
 
-    <div class="row">
-                 <div class="col-md-3 col-xs-12 widget widget_tally_box">
-                      <div class="x_panel fixed_height_390">
-                        <div class="x_content">
+<script>
+  $(function () {
+    lerUserOnlie();
+   setInterval(lerUserOnlie, 10000);
+  })
+</script>
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>USUARIOS ONLINE  <small>Agora</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div id="rest" class="x_content">
 
-                          <div class="flex">
-                            <ul class="list-inline widget_profile_box">
-                              <li>
-                                <a>
-                                  <i class="fa fa-facebook"></i>
-                                </a>
-                              </li>
-                              <li>
-                                <img class="img-circle profile_img" alt="..." src="images/user.png">
-                              </li>
-                              <li>
-                                <a>
-                                  <i class="fa fa-twitter"></i>
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
+            </div>
+        </div>
+    </div>
 
-                          <h3 class="name">Musimbi</h3>
-
-                          <div class="flex">
-                            <ul class="list-inline count2">
-                              <li>
-                                <h3>123</h3>
-                                <span>Articles</span>
-                              </li>
-                              <li>
-                                <h3>1234</h3>
-                                <span>Followers</span>
-                              </li>
-                              <li>
-                                <h3>123</h3>
-                                <span>Following</span>
-                              </li>
-                            </ul>
-                          </div>
-                          <p>
-                            If you've decided to go in development mode and tweak all of this a bit, there are few things you should do.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
 </div>

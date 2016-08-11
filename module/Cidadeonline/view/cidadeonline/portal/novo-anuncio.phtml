@@ -1,5 +1,5 @@
 <div class="row-fluid">
-    <div id="main" class="span8 page author-page image-preloader">
+    <div id="main" class="span10 offset1 page author-page image-preloader">
         <div class="row-fluid">
             <?php
             $tpl=$this->partial('/widget/novo-anuncio-form');
@@ -9,62 +9,5 @@
             <div id="output"></div>
         </div> <!-- End Row-Fluid -->
     </div> <!-- End Main -->
-
-    <div id="sidebar" class="span4">
-
-        <div class="widget clearfix">
-            <?php echo $this->partial('/tpl/social-indices'); ?>
-        </div>
-        <!-- End Widget -->
-
-        <div class="widget clearfix">
-            <?php echo $this->partial('/widget/enews-tabs'); ?>
-        </div>
-        <!-- End Widget -->
-
-        <div class="widget clearfix">
-            <?php echo $this->partial('/widget/sponsors'); ?>
-        </div> <!-- End Widget -->
-
-        <div class="widget clearfix">
-            <?php echo $this->partial('/widget/subscribe-form'); ?>
-        </div> <!-- End Widget -->
-    </div> <!-- End Sidebar -->
-
 </div> <!-- End Row-Fluid -->
-
-<script>
-    $(function(){
-
-        var options= {
-            beforeSubmit: showComentRequest,  // pre-submit callback
-            success: showComentResponse,  // post-submit callback
-            type: 'post',        // 'get' or 'post', override for form's 'method' attribute
-            dataType: 'json'
-        };
-        // bind to the form's submit event
-        $("#Classificados").ajaxForm(options);
-    })
-    // pre-submit callback
-    function showComentRequest(formData, jqForm, options) {
-        $('#output').addClass('alert alert-info').html('Enviando...');
-        return true;
-    }
-
-    // post-submit callback
-    function showComentResponse(responseText, statusText, xhr, $form)  {
-
-        $('#output').removeClass('alert alert-info');
-        if(responseText.result==true){
-            $('#output').addClass('alert alert-success');
-            $("#id").val(responseText.data.id);
-            $("#codigo").val(responseText.data.codigo);
-            $("#asset_id").val(responseText.data.asset_id);
-
-        }
-        else{
-            $('#output').addClass('alert alert-danger');
-        }
-        $('#output').html(responseText.error);
-    }
-</script>
+<script src="/Portal_city556622/stretched/js/minhaconta.js"></script>

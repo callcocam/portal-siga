@@ -11,6 +11,7 @@ namespace Auth\Form;
 
 use Base\Form\AbstractForm;
 use Interop\Container\ContainerInterface;
+use Zend\Debug\Debug;
 
 class ResourcesForm extends AbstractForm {
     public function __construct(ContainerInterface $container, $name, $options = [])
@@ -30,8 +31,6 @@ class ResourcesForm extends AbstractForm {
         parent::__construct($container,$name);
         $this->setAttributes(['action'=>'resources','class'=>'form-geral Manager  form-horizontal form-label-left']);
 
-
-
         $this->add([
             'type'=>'text',
             'name'=>'title',
@@ -47,6 +46,31 @@ class ResourcesForm extends AbstractForm {
             ]
         ]);
 
+        $this->add([
+            'type'=>'select',
+            'name'=>'alias',
+            'options'=>[
+                'label'=>'Alias'
+            ],
+            'attributes'=>[
+                'id'=>'alias',
+                'class'=>'form-control',
+                'placeholder'=>'Alias',
+                'data-access' => '3',
+                'data-position' => 'geral',
+            ]
+        ]);
+        if ($this->has('alias')):
+            if($this->get('alias')->getAttribute('type')=="select"):
+                $controllers = $container->get('Config');
+                foreach($controllers['controllers']['factories'] as $key=> $value){
+                    $Resource[strtolower(str_replace("\\", "_", $key))]=$key;
+                }
+               $this->get('alias')->setOptions(['value_options' => $Resource]);
+            else:
+                $this->get('alias')->setValue('admin_controller_admincontroller');
+            endif;
+        endif;
 
     }
 

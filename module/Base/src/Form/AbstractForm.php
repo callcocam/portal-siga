@@ -442,7 +442,7 @@ class AbstractForm extends Form{
     public function setValueOption($table, $condicao = array('state' => '0')) {
         $dados = $this->container->get($table)->findBy($condicao);
         $valueOptions = array('--SELECIONE--');
-        if ($dados->getData()->getResult()):
+        if ($dados->getResult()):
             foreach ($dados->getData() as $value):
                 $valueOptions[$value->getId()] =sprintf("%s - %s",$value->getId(),$value->getTitle());
             endforeach;

@@ -10,6 +10,7 @@ namespace Admin\Model\Issusers;
 
 
 use Base\Model\AbstractRepository;
+use Base\Model\Cache;
 use Zend\Db\TableGateway\TableGateway;
 
 class IssusersRepository extends AbstractRepository{
@@ -17,6 +18,8 @@ class IssusersRepository extends AbstractRepository{
     function __construct(TableGateway $tableGateway)
     {
         $this->tableGateway=$tableGateway;
+        $cache=new Cache();
+        $cache->removeItem('issusers');
     }
 
     public function getEmpresas(){

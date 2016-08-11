@@ -33,6 +33,9 @@ abstract class AbstractController extends AbstractActionController
     protected $page='1';
     protected $controller;
     protected $action;
+    protected $btnnavigation=true;
+    protected $btnfiltro=true;
+    protected $btnnovo=true;
     protected $config;
     protected $user;
     protected $data;
@@ -45,11 +48,15 @@ abstract class AbstractController extends AbstractActionController
     public function onDispatch(MvcEvent $e)
     {
         $this->config=$this->container->get('ZfConfig');
-
         $this->getIdentityManager();
         if(!$this->IdentityManager->hasIdentity()){
             return $this->redirect()->toRoute('authenticate');
         }
+
+        if(!$this->IsAllowed($e)){
+             return $this->redirect()->toRoute('home');
+        }
+
         return parent::onDispatch($e);
     }
 
@@ -149,6 +156,9 @@ abstract class AbstractController extends AbstractActionController
         $view->setVariable('page',$this->page);
         $view->setVariable('user',$this->user);
         $view->setVariable('filtro',$this->filtro);
+        $view->setVariable('btnnavigation',$this->btnnavigation);
+        $view->setVariable('btnfiltro',$this->btnfiltro);
+        $view->setVariable('btnnovo',$this->btnnovo);
         $view->setTemplate($this->template);
         return $view;
     }
@@ -163,10 +173,13 @@ abstract class AbstractController extends AbstractActionController
         $viewModel->setVariable('route',$this->route);
         $viewModel->setVariable('page',$this->page);
         $viewModel->setVariable('user',$this->user);
+        $viewModel->setVariable('btnnavigation',$this->btnnavigation);
+        $viewModel->setVariable('btnfiltro',$this->btnfiltro);
+        $viewModel->setVariable('btnnovo',$this->btnnovo);
         $viewModel->setTemplate('/admin/admin/editar');
         return $viewModel;
     }
-    public function editarAction()
+    public function updateAction()
     {
         $id=$this->params()->fromRoute('id');
         $this->page=$this->params()->fromRoute('page','1');
@@ -186,6 +199,9 @@ abstract class AbstractController extends AbstractActionController
         $viewModel->setVariable('route',$this->route);
         $viewModel->setVariable('page',$this->page);
         $viewModel->setVariable('user',$this->user);
+        $viewModel->setVariable('btnnavigation',$this->btnnavigation);
+        $viewModel->setVariable('btnfiltro',$this->btnfiltro);
+        $viewModel->setVariable('btnnovo',$this->btnnovo);
         $viewModel->setTemplate('/admin/admin/editar');
         return $viewModel;
     }

@@ -102,7 +102,13 @@ $(function() {
         }
     });
 
+   
 });
+function lerUserOnlie() {
+    $.get('/admin/user-online', function (data) {
+         $("#rest").html(data);
+    });
+}
 
 // pre-submit callback
 function showRequest(formData, jqForm, options) {
@@ -131,6 +137,8 @@ function showResponse(responseText, statusText, xhr, $form)  {
     notice.update(options);
    
 }
+
+
 
 function print(URL) {
     var mn = 'menubar=no';

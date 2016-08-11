@@ -7,6 +7,7 @@
  */
 
 namespace Base\View\Helper;
+use Base\Model\Cache;
 use Zend\View\Helper\AbstractHelper;
 /**
  * Description of CacheHelper
@@ -16,8 +17,15 @@ use Zend\View\Helper\AbstractHelper;
 class CacheHelper extends AbstractHelper {
     protected $cache;
     public function __construct() {
-        $this->cache=new \Base\Model\Cache();
+        $this->cache=new Cache();
+
     }
+
+    function __invoke()
+    {
+        return $this->cache;
+    }
+
 
     public function getItem($key) {
         return $this->cache->getItem($key);

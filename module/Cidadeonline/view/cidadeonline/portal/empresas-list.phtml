@@ -6,21 +6,22 @@
             $categorias['title']="";
             if (empty($this->id)):
                 //tabela,estraselect,params,bool[true=1 registro ou false uma lista]
-                $empresas=$this->HomeHelper()->ExeRead("bs_empresas", " WHERE catid=?  ORDER BY created DESC",[$this->action]);
+                $empresas=$this->HomeHelper()->ExeRead("bs_empresas", " WHERE catid=?  AND (title like ? OR description like ?) ORDER BY created DESC",[$this->action,"%{$this->filtro['search']}%","%{$this->filtro['search']}%"]);
                 $categorias['title']="Todas As Cidades";
                 else:
-                $empresas=$this->HomeHelper()->ExeRead("bs_empresas", " WHERE catid=? AND cidade=?  ORDER BY created DESC",[$this->action,$this->id]);
+                $empresas=$this->HomeHelper()->ExeRead("bs_empresas", " WHERE catid=? AND cidade=?  AND (title like ? OR description like ?) ORDER BY created DESC",[$this->action,$this->id,"%{$this->filtro['search']}%","%{$this->filtro['search']}%"]);
                 $categorias['title']=$this->HomeHelper()->getCidade($this->id);
             endif;
+            $breadcrumb = $this->partial('/tpl/breadcrumb');
+            $categorias['categoria']=$this->HomeHelper()->getCategorias($this->action);
+            $categorias['url']="";
+            echo $this->HomeHelper()->Show($categorias, $breadcrumb,$this->action);
+            echo $this->partial('/tpl/search',['result'=>$empresas,'url'=>$this->url($this->route,['action'=>$this->action,'id'=>$this->id]),'filtro'=>$this->filtro]);
 
             if (!$empresas->getResult()):
                 $this->HomeHelper()->alert($empresas->getError());
                 else:
-                $breadcrumb = $this->partial('/tpl/breadcrumb');
-                $categorias['categoria']=$this->HomeHelper()->getCategorias($this->action);
-                $categorias['url']="";
-                echo $this->HomeHelper()->Show($categorias, $breadcrumb,$this->action);
-                ?>
+                  ?>
                 <div class="sep-border margin-bottom30"></div> <!-- Sep Border -->
                 <?php
                 $html=[];
@@ -36,19 +37,28 @@
                 endif;
             endif;
             ?>
-
+            <nav class="nav-pagination">
+                <?php
+                if (!$empresas->getResult()):
+                echo $this->paginationControl(
+                    $empresas->getData(),
+                    'Sliding',
+                    '/widget/paginator',
+                    ['route' => $this->route,
+                        'action'=>$this->action,
+                        'id'=>$this->id?$this->id:0]
+                );
+                echo $this->Html('p')->setText("Pagina")->appendText($this->page)->appendText(" a ")->appendText('10')->appendText(" de ")->appendText($empresas->getResult());
+               endif;
+                ?>
+            </nav> <!-- End Nav-Pagination -->
 
         </div> <!-- End Row-Fluid -->
 
     </div> <!-- End Main -->
 
     <div id="sidebar" class="span4">
-        <div class="widget clearfix">
-            <?php echo $this->partial('/tpl/social-indices'); ?>
-        </div>
-        <!-- End Widget -->
-
-        <div class="widget clearfix">
+         <div class="widget clearfix">
             <?php echo $this->partial('/widget/enews-tabs'); ?>
         </div>
         <!-- End Widget -->

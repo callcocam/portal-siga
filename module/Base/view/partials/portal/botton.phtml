@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row-fluid">
 
-            <div class="span3 widget clearfix">
+            <div class="span4 widget clearfix">
                 <div class="header">
                     <h4>About Us</h4>
                 </div>
@@ -14,7 +14,7 @@
                 </div>
             </div> <!-- End Widget -->
 
-            <div class="span3 widget clearfix">
+            <div class="span4 widget clearfix">
                 <div class="tags-cloud">
 
                     <div class="header">
@@ -35,38 +35,26 @@
 
                 </div>
             </div> <!-- End Widget -->
-
-            <div class="span3 widget clearfix">
-                <div class="tweets">
+            <div class="span4 widget clearfix">
+                <div class="">
 
                     <div class="header">
-                        <h4>Latest Tweets</h4>
+                        <h4>Mapa Do Site</h4>
                     </div>
 
-                    <ul>
-                        <li>
-                            <span class="picons"><!-- --></span>
-                            <p><a href="#">@realt0rlife</a> That's a very good question :) You may want to contact the author. There's a form on the right when you click their name.</p>
-                            <span class="date">- 10 hours ago</span>
-                        </li>
-                        <li>
-                            <span class="picons"><!-- --></span>
-                            <p><a href="#">@ghostpool</a> Have you opened a support ticket yet? Can you send methe ticket number? Thanks!</p>
-                            <span class="date">- 2 days ago</span>
-                        </li>
+                    <ul class="list-arrow-bold">
+                    <li><a href="/">HOME</a></li>
+                    <?php if(!$this->UserIdentity()->getHasIdentity()):?>
+                        <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'cadastro'])?>">CADASTRAR-SE</a></li>
+                    <?php else:?>
+                        <li><a title="<?=$this->UserIdentity()->getHasIdentity()->title?>" href="<?=$this->url('cidadeonline-pages',['action'=>'minha-conta'])?>">MEUS ANUNCIOS</a> </li>
+                    <?php endif;?>
+                         <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'politica-de-privacidade'])?>">POLITICA DO SITE</a></li>
+                          <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'termos-de-uso'])?>">TERMOS DE USO DO SITE</a></li>
+                          <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'sobre-nos'])?>">SOBRE NOS</a></li>
+                          <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'perguntas-frequentes'])?>">TIRE SUAS DUVIDAS</a></li>
+                
                     </ul>
-
-                </div>
-            </div> <!-- End Widget -->
-
-            <div class="span3 widget clearfix">
-                <div class="flickr-photos">
-
-                    <div class="header">
-                        <h4>Flickr Photos</h4>
-                    </div>
-
-                    <ul id="flickr-gallery"><!-- --></ul>
 
                 </div>
             </div> <!-- End Widget -->

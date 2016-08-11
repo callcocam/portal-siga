@@ -15,6 +15,7 @@ class Issusers extends AbstractModel{
 
     protected $fantasia;
     protected $title;
+    protected $phone;
     protected $logradouro;
     protected $numero;
     protected $complemento;
@@ -307,6 +308,22 @@ class Issusers extends AbstractModel{
     public function setPass($pass)
     {
         $this->pass = $pass;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param mixed $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
     }
 
     /**

@@ -79,7 +79,8 @@ class Mail implements MailInterface {
     }
 
     public function send() {
-        $this->transport->send($this->execute());
+        return $this->transport->send($this->execute());
+
     }
 
 }

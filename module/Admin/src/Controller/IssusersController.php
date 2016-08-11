@@ -31,13 +31,16 @@ class IssusersController extends AbstractController  {
         $this->filter=IssusersFilter::class;
         $this->route="issusers";
         $this->controller="issusers";
+        $this->btnfiltro=false;
+        $this->btnnavigation=false;
+        $this->btnnovo=false;
 
     }
 
     /**
      *
      */
-    public function createAction()
+    public function createtesteAction()
     {
         /**
          * @var $client ClientHttp

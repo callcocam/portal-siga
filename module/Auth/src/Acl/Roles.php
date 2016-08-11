@@ -9,13 +9,22 @@
 namespace Auth\Acl;
 
 
+use Base\Model\AbstractRepository;
 use Zend\Permissions\Acl\Role\RoleInterface;
 
 class Roles implements RoleInterface{
 
-    protected $role=["1"=>"suport","2"=>"admin", "3"=>"member", "4"=>"guest","5"=>"visit"];
-    protected $parents=['1'=>'2','2'=>'3','3'=>'4','4'=>'5','5'=>null];
-    protected $is_admin=['1'=>true,'2'=>false,'3'=>false,'4'=>false,'5'=>false];
+
+    protected $roles;
+
+    public function __construct(AbstractRepository $repository){
+        $Roles=$repository->findBy(['state'=>'0']);
+        if($Roles->getResult()){
+            foreach($Roles->getData() as $o){
+                $this->roles[$o->getId()]=$o;
+            }
+        }
+    }
     /**
      * Returns the string identifier of the Role
      *
@@ -23,7 +32,7 @@ class Roles implements RoleInterface{
      */
     public function getRoleId()
     {
-        return $this->role;
+        return $this->roles;
     }
 
     /**

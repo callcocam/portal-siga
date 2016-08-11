@@ -11,6 +11,7 @@ namespace Auth;
 
 use Auth\Acl\Acl;
 use Auth\Acl\Factory\AclFactory;
+use Auth\Controller\Plugin\IsAllowed;
 use Auth\Form\Factory\PrivilegesFilterFactory;
 use Auth\Form\Factory\PrivilegesFormFactory;
 use Auth\Form\Factory\ProfileFilterFactory;
@@ -58,10 +59,11 @@ use Auth\Storage\IdentityManager;
 use Auth\View\Helper\UserIdentity;
 use Interop\Container\ContainerInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\ControllerPluginProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 
-class Module implements ConfigProviderInterface, ServiceProviderInterface,ViewHelperProviderInterface{
+class Module implements ConfigProviderInterface, ServiceProviderInterface,ViewHelperProviderInterface,ControllerPluginProviderInterface{
 
     /**
      * Returns configuration to merge with application configuration
@@ -129,5 +131,27 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface,ViewHe
                 }
             ]
         ];
+    }
+
+    /**
+     * Expected to return \Zend\ServiceManager\Config object or array to
+     * seed such an object.
+     *
+     * @return array|\Zend\ServiceManager\Config
+     */
+    public function getControllerPluginConfig()
+    {
+        return [
+            'invokables'=>[
+            ],
+            'factories'=>[
+                'IsAllowed' => function (ContainerInterface $container) {
+                    $auth = $container->get(IdentityManager::class);
+                    $acl = $container->get(Acl::class);
+                    return new IsAllowed($auth, $acl);
+                }
+            ]
+        ];
+
     }
 }

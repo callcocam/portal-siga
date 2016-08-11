@@ -69,6 +69,32 @@ class ResourcesFilter extends AbstractInputFilter{
             ],
         ]);
 
+        $inputFilter->add([
+            'name' => 'alias',
+            'required' => true,
+            'filters' => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+            ],
+            'validators' => [
+                [
+                    'name' => StringLength::class,
+                    'options' => [
+                        'encoding' => 'UTF-8',
+                        'min' => 5,
+                        'max' => 255,
+                        'messages'=>[StringLength::TOO_LONG=>"Texto Muito Longo, Maximo:30",StringLength::TOO_SHORT=>"Texto Muito Curto, Minimo 5"]
+                    ],
+                ],
+                [
+                    'name' => NotEmpty::class,
+                    'options' => [
+                        'messages'=>[NotEmpty::IS_EMPTY=>"Campo Obrigatorio"]
+                    ],
+                ],
+            ],
+        ]);
+
 
         return $inputFilter;
     }

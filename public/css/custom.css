@@ -3464,7 +3464,8 @@ html > body > .ui-pnotify {
 }
 .widget {
   min-width: 250px;
-  max-width: 310px;
+  position: relative;
+  /*max-width: 310px;*/
 }
 .widget_tally_box .btn-group button {
   text-align: center

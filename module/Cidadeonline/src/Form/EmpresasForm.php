@@ -144,7 +144,7 @@ class EmpresasForm extends AbstractForm
                     //"disable_inarray_validator" => true,
                 ],
                 'attributes' => [
-                    'id'=>'images',
+                    'id'=>'images-empresa',
                     'class' =>'form-control',
                     'title' => 'FILD_IMAGES_DESC',
                     'placeholder' => 'FILD_IMAGES_PLACEHOLDER',
@@ -282,7 +282,7 @@ class EmpresasForm extends AbstractForm
                     //"disable_inarray_validator" => true,
                 ],
                 'attributes' => [
-                    'id'=>'cidade',
+                    'id'=>'cidade-empresa',
                     'class' =>'form-control',
                     'title' => 'FILD_CIDADE_DESC',
                     'placeholder' => 'FILD_CIDADE_PLACEHOLDER',

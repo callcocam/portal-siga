@@ -21,6 +21,7 @@ use Make\Services\Form;
 use Make\Services\Model;
 use Make\Services\Repository;
 use Make\Services\RepositoryFactory;
+use Zend\Debug\Debug;
 use Zend\View\Model\ViewModel;
 
 class MakeController extends AbstractController{
@@ -39,80 +40,81 @@ class MakeController extends AbstractController{
     {
       
         $module=$this->params()->fromRoute('module');
+        $classe=$this->params()->fromRoute('classe');
         $table=$this->params()->fromRoute('table');
         if(!empty($module) && !empty($table)){
             $data['alias']=$module;
-            $data['arquivo']=$table;
+            $data['arquivo']=$classe;
             $data['tabela']=$table;
-            if(!is_dir(sprintf("./{$this->config->module}/{$module}/src/Model/{$table}"))){
-                mkdir(sprintf("./{$this->config->module}/{$module}/src/Model/{$table}"));
+            if(!is_dir(sprintf("./{$this->config->module}/{$module}/src/Model/{$classe}"))){
+                mkdir(sprintf("./{$this->config->module}/{$module}/src/Model/{$classe}"));
             }
             $model=new Model($data,$this->container);
             $model->generateClass();
-            $msg[]="Model {$table} Foi Criado Com Sucesso!";
+            $msg[]="Model {$classe} Foi Criado Com Sucesso!";
 
             /*Model Factory*/
-            if(!is_dir(sprintf("./{$this->config->module}/{$module}/src/Model/{$table}/Factory"))){
-                mkdir(sprintf("./{$this->config->module}/{$module}/src/Model/{$table}/Factory"));
+            if(!is_dir(sprintf("./{$this->config->module}/{$module}/src/Model/{$classe}/Factory"))){
+                mkdir(sprintf("./{$this->config->module}/{$module}/src/Model/{$classe}/Factory"));
             }
             $modelFactory=new FactoryModel($data,$this->container);
             $modelFactory->generateClass();
-            $msg[]="Model Factory {$table} Foi Criado Com Sucesso!";
+            $msg[]="Model Factory {$classe} Foi Criado Com Sucesso!";
 
 
             $repository=new Repository($data,$this->container);
             $repository->generateClass();
-            $msg[]="Repository {$table} Foi Criado Com Sucesso!";
+            $msg[]="Repository {$classe} Foi Criado Com Sucesso!";
 
             $repositoryFactory=new RepositoryFactory($data,$this->container);
             $repositoryFactory->generateClass();
-            $msg[]="Repository Factory {$table} Foi Criado Com Sucesso!";
+            $msg[]="Repository Factory {$classe} Foi Criado Com Sucesso!";
 
             if(!is_dir(sprintf("./{$this->config->module}/{$module}/src/Controller"))){
                 mkdir(sprintf("./{$this->config->module}/{$module}/src/Controller"));
             }
             $controller=new Controller($data,$this->container);
             $controller->generateClass();
-            $msg[]="Controller {$table} Foi Criado Com Sucesso!";
+            $msg[]="Controller {$classe} Foi Criado Com Sucesso!";
 
             if(!is_dir(sprintf("./{$this->config->module}/{$module}/src/Controller/Factory"))){
                 mkdir(sprintf("./{$this->config->module}/{$module}/src/Controller/Factory"));
             }
             $controllerFactory=new ControllerFactory($data,$this->container);
             $controllerFactory->generateClass();
-            $msg[]="Controller Factory {$table} Foi Criado Com Sucesso!";
+            $msg[]="Controller Factory {$classe} Foi Criado Com Sucesso!";
 
             if(!is_dir(sprintf("./{$this->config->module}/{$module}/src/Form"))){
                 mkdir(sprintf("./{$this->config->module}/{$module}/src/Form"));
             }
             $form=new Form($data,$this->container);
             $form->generateClass();
-            $msg[]="Form {$table} Foi Criado Com Sucesso!";
+            $msg[]="Form {$classe} Foi Criado Com Sucesso!";
 
             if(!is_dir(sprintf("./{$this->config->module}/{$module}/src/Form/Factory"))){
                 mkdir(sprintf("./{$this->config->module}/{$module}/src/Form/Factory"));
             }
             $formFactory=new FactoryForm($data,$this->container);
             $formFactory->generateClass();
-            $msg[]="Form Factory {$table} Foi Criado Com Sucesso!";
+            $msg[]="Form Factory {$classe} Foi Criado Com Sucesso!";
 
             $filter=new Filter($data,$this->container);
             $filter->generateClass();
-            $msg[]="Filter {$table} Foi Criado Com Sucesso!";
+            $msg[]="Filter {$classe} Foi Criado Com Sucesso!";
 
             $filterFactory=new FactoryFilter($data,$this->container);
             $filterFactory->generateClass();
             $msg[]=PHP_EOL;
-            $msg[]="Filter Factory {$table} Foi Criado Com Sucesso!";
+            $msg[]="Filter Factory {$classe} Foi Criado Com Sucesso!";
             $msg[]="Você Pode Ainda Adicionar Os Serviços No Arquivo module/{$module}/Module.php";
-            $msg[]="{$table}::class=>{$table}Factory::class,";
-            $msg[]="{$table}Repository::class=>{$table}RepositoryFactory::class,";
-            $msg[]="{$table}Form::class=>{$table}FormFactory::class,";
-            $msg[]="{$table}Filter::class=>{$table}FilterFactory::class,";
+            $msg[]="{$classe}::class=>{$classe}Factory::class,";
+            $msg[]="{$classe}Repository::class=>{$classe}RepositoryFactory::class,";
+            $msg[]="{$classe}Form::class=>{$classe}FormFactory::class,";
+            $msg[]="{$classe}Filter::class=>{$classe}FilterFactory::class,";
 
             $msg[]=PHP_EOL;
             $msg[]="Você Pode Ainda Adicionar Os Serviços No Arquivo module/{$module}/config/module.config.php";
-            $msg[]="{$table}Conroller::class=>{$table}ControllerFactory::class,";
+            $msg[]="{$classe}Conroller::class=>{$classe}ControllerFactory::class,";
 
             return new ViewModel(['error'=>$msg]);
 

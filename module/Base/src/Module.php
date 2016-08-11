@@ -1,6 +1,8 @@
 <?php
 namespace Base;
 
+use Admin\Model\Issusers\IssusersRepository;
+use Auth\Storage\IdentityManager;
 use Base\Controller\Plugin\Messages;
 use Base\Controller\Plugin\SigaContas;
 use Base\Files\Factory\FilesServiceFactory;
@@ -8,6 +10,7 @@ use Base\Files\FilesService;
 
 use Base\Form\BuscaForm;
 use Base\Form\Factory\BuscaFormFactory;
+use Base\Model\Cache;
 use Base\Services\Client;
 use Base\Services\Factory\ClientHttpFactory;
 use Base\Services\Factory\TableFactory;
@@ -63,6 +66,23 @@ class Module implements BootstrapListenerInterface, ConfigProviderInterface,Serv
     }
 
     public function onDispatch($e){
+        $cache=new Cache();
+        if(!$cache->hasItem('issusers')){
+            $repository= $e->getApplication()->getServiceManager()->get(IssusersRepository::class);
+            /**
+             * @var $user IdentityManager
+             */
+            $user= $e->getApplication()->getServiceManager()->get(IdentityManager::class);
+            if($user->hasIdentity()){
+                $issuser=$repository->find($user->hasIdentity()->empresa,false);
+            }
+           else{
+               $issuser=$repository->find('1',false);
+           }
+            if($issuser->getResult()){
+                $cache->setItem('issusers',$issuser->getData());
+            }
+        }
         $config = $e->getApplication()->getServiceManager()->get('config');
         $layout_map = $config["view_manager"]["template_map"];
         $controller = $e->getTarget();

@@ -317,6 +317,8 @@ select {
 	-moz-box-shadow:none;
 	box-shadow:none;
 	width: 100%;
+	padding:0px 10px;
+	height: 36px;
 }
 
 input[type="text"],input[type="email"],input[type="password"], textarea {
@@ -597,7 +599,7 @@ ul.nav-tabs { border-bottom:none; margin:0px; }
 	background-color:#3A3A3A;
 	margin-bottom:5px;
 	position:relative;
-	z-index:200;
+	z-index:800;
 }
 	#main-navigation .select-nav { margin:0px; }
 	#main-navigation ul li {

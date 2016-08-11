@@ -34,6 +34,8 @@ class UsersRepositoryFactory extends AbstractFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        return new UsersRepository($this->tableGateway('bs_users',Users::class,$container));
+        $table=new UsersRepository($this->tableGateway('bs_users',Users::class,$container));
+        $table->container=$container;
+        return $table;
     }
 }

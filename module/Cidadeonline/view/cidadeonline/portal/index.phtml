@@ -191,33 +191,15 @@ endif;
 </div> <!-- End Main -->
 
 <div id="sidebar" class="span4">
-
-<div class="widget clearfix">
-   <?php echo $this->partial('/tpl/social-indices'); ?>
-</div> <!-- End Widget -->
 <div class="widget clearfix">
 <?php echo $this->partial('/widget/enews-tabs'); ?>
 </div>
 <div class="widget clearfix">
     <?php echo $this->partial('/widget/sponsors'); ?>
 </div> <!-- End Widget -->
-<!-- End Widget -->
+
 <div class="widget clearfix">
-    <div class="subscribe-form">
-
-        <div class="header">
-            <h4>Subscribe Us</h4>
-        </div>
-
-        <div class="content">
-            <p>You can stay up-to-date with our latest news with subscribe our newsletter.</p>
-            <form name="subscribe-form" id="enews-subscribe-form" method="post" action="#">
-                <input type="text" name="email_address" placeholder="ex: your_email@domain.com" />
-                <input type="submit" name="submit" value="Send" />
-            </form>
-        </div>
-
-    </div>
+    <?php echo $this->partial('/widget/subscribe-form'); ?>
 </div> <!-- End Widget -->
 
 </div> <!-- End Sidebar -->

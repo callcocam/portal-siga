@@ -15,6 +15,7 @@ use Interop\Container\ContainerInterface;
 use Mail\Service\Mail;
 use Zend\Crypt\Key\Derivation\Pbkdf2;
 use Zend\Db\Adapter\AdapterInterface;
+use Zend\Debug\Debug;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Mvc\MvcEvent;
 use Zend\View\Model\JsonModel;
@@ -38,6 +39,10 @@ abstract class AbstractController extends AbstractActionController{
     protected $user;
     protected $data;
     protected $id;
+    protected $search;
+    protected $filtro=['search'=>'','first'=>'1','lasted'=>'8','count'=>'8'];
+    protected $page;
+    protected $registro_por_page;
 
     abstract function __construct(ContainerInterface $container);
 
@@ -46,6 +51,16 @@ abstract class AbstractController extends AbstractActionController{
         $this->id=$this->params()->fromRoute("id");
         $this->config=$this->container->get('ZfConfig');
         $this->getIdentityManager();
+        $this->action=$this->params()->fromRoute('action','index');
+        $this->search=[
+        'id'=>$this->id,
+        'parent'=>'post',
+        'route'=>$this->route,
+        'action'=>$this->action,
+        'page'=>$this->params()->fromRoute("page",'1'),
+        'user'=>$this->user,
+        'filtro'=>$this->filtro
+        ];
         return parent::onDispatch($e);
     }
 
@@ -163,6 +178,10 @@ abstract class AbstractController extends AbstractActionController{
                         'msg' => $this->filesservice->getMessages(), 'data' => $this->data));
                 endif;
             endif;
+            if(isset($this->data['password'])){
+                $this->data['usr_password_confirm'] =$this->data['password'];
+                $this->prepareData($this->data);
+            }
             $inputfilter=$this->getFilter();
             $inputfilter->dbAdapter=$this->container->get(AdapterInterface::class);
             $this->data['asset_id']=$this->controller;
@@ -172,10 +191,6 @@ abstract class AbstractController extends AbstractActionController{
             $this->form->setData($this->data);
 
             if ($this->form->isValid()) {
-                if (isset($this->data['save_copy'])):
-                    $this->data['id'] = 'AUTOMATICO';
-                    $model->setId(null);
-                endif;
                 //Se exitir o campo id valido e uma edição
                 if (isset($this->data['id']) && (int) $this->data['id']):
                     $this->getTable()->update($model);
@@ -313,30 +328,45 @@ abstract class AbstractController extends AbstractActionController{
 
     public function cache_usuarios_online(){
        $cache=new Cache();
-            $data['title']="ANONIMO";
-            $data['images']="/dist/no_avatar.jpg";
+            $data['id']="0";
+            $data['title']=$this->getRequest()->getServer('REMOTE_ADDR');
+            $data['images']="no_avatar.jpg";
             $data['email']="admin@hotmail.com";
+            $data['data']=date("d-m-Y");
+            $data['hora']=date("H:i:s");
             $url = sprintf("%s%s", $this->getRequest()->getServer('HTTP_ORIGIN'),$this->params()->fromRoute('action','index'));
             $data['url']=$url;
        if ($this->getIdentityManager()->hasIdentity()) {
              $data['title']=$this->user->title;
+             $data['id']=$this->user->id;
              $data['images']=$this->user->images;
              $data['email']=$this->user->email;
         }
+
         $data['ip']=$this->getRequest()->getServer('REMOTE_ADDR');
         $data['agent']=$this->getRequest()->getServer('HTTP_USER_AGENT');
-        $read=$cache->getItem('useronline');
-        if($read){
-            $read[$url]=$data;
-            $cache->setItem('useronline',$read);
+        $read_user_online=$cache->getItem('useronline');
+      
+        if($read_user_online){
+            $read_user_online[\Base\Model\Check::Name($this->getRequest()->getServer('REMOTE_ADDR'))]=$data;
+            //$read_user_online[$url]=$data;
+            $cache->setItem('useronline',$read_user_online);
+          }
+        else{
+            //$cache->setItem('useronline',[$url=>$data]);
+            $cache->setItem('useronline',[\Base\Model\Check::Name($this->getRequest()->getServer('REMOTE_ADDR'))=>$data]);
+        }
+
+        $read_user_navigation=$cache->getItem('user_navigation');
+
+        if($read_user_navigation){
+            $read_user_navigation[$url]=$data;
+            $cache->setItem('user_navigation',$read_user_navigation);
         }
         else{
-            $cache->setItem('useronline',[$url=>$data]);
+           $cache->setItem('user_navigation',[$url=>$data]);
         }
         
-        echo "<pre>";
-        var_dump($cache->getItem('useronline'));
-        echo "</pre>";
      }
 
 //\Base\Model\Check::Name($this->getRequest()->getServer('REMOTE_ADDR'))

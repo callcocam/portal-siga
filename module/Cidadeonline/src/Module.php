@@ -14,6 +14,8 @@ use Cidadeonline\Form\CategoriasFilter;
 use Cidadeonline\Form\CategoriasForm;
 use Cidadeonline\Form\ClassificadosFilter;
 use Cidadeonline\Form\ClassificadosForm;
+use Cidadeonline\Form\ClientesFilter;
+use Cidadeonline\Form\ClientesForm;
 use Cidadeonline\Form\ComentariosFilter;
 use Cidadeonline\Form\ComentariosForm;
 use Cidadeonline\Form\EmpresasFilter;
@@ -22,14 +24,20 @@ use Cidadeonline\Form\Factory\CategoriasFilterFactory;
 use Cidadeonline\Form\Factory\CategoriasFormFactory;
 use Cidadeonline\Form\Factory\ClassificadosFilterFactory;
 use Cidadeonline\Form\Factory\ClassificadosFormFactory;
+use Cidadeonline\Form\Factory\ClientesFilterFactory;
+use Cidadeonline\Form\Factory\ClientesFormFactory;
 use Cidadeonline\Form\Factory\ComentariosFilterFactory;
 use Cidadeonline\Form\Factory\ComentariosFormFactory;
 use Cidadeonline\Form\Factory\EmpresasFilterFactory;
 use Cidadeonline\Form\Factory\EmpresasFormFactory;
 use Cidadeonline\Form\Factory\PostsFilterFactory;
 use Cidadeonline\Form\Factory\PostsFormFactory;
+use Cidadeonline\Form\Factory\SearchFilterFactory;
+use Cidadeonline\Form\Factory\SearchFormFactory;
 use Cidadeonline\Form\PostsFilter;
 use Cidadeonline\Form\PostsForm;
+use Cidadeonline\Form\SearchFilter;
+use Cidadeonline\Form\SearchForm;
 use Cidadeonline\Model\Categorias\Categorias;
 use Cidadeonline\Model\Categorias\CategoriasRepository;
 use Cidadeonline\Model\Categorias\Factory\CategoriasFactory;
@@ -38,6 +46,10 @@ use Cidadeonline\Model\Classificados\Classificados;
 use Cidadeonline\Model\Classificados\ClassificadosRepository;
 use Cidadeonline\Model\Classificados\Factory\ClassificadosFactory;
 use Cidadeonline\Model\Classificados\Factory\ClassificadosRepositoryFactory;
+use Cidadeonline\Model\Clientes\Clientes;
+use Cidadeonline\Model\Clientes\ClientesRepository;
+use Cidadeonline\Model\Clientes\Factory\ClientesFactory;
+use Cidadeonline\Model\Clientes\Factory\ClientesRepositoryFactory;
 use Cidadeonline\Model\Comentarios\Comentarios;
 use Cidadeonline\Model\Comentarios\ComentariosRepository;
 use Cidadeonline\Model\Comentarios\Factory\ComentariosFactory;
@@ -117,6 +129,18 @@ class Module implements ConfigProviderInterface,ServiceProviderInterface,ViewHel
                 ComentariosForm::class=>ComentariosFormFactory::class,
 
                 ComentariosFilter::class=>ComentariosFilterFactory::class,
+
+                Clientes::class=>ClientesFactory::class,
+
+                ClientesRepository::class=>ClientesRepositoryFactory::class,
+
+                ClientesForm::class=>ClientesFormFactory::class,
+
+                ClientesFilter::class=>ClientesFilterFactory::class,
+
+                SearchForm::class=>SearchFormFactory::class,
+
+                SearchFilter::class=>SearchFilterFactory::class
             ],
             'invokables'=>[
 

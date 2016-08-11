@@ -9,7 +9,11 @@
 namespace Base\View\Helper;
 
 
+use Admin\Form\IssusersForm;
+use Admin\Model\Issusers\IssusersRepository;
 use Base\Form\BuscaForm;
+use Base\Model\AbstractRepository;
+use Base\Model\Cache;
 use Base\Services\Table;
 use Interop\Container\ContainerInterface;
 use Zend\Debug\Debug;
@@ -89,6 +93,24 @@ class GerarViewHelper extends AbstractHelper {
             );
         }
         return implode("", $btns);
+    }
+
+    public function formIssusers(){
+        /**
+         * @var $cache Cache
+         * @var $repository AbstractRepository
+         */
+        $form=$this->container->get(IssusersForm::class);
+        $cache=$this->view->CacheHelper();
+        if(!$cache->hasItem('issusers')){
+           $repository=$this->container->get(IssusersRepository::class);
+            $issuser=$repository->find($this->view->user->empresa,false);
+            if($issuser->getResult()){
+                $cache->setItem('issusers',$issuser->getData());
+            }
+        }
+        $form->setData($cache->getItem('issusers'));
+        return $form;
     }
 
     public function GerarElement($form) {

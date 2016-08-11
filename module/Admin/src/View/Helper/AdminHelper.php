@@ -1,6 +1,7 @@
 <?php
 namespace Admin\View\Helper;
 use Base\Model\Result;
+use Base\Model\Check;
 use Interop\Container\ContainerInterface;
 use Zend\Debug\Debug;
 use Zend\View\Helper\AbstractHelper;
@@ -15,6 +16,18 @@ class AdminHelper extends AbstractHelper
 
     const MSG_SUCCESS="SUA BUSCA RETORNOU %s";
     const MSG_ERROR="SUA BUSCA RETORNOU NENHUM RESULTADO";
+
+    private $linha;
+
+    protected $select=' * ';
+    /**
+     * @var Keys
+     */
+    private $Keys;
+    /**
+     * @var Values
+     */
+    private $Values;
 
     /**
      * @var ContainerInterface
@@ -58,6 +71,46 @@ class AdminHelper extends AbstractHelper
 
     }
 
+     /**
+     * <b>Exibir Template View:</b> Execute um foreach com um getResult() do seu model e informe o envelope
+     * neste método para configurar a view. Não esqueça de carregar a view acima do foreach com o método Load.
+     * @param array $Linha = Array com dados obtidos
+     * @param View $View = Template carregado pelo método Load()
+     * @param string $action
+     * @param int $wordTitle
+     * @param int $wordDesc
+     * @return mixed
+     */
+    public function Show(array $Linha, $View,$action="index",$wordTitle=12,$wordDesc=38,$param_url="url") {
+
+        if(isset($Linha[$param_url])){
+            $Linha[$param_url]=$this->view->url('cidadeonline-pages',['action'=>$action,'id'=>$Linha[$param_url]]);
+        }
+        if(isset($Linha['title'])){
+            $Linha['title']= Check::Words($Linha['title'], $wordTitle);
+        }
+        if(isset($Linha['description'])){
+            $Linha['description'] = Check::Words($Linha['description'], $wordDesc);
+        }
+        if(isset($Linha['created'])){
+            $Linha['datetime'] = date('Y-m-d', strtotime($Linha['created']));
+            $Linha['dia'] = date('d', strtotime($Linha['created']));
+            $Linha['mes'] = $this->MES[date('M', strtotime($Linha['created']))];
+            $Linha['ano'] = date('Y', strtotime($Linha['created']));
+        }
+        if(isset($Linha['modified'])){
+            $Linha['pubdate'] = date('d/m/Y H:i', strtotime($Linha['modified']));
+            $Linha['horas'] = date('H:i', strtotime($Linha['modified']));
+        }
+
+        if(isset($Linha['images'])){
+            $Linha['images']=str_replace('\\','/',$Linha['images']);
+        }
+        $this->setKeys($Linha);
+        $this->setValues();
+       return $this->ShowView($View);
+    }
+
     /**
      * @return mixed
      */
@@ -73,6 +126,30 @@ class AdminHelper extends AbstractHelper
     {
         $this->data = $data;
     }
+
+
+    /*
+    * ***************************************
+    * **********  PRIVATE METHODS  **********
+    * ***************************************
+    */
+
+    //Executa o tratamento dos campos para substituição de chaves na view.
+    private function setKeys($Linha) {
+        $this->linha = $Linha;
+        $this->Keys = explode('&', '#' . implode("#&#", array_keys($this->linha)) . '#');
+      }
+
+    //Obtém os valores a serem inseridos nas chaves da view.
+    private function setValues() {
+        $this->Values = array_values($this->linha);
+    }
+
+    //Exibe o template view com echo!
+    private function ShowView($View) {
+        return str_replace($this->Keys, $this->Values, $View);
+    }
+
 
 
 }

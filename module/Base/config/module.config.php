@@ -12,6 +12,17 @@ use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
+// or in config/autoload/global.php:
+    'translator' => [
+        'locale' => 'pt_BR',
+        'translation_file_patterns' => [
+            [
+                'type'     => 'phparray',
+                'base_dir' => __DIR__ . '/../language',
+                'pattern'  => '%s.php',
+            ],
+        ],
+    ],
     'view_manager' => [
         'strategies'=> [
             'ViewJsonStrategy'

@@ -13,6 +13,7 @@ use Zend\Db\Adapter\Exception\InvalidQueryException;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Expression;
 use Zend\Db\Sql\Predicate\Operator;
+use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Where;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Debug\Debug;
@@ -134,9 +135,12 @@ abstract class AbstractRepository{
      * @param array $param
      * @return type object table bd
      */
-    public function findBy(array $param) {
+    public function findBy(array $param,$order=['id'=>'ASC']) {
         $this->setData();
-        $data=$this->tableGateway->select($param);
+        $data=$this->tableGateway->select(function (Select $select) use ($param,$order) {
+            $select->where($param);
+            $select->order($order);
+        });
         if($data->count()):
             $this->data->setResult(true);
             $this->data->setData($data);

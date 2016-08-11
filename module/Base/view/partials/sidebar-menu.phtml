@@ -6,9 +6,9 @@
                 ->menu()
                 ->setMinDepth(0)
                 ->setMaxDepth(4)
-                ->setUlClass('nav side-menu')->setPartial('partials/navigation.phtml');
-                //->setAcl($this->UserIdentity()->getAuthAcl())
-                //->setRole((string)$this->UserIdentity()->getAuthAcl()->getRoleDefaul())
+                ->setUlClass('nav side-menu')->setPartial('partials/navigation')
+                ->setAcl($this->UserIdentity()->getAuthAcl())
+                ->setRole((string)$this->UserIdentity()->getAuthAcl()->getRoleDefaul());
                 ?>
         </ul>
 

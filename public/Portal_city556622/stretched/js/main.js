@@ -232,43 +232,7 @@ $(document).ready(function(){
 	/* End email subcribe process */
 	
 	
-	/* Contact us process */
-	$("#enews-contact-form").submit(function() {
-		var submitData = $('#enews-contact-form').serialize();
-		$("#enews-contact-form input[name='name']").attr('disabled','disabled');
-		$("#enews-contact-form input[name='email']").attr('disabled','disabled');
-		$("#enews-contact-form input[name='subject']").attr('disabled','disabled');
-		$("#enews-contact-form textarea[name='message']").attr('disabled','disabled');
-		$("#enews-contact-form input[name='submit']").attr('disabled','disabled');
-		$("#enews-contact-form .data-status").show().html('<div class="alert alert-info"><strong>Loading...</strong></div>');
-		$.ajax({ // Send an offer process with AJAX
-			type: "POST",
-			url: "/cidaonline/contact",
-			data: submitData + "&action=add",
-			dataType: "html",
-			success: function(msg){
-				if (parseInt(msg, 0) !== 0) {
-					var msg_splits = msg.split("|");
-					if (msg_splits[0] === "success") {
-						$("#enews-contact-form input[name='name']").val('').removeAttr('disabled');
-						$("#enews-contact-form input[name='email']").val('').removeAttr('disabled');
-						$("#enews-contact-form input[name='subject']").val('').removeAttr('disabled');
-						$("#enews-contact-form textarea[name='message']").val('').removeAttr('disabled');
-						$("#enews-contact-form input[name='submit']").removeAttr('disabled');
-						$("#enews-contact-form .data-status").html(msg_splits[1]).fadeIn();
-					} else {
-						$("#enews-contact-form input[name='name']").removeAttr('disabled');
-						$("#enews-contact-form input[name='email']").removeAttr('disabled');
-						$("#enews-contact-form input[name='subject']").removeAttr('disabled');
-						$("#enews-contact-form textarea[name='message']").removeAttr('disabled');
-						$("#enews-contact-form input[name='submit']").removeAttr('disabled');
-						$("#enews-contact-form .data-status").html(msg_splits[1]).fadeIn();
-					}
-					}
-				}
-		});
-		return false;
-	});
+	
 	/* End contact us process */
 	
 	

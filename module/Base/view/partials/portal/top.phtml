@@ -7,9 +7,9 @@
                 <div class="nav-sub-menu">
                     <ul class="container">
 
-                        <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'blog-posts','id'=>'aconteceu'])?>">ACONTECEU</a></li>
-                        <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'blog-posts','id'=>'eventos'])?>">EVENTOS</a></li>
-                        <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'blog-posts','id'=>'esportes'])?>">ESPORTES</a></li>
+                        <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'posts-list','id'=>'aconteceu'])?>">ACONTECEU</a></li>
+                        <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'posts-list','id'=>'eventos'])?>">EVENTOS</a></li>
+                        <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'posts-list','id'=>'esportes'])?>">ESPORTES</a></li>
 
                     </ul>
                 </div>
@@ -48,17 +48,8 @@
             <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'login'])?>">LOGIN</a></li>
             <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'cadastro'])?>">CADASTRAR-SE</a></li>
             <?php else:?>
-                <li><a href="#"><?=$this->UserIdentity()->getHasIdentity()->title?></a>
-                    <div class="nav-sub-menu">
-                        <ul class="container pull-right">
-                            <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'minha-conta'])?>">MINHA CONTA</a></li>
-                            <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'minha-empresa'])?>">MINHA EMPRESA</a></li>
-                            <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'novo-anuncio'])?>">NOVO ANUNCIO</a></li>
-                            <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'logout'])?>">LOGOUT</a></li>
-                        </ul>
-                    </div>
-                </li>
-
+                <li><a title="<?=$this->UserIdentity()->getHasIdentity()->title?>" href="<?=$this->url('cidadeonline-pages',['action'=>'minha-conta'])?>"><?=substr($this->UserIdentity()->getHasIdentity()->title,0,15)?>...</a> </li>
+                <li><a href="<?=$this->url('cidadeonline-pages',['action'=>'logout'])?>">LOGOUT</a></li>
             <?php endif;?>
         </ul>
 
@@ -92,7 +83,7 @@
                     else:
                         $post=$this->HomeHelper()->ExeRead("bs_categorias", "WHERE state =? AND parent_id=? ORDER BY id DESC LIMIT 3 OFFSET 0", ['0',$cat->getData()->id]);
                         foreach ($post->getData() as $slide):
-                           $html[]=$this->HomeHelper()->Show($slide, '<li><a href="#url#">#title#</a></li>','blog-posts');
+                           $html[]=$this->HomeHelper()->Show($slide, '<li><a href="#url#">#title#</a></li>','posts-list');
                         endforeach;
                     endif;
                     echo implode("", $html);
@@ -110,7 +101,7 @@
                     else:
                         $post=$this->HomeHelper()->ExeRead("bs_categorias", "WHERE state =? AND parent_id=? ORDER BY id DESC LIMIT 3 OFFSET 0", ['0',$cat->getData()->id]);
                         foreach ($post->getData() as $slide):
-                           $html[]=$this->HomeHelper()->Show($slide, '<li><a href="#url#">#title#</a></li>','blog-posts');
+                           $html[]=$this->HomeHelper()->Show($slide, '<li><a href="#url#">#title#</a></li>','posts-list');
                         endforeach;
                     endif;
                     echo implode("", $html);
@@ -128,7 +119,7 @@
                     else:
                         $post=$this->HomeHelper()->ExeRead("bs_categorias", "WHERE state =? AND parent_id=? ORDER BY id DESC LIMIT 3 OFFSET 0", ['0',$cat->getData()->id]);
                         foreach ($post->getData() as $slide):
-                            $html[]=$this->HomeHelper()->Show($slide, '<li><a href="#url#">#title#</a></li>','blog-posts');
+                            $html[]=$this->HomeHelper()->Show($slide, '<li><a href="#url#">#title#</a></li>','posts-list');
                         endforeach;
                     endif;
                     echo implode("", $html);
@@ -145,7 +136,7 @@
                     else:
                         $post=$this->HomeHelper()->ExeRead("bs_categorias", "WHERE state =? AND parent_id=? ORDER BY id DESC LIMIT 3 OFFSET 0", ['0',$cat->getData()->id]);
                         foreach ($post->getData() as $slide):
-                            $html[]=$this->HomeHelper()->Show($slide, '<li><a href="#url#">#title#</a></li>','blog-posts');
+                            $html[]=$this->HomeHelper()->Show($slide, '<li><a href="#url#">#title#</a></li>','posts-list');
                         endforeach;
                     endif;
                     echo implode("", $html);
