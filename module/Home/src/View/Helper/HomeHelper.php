@@ -42,6 +42,8 @@ class HomeHelper extends AbstractHelper{
     protected $categorias=['onde-comprar'=>"ONDE COMPRAR",'onde-comer'=>"ONDE COMER",'onde-ficar'=>"ONDE FICAR",'onde-se-divertir'=>"ONDE SE DIVERTIR",
         'quero-comprar'=>"QUERO COMPRAR",'quero-vender'=>"QUERO VENDER",'quero-trocar'=>"QUERO TROCAR",'quero-alugar'=>"QUERO ALUGAR"];
     protected $config;
+
+    public $tirar=true;
     /**
      * @var $data Result
      */
@@ -303,7 +305,7 @@ class HomeHelper extends AbstractHelper{
             $Linha['title']= Check::Words($Linha['title'], $wordTitle);
         }
         if(isset($Linha['description'])){
-            $Linha['description'] = Check::Words($Linha['description'], $wordDesc);
+            $Linha['description'] = Check::Words($Linha['description'], $wordDesc,null,$this->tirar);
         }
         if(isset($Linha['created'])){
             $Linha['datetime'] = date('Y-m-d', strtotime($Linha['created']));
@@ -480,6 +482,7 @@ class HomeHelper extends AbstractHelper{
             $form->get('url')->setAttribute('type','hidden');
             $form->get('access')->setAttribute('type','hidden');
             $form->get('uf')->setAttribute('type','hidden');
+            $form->get('images')->setAttribute('id','images-empresa');
             $form->get('created_by')->setValue($this->view->user->id);
             $this->GerarElement($form);
             $primeiro = str_replace(array_keys(self::$html), array_values(self::$html), $html);

@@ -169,7 +169,7 @@ class GerarViewHelper extends AbstractHelper {
 
     }
     public function formGrupo() {
-        $box = $this->view->Html("fildset")->setText(PHP_EOL)->appendText($this->view->Html("legend")->setText("FORMULARIO DE MANUTENÇÃO"))->appendText(PHP_EOL);
+        $box = $this->view->Html("fieldset")->setText(PHP_EOL)->appendText($this->view->Html("legend")->setText("FORMULARIO DE MANUTENÇÃO"))->appendText(PHP_EOL);
         if (self::$hidden):
             self::$gegal['hiddeh'] = implode("", self::$hidden);
             $boxGeral = $this->boxWidgets(array('body' => implode(PHP_EOL, self::$gegal), "title" => "CADASTRO GERAL", "class" => "box-default", 'footer' =>sprintf("%s%s",implode("", self::$btn),"#btn-voltar#"), 'icone' => 'clipboard'));

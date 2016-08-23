@@ -11,6 +11,8 @@ return [
         'staticsalt'=>'aFGQ475SDsdfsaf2342',
         'sessao'=>'funcionarios',
         'serverHost'=>'http://rest.callcocam.com.br',
+        'site_name'=>'SIGA SMART',
+        'site_url'=>'http://cidadeonline.tk',
         'email_contato'=>['Caudio'=>'callcocam@gmail.com','Dani'=>'denius.net@gmail.com','Alison'=>'alissoncandiotto@gmail.com'],
         //'serverHost'=>'http://localhost.server',
         'moderarcomments'=>'1',

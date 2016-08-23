@@ -13,6 +13,20 @@
             ?>
             <?php
             if ($empresas->getResult()):
+                $empresaSEO=$empresas->getData();
+                $this->headMeta()->setProperty('fb:app_id', '162032950871423');
+
+                $this->OpenGraph()->setType('article');
+
+                $this->OpenGraph()->setTitle($empresaSEO['title']);
+
+                $this->OpenGraph()->setSiteName($this->config->site_name);
+
+                $this->OpenGraph()->setDescription(\Base\Model\Check::Chars($empresaSEO['description'],100));
+
+                $this->OpenGraph()->setUrl(sprintf("%s/cidadeonline/%s/%s",$this->config->site_url,$this->action,$this->id));
+                // $this->OpenGraph()->setLocale('pt', array('pt_BR', 'sr'));
+                $this->OpenGraph()->appendImage(sprintf("%s/dist/%s",$this->config->site_url,$empresaSEO['images']));
                 $breadcrumb = $this->partial('/tpl/breadcrumb');
                 $emp=$empresas->getData();
                 $emp['categoria']=$this->HomeHelper()->getCategorias($emp['catid']);
@@ -34,7 +48,9 @@
             <div class="content">
                 <?php
                 if ($empresas->getResult()):
+                    $this->HomeHelper()->tirar=false;
                     echo $this->HomeHelper()->Show($empresas->getData(), "#description#",$emp['catid']);
+                    $this->HomeHelper()->tirar=true;
                 endif;
                 ?>
 
@@ -146,7 +162,9 @@
     <div id="sidebar" class="span4">
 
         <div class="widget clearfix">
-            <?php echo $this->partial('/tpl/social-indices'); ?>
+            <?php
+            $empresaSEO['url_share']=sprintf("%s/cidadeonline/%s/%s",$this->config->site_url,$this->action,$this->id);
+            echo $this->partial('/tpl/social-indices',['postSEO'=>$empresaSEO]); ?>
         </div>
         <!-- End Widget -->
 

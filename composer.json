@@ -32,7 +32,8 @@
         "zendframework/zend-code": "^3.0",
         "zendframework/zend-paginator": "^2.7",
         "zendframework/zend-cache": "^2.7",
-        "zendframework/zend-serializer": "^2.8"
+        "zendframework/zend-serializer": "^2.8",
+        "facebook/php-sdk-v4" : "~5.0"
     },
     "autoload": {
         "psr-4": {
@@ -41,7 +42,8 @@
             "Auth\\": "module/Auth/src/",
             "Home\\": "module/Home/src/",
             "Mail\\": "module/Mail/src/",
-            "Cidadeonline\\": "module/Cidadeonline/src/"
+            "Cidadeonline\\": "module/Cidadeonline/src/",
+            "Facebook\\": "module/Facebook/src/"
         }
     },
     "autoload-dev": {

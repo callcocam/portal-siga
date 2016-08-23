@@ -144,7 +144,7 @@ class EmpresasForm extends AbstractForm
                     //"disable_inarray_validator" => true,
                 ],
                 'attributes' => [
-                    'id'=>'images-empresa',
+                    'id'=>'images',
                     'class' =>'form-control',
                     'title' => 'FILD_IMAGES_DESC',
                     'placeholder' => 'FILD_IMAGES_PLACEHOLDER',
@@ -329,6 +329,7 @@ class EmpresasForm extends AbstractForm
                 ],
                 'attributes' => [
                     'id'=>'empresa_views',
+                    'class' =>'form-control',
                     'data-access' => '3',
                     'data-position' => 'geral',
                     'readonly' => true,

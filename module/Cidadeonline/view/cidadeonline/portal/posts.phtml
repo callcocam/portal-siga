@@ -4,6 +4,7 @@
 
 <div class="row-fluid">
 <?php
+$postSEO['title']="";
 $this->HomeHelper()->setSelect(" a.*,c.title as autor,c.images as foto_autor,c.url as url_autor,c.description as desc_autor,g.title as categoria,g.url as url_cat ");
                                     //tabela,estraselect,params,bool[true=1 registro ou false uma lista]
 $posts=$this->HomeHelper()->ExeRead("bs_posts a", " ,bs_users c, bs_categorias g WHERE a.created_by=c.id AND a.catid=g.id AND a.url=?", [$this->id],true);
@@ -14,6 +15,21 @@ endif;
 ?>
 <?php
 if ($posts->getResult()):
+    $postSEO=$posts->getData();
+    $this->headMeta()->setProperty('fb:app_id', '162032950871423');
+
+    $this->OpenGraph()->setType('article');
+
+    $this->OpenGraph()->setTitle($postSEO['title']);
+
+    $this->OpenGraph()->setSiteName($this->config->site_name);
+
+    $this->OpenGraph()->setDescription(\Base\Model\Check::Chars($postSEO['description'],100));
+
+    $this->OpenGraph()->setUrl(sprintf("%s/cidadeonline/%s/%s",$this->config->site_url,$this->action,$this->id));
+    // $this->OpenGraph()->setLocale('pt', array('pt_BR', 'sr'));
+    $this->OpenGraph()->appendImage(sprintf("%s/dist/%s",$this->config->site_url,$postSEO['images']));
+
     $breadcrumb = $this->partial('/tpl/breadcrumb');
     $emp=$posts->getData();
     $emp['url']=$emp["url_cat"];
@@ -30,7 +46,9 @@ if ($posts->getResult()):
 <div class="content">
 <?php
 if ($posts->getResult()):
-   echo $this->HomeHelper()->Show($posts->getData(), "#description#","posts-list",500,10000);
+    $this->HomeHelper()->tirar=false;
+    echo $this->HomeHelper()->Show($posts->getData(), "#description#","posts-list",500,10000);
+    $this->HomeHelper()->tirar=true;
  endif;
  ?>
 
@@ -146,7 +164,9 @@ if ($posts->getResult()):
 <div id="sidebar" class="span4">
 
     <div class="widget clearfix">
-       <?php echo $this->partial('/tpl/social-indices'); ?>
+       <?php
+       $postSEO['url_share']=sprintf("%s/cidadeonline/%s/%s",$this->config->site_url,$this->action,$this->id);
+       echo $this->partial('/tpl/social-indices',['postSEO'=>$postSEO]); ?>
     </div> 
     <!-- End Widget -->
     

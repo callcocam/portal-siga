@@ -236,8 +236,9 @@ class ClassificadosForm extends AbstractForm
                 ],
                 'attributes' => [
                     'id'=>'classifcados_views',
+                    'class' =>'form-control',
                     'data-access' => '3',
-                    'data-position' => 'images',
+                    'data-position' => 'geral',
                     'readonly' => true,
                 ],
             ]
@@ -248,7 +249,7 @@ class ClassificadosForm extends AbstractForm
                 'type' => 'hidden',//hidden, select, radio, checkbox, textarea
                 'name' => 'created_by',
                 'options' => [
-                    //'label' => 'FILD_CLASSIFCADOS_VIEWS_LABEL',
+                   //'label' => 'FILD_CLASSIFCADOS_VIEWS_LABEL',
                     //'value_options'      =>[],
                     //"disable_inarray_validator" => true,
                 ],

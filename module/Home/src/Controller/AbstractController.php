@@ -59,7 +59,8 @@ abstract class AbstractController extends AbstractActionController{
         'action'=>$this->action,
         'page'=>$this->params()->fromRoute("page",'1'),
         'user'=>$this->user,
-        'filtro'=>$this->filtro
+        'filtro'=>$this->filtro,
+        'config'=>$this->config
         ];
         return parent::onDispatch($e);
     }

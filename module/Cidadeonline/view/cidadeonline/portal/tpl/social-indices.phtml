@@ -1,14 +1,43 @@
  <ul class="social-subscribers">
         <li>
-            <a href="#" data-original-title="Like us on Facebook"><img src="/Portal_city556622/stretched/images/social/somacro/facebook.png" alt="Facebook" /></a>
-            <p>25,645<i>likes</i></p>
+            <a class="share-face" href="https://www.facebook.com/sharer/sharer.php?u=<?=$postSEO['url_share']?>" data-original-title="Compartillhe [<?=$postSEO['title']?>] No Facebook"><img src="/Portal_city556622/stretched/images/social/somacro/facebook.png" alt="<?=$postSEO['title']?>" /></a>
+            <p ><span id="count_likes">0</span><i>likes</i></p>
         </li>
         <li>
-            <a href="#" data-original-title="Follow us on Twitter"><img src="/Portal_city556622/stretched/images/social/somacro/twitter.png" alt="Twitter" /></a>
-            <p>8,480<i>followers</i></p>
+            <a class="share-face" href="https://twitter.com/intent/tweet?hashtags=''&url=<?=$postSEO['url_share']?>&text=<?=$postSEO['title']?>" data-original-title="Compartillhe [<?=$postSEO['title']?>] No Twitter"><img src="/Portal_city556622/stretched/images/social/somacro/twitter.png" alt="<?=$postSEO['title']?>" /></a>
+            <p><span id="count_followers">0</span><i><i>followers</i></p>
         </li>
         <li>
-            <a href="#" data-original-title="Subscribe our RSS Feed"><img src="/Portal_city556622/stretched/images/social/somacro/rss.png" alt="RSS" /></a>
-            <p>17,289<i>subscribers</i></p>
+            <a class="share-face" href="https://plus.google.com/share?url=<?=$postSEO['url_share']?>" data-original-title="Compartillhe [<?=$postSEO['title']?>] No Google++"><img src="/Portal_city556622/stretched/images/social/somacro/rss.png" alt="<?=$postSEO['title']?>" /></a>
+            <p><span id="count_subscribers">0</span><i>subscribers</i></p>
         </li>
     </ul>
+
+ <script>
+     $(function(){
+         $(".share-face").on('click',function(){
+             var url = $(this).attr('href');
+             var width = 600;
+             var height = 600;
+             var leftPosition, topPosition;
+             leftPosition = (window.screen.width / 2) - ((width / 2) + 10);
+             topPosition = (window.screen.height / 2) - ((height / 2) + 100);
+             window.open(url, "Window2",
+                 "status=no,height=" + height + ",width=" + width + ",resizable=yes,left="
+                 + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY="
+                 + topPosition + ",toolbar=no,menubar=no,scrollbars=no,location=no,directories=no");
+             return false;
+         });
+         $.ajax({
+             url:'http://api.facebook.com/restserver.php?format=json&method=links.getStats&urls=<?=$postSEO['url_share']?>',
+             type:'get',
+             dataType:'json',
+             success:function(data){
+                 $("#count_likes").html(data[0].share_count);
+                  }
+         });
+
+
+     })
+
+ </script>

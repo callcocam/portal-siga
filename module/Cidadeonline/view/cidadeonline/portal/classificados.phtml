@@ -5,26 +5,39 @@
         <div class="row-fluid">
             <?php
             //tabela,estraselect,params,bool[true=1 registro ou false uma lista]
-            $empresas=$this->HomeHelper()->ExeRead("bs_classificados", " WHERE url=?",[$this->id],true);
-            if (!$empresas->getResult()):
-                $this->HomeHelper()->alert($empresas->getError());
+            $classificados=$this->HomeHelper()->ExeRead("bs_classificados", " WHERE url=?",[$this->id],true);
+            if (!$classificados->getResult()):
+                $this->HomeHelper()->alert($classificados->getError());
             endif;
             ?>
             <?php
-            if ($empresas->getResult()):
+            if ($classificados->getResult()):
+                $classificadoSEO=$classificados->getData();
+                $this->headMeta()->setProperty('fb:app_id', '162032950871423');
+
+                $this->OpenGraph()->setType('article');
+
+                $this->OpenGraph()->setTitle($classificadoSEO['title']);
+
+                $this->OpenGraph()->setSiteName($this->config->site_name);
+
+                $this->OpenGraph()->setDescription(\Base\Model\Check::Chars($classificadoSEO['description'],100));
+
+                $this->OpenGraph()->setUrl(sprintf("%s/cidadeonline/%s/%s",$this->config->site_url,$this->action,$this->id));
+                // $this->OpenGraph()->setLocale('pt', array('pt_BR', 'sr'));
+                $this->OpenGraph()->appendImage(sprintf("%s/dist/%s",$this->config->site_url,$classificadoSEO['images']));
                 $breadcrumb = $this->partial('/tpl/breadcrumb');
-                $emp=$empresas->getData();
+                $emp=$classificados->getData();
                 $emp['categoria']=$this->HomeHelper()->getCategorias($emp['catid']);
                 $emp['url']=$emp['catid'];
                 echo $this->HomeHelper()->Show($emp, $breadcrumb,'classificadolista');
 
             endif;
             ?>
-
             <?php
-            if ($empresas->getResult()):
+            if ($classificados->getResult()):
                 $emp_figure = $this->partial('/tpl/classificados/classificados-figure');
-                $emp=$empresas->getData();
+                $emp=$classificados->getData();
                 $emp['categoria']=$this->HomeHelper()->getCategorias($emp['catid']);
                 $emp['url_cat']=$emp['catid'];
                 $emp['action']=$emp['catid'];
@@ -33,8 +46,10 @@
             ?>
             <div class="content">
                 <?php
-                if ($empresas->getResult()):
-                    echo $this->HomeHelper()->Show($empresas->getData(), "#description#",$emp['catid']);
+                if ($classificados->getResult()):
+                    $this->HomeHelper()->tirar=false;
+                    echo $this->HomeHelper()->Show($classificados->getData(), "#description#",$emp['catid']);
+                    $this->HomeHelper()->tirar=true;
                 endif;
                 ?>
 
@@ -48,8 +63,8 @@
             <div class="prevnext-posts clearfix">
                 <?php
 
-                if ($empresas->getResult()):
-                    $postId=$empresas->getData();
+                if ($classificados->getResult()):
+                    $postId=$classificados->getData();
                     $navigation=$this->HomeHelper()->ExeRead("bs_classificados", " WHERE id<? LIMIT 1", [$postId['id']],true);
                     if($navigation->getResult()){
                         $navprev=$navigation->getData();
@@ -57,8 +72,8 @@
                         echo $this->HomeHelper()->Show($navprev, $this->partial('/tpl/prev',['prev'=>"Proximo"]),"empresa",5,38);
                     }
                 endif;
-                if ($empresas->getResult()):
-                    $postId=$empresas->getData();
+                if ($classificados->getResult()):
+                    $postId=$classificados->getData();
                     $navigation=$this->HomeHelper()->ExeRead("bs_classificados", " WHERE id>? LIMIT 1", [$postId['id']],true);
                     if($navigation->getResult()){
                         $navnext=$navigation->getData();
@@ -74,18 +89,18 @@
             <div class="related-posts">
                 <h3>Classificados Relacionadas</h3>
                 <?php
-                if ($empresas->getResult()):
-                    $empresaId=$empresas->getData();
+                if ($classificados->getResult()):
+                    $classificadoId=$classificados->getData();
                     //tabela,estraselect,params,bool[true=1 registro ou false uma lista]
-                    $empresasRelacionadas=$this->HomeHelper()->ExeRead("bs_classificados", " WHERE catid=? AND id<>? ORDER BY created DESC LIMIT 4", [$empresaId['catid'],$empresaId['id']]);
+                    $empresasRelacionadas=$this->HomeHelper()->ExeRead("bs_classificados", " WHERE catid=? AND id<>? ORDER BY created DESC LIMIT 4", [$classificadoId['catid'],$classificadoId['id']]);
                     $html=[];
                     if (!$empresasRelacionadas->getResult()):
                         $this->HomeHelper()->alert($empresasRelacionadas->getError());
                     else:
                         $nomargin=" no-margin-left";
-                        foreach ($empresasRelacionadas->getData() as $empresa):
+                        foreach ($empresasRelacionadas->getData() as $classificado):
                             $post['nomargin']=$nomargin;
-                            $html[]=$this->HomeHelper()->Show($empresa, $this->partial('/widget/related-post'),"classificados",5);
+                            $html[]=$this->HomeHelper()->Show($classificado, $this->partial('/widget/related-post'),"classificados",5);
                             $nomargin="";
 
                         endforeach;
@@ -104,11 +119,11 @@
                 </div>
                 <?php
                 if($this->user):
-                    if ($empresas->getResult()):
-                        $empresaId=$empresas->getData();
-                        $data['title']=$empresaId['title'];
+                    if ($classificados->getResult()):
+                        $classificadoId=$classificados->getData();
+                        $data['title']=$classificadoId['title'];
                         $data['html']=$this->partial('/widget/comments-form');
-                        $data['parent_id']=$empresaId['id'];
+                        $data['parent_id']=$classificadoId['id'];
                         $data['parent']='classificado';
                         $data['tipo']='0';
                         $data['id_form']="Comentarios";
@@ -129,7 +144,9 @@
     <div id="sidebar" class="span4">
 
         <div class="widget clearfix">
-            <?php echo $this->partial('/tpl/social-indices'); ?>
+            <?php
+            $classificadoSEO['url_share']=sprintf("%s/cidadeonline/%s/%s",$this->config->site_url,$this->action,$this->id);
+            echo $this->partial('/tpl/social-indices',['postSEO'=>$classificadoSEO]); ?>
         </div>
         <!-- End Widget -->
 
@@ -152,8 +169,8 @@
 
 </div> <!-- End Row-Fluid -->
 <?php
-if ($empresas->getResult()):
-    $postId=$empresas->getData();
+if ($classificados->getResult()):
+    $postId=$classificados->getData();
     ?>
     <script type="text/javascript" src="/Portal_city556622/stretched/js/comments.js"></script>
     <script>

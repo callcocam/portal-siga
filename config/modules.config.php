@@ -31,5 +31,6 @@ return [
     'Mail',
     'Auth',
     'Home',
-    'Cidadeonline'
+    'Cidadeonline',
+    'Facebook'
 ];

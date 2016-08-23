@@ -69,7 +69,7 @@ $(function() {
 
      //CAPA VIEW
     $('#attachment').change(function () {
-       var input = $(this);
+        var input = $(this);
         var target = $('#images');
         var fileDefault = target.attr('default');
        if (!input.val()) {
@@ -78,9 +78,10 @@ $(function() {
             });
             return false;
         }
+
         if (this.files && this.files[0].type.match('image.*')) {
             var reader = new FileReader();
-            reader.onload = function (e) {
+             reader.onload = function (e) {
                 target.fadeOut('fast', function () {
                     $('#image-preview').attr('src', e.target.result).fadeIn('fast');
                 });

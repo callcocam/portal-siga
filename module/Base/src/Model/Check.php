@@ -157,8 +157,12 @@ class Check {
      * @param STRING $String = Uma string qualquer
      * @return INT = $Limite = String limitada pelo $Limite
      */
-    public static function Words($String, $Limite, $Pointer = null) {
+    public static function Words($String, $Limite, $Pointer = null,$tirar=true) {
+       if($tirar):
         self::$Data = strip_tags(trim($String));
+       else:
+           self::$Data = trim($String);
+      endif;
         self::$Format = (int) $Limite;
 
         $ArrWords = explode(' ', self::$Data);

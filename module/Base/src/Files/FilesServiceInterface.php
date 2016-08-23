@@ -9,7 +9,7 @@ namespace Base\Files;
  */
 interface FilesServiceInterface {
 
-      const CODE_SUCCESS = 'trigger_success';
+    const CODE_SUCCESS = 'trigger_success';
     const CODE_ERROR = 'trigger_error';
 
     /**
